@@ -2,7 +2,7 @@
 use Data::Dump;
 
 my %hash;
-while(<DATA>) {
+while (<DATA>) {
 
     #  取得合法似乎据
     s/^\s+|\s+$//g;
@@ -13,6 +13,7 @@ while(<DATA>) {
     # non-space line
     my ($key, @e) = split;
     for (@e) {
+        # BUS_z=3
         next unless /(\w+)_(\w+)=(\d+)/;
         $hash{$key}{$1}{$2} += $3; 
     }
@@ -23,7 +24,8 @@ Data::Dump->dump(\%hash);
 #
 #
 #  sort map split  grep ..... slice  :
-#
+#  1> 结构整洁
+#  2> 思路清晰
 #
 
 __END__
