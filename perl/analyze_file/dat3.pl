@@ -17,12 +17,13 @@ while (<DATA>) {
     for my $fld (split) {
 
         # XXX_x=9999
-        next unless s/(\w*)\_(\w\=\d)//;	#BUG2不能进行严格匹配
+        next unless s/(\w+)\_(\w+\=\d+)//;	#BUG2不能进行严格匹配
         my $k1 = $1;
 
         #Data::Dump->dump($k1);
         my ( $k2, $value ) = split /=/, $2;
 
+		
         #Data::Dump->dump($k2);
         if ( exists ${ $href->{$who}->{$k1} }{$k2} ) {
             $value += ${ $href->{$who}->{$k1} }{$k2};
