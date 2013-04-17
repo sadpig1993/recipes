@@ -1,0 +1,5 @@
+useage:
+perl dat_ckjy.pl ckjy2.csv
+perl dat_rkjy.pl rkjy1.csv
+
+sql 目录是创建库表的SQL
