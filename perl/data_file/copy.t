@@ -29,7 +29,7 @@ $sth = $dbh->prepare("select * from source_jsck where c_out_type = '1'");
 $sth->execute;
 ########mkdir begin#########
 while ( my $row = $sth->fetchrow_arrayref ) {
-    my $filepath = join( "", split( "-", ( substr $row->[9], 0, 10 ) ) );
+    my $filepath = join( "", split( "-", ( substr $row->[6], 0, 10 ) ) );
 
     #print "$filepath\n";
     if ( -d $filepath ) {
@@ -68,7 +68,7 @@ $sth->execute;
 
 ######################mkdir###############################
 while ( my $row = $sth->fetchrow_arrayref ) {
-    my $filepath = join( "", split( "-", ( substr $row->[9], 0, 10 ) ) );
+    my $filepath = join( "", split( "-", ( substr $row->[6], 0, 10 ) ) );
 
     #print "$filepath\n";
     if ( -d $filepath ) {
