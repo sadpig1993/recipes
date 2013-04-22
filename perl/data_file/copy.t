@@ -4,6 +4,7 @@ use warnings;
 use DBI;
 use IO::File;
 use IO::Dir;
+#use Data::Dump;
 
 ## 创建file handler
 my $fh;
@@ -14,7 +15,10 @@ unless ($dbh) {
     exit 0;
 }
 
-my $sth = $dbh->prepare("select * from source_jsck");
+my $sth = $dbh->prepare(
+"select C_MERCHANT_NO, C_OUT_SERIALNO, C_OUT_TYPE, F_OUT_BALANCE, F_INCOME_BALANCE, 
+	C_BANK_NO, D_BANK_CONFIRM_DATE, F_INNER_BANK_BALANCE, F_OUTER_BANK_BALANCE, D_CREATE_DATE from source_jsck"
+);
 unless ($sth) {
     warn "can not prepare source_jsck";
     exit 0;
@@ -25,76 +29,123 @@ my $narray = $sth->{NAME};
 my @dim = join "|", map { lc } @$narray;
 
 ##取出创建目录的时间
-$sth = $dbh->prepare("select * from source_jsck where c_out_type = '1'");
-$sth->execute;
+$sth = $dbh->prepare(
+"select C_MERCHANT_NO, C_OUT_SERIALNO, C_OUT_TYPE, F_OUT_BALANCE, F_INCOME_BALANCE, 
+	C_BANK_NO, D_BANK_CONFIRM_DATE, F_INNER_BANK_BALANCE, F_OUTER_BANK_BALANCE, D_CREATE_DATE 
+	from source_jsck where C_OUT_TYPE = '1'"
+);
+$sth->execute();
+my $row;
 ########mkdir begin#########
-while ( my $row = $sth->fetchrow_arrayref ) {
+while ( $row = $sth->fetchrow_arrayref ) {
     my $filepath = join( "", split( "-", ( substr $row->[6], 0, 10 ) ) );
+    my $filename = "0007.src";
+#    Data::Dump->dump($filename);
 
-    #print "$filepath\n";
     if ( -d $filepath ) {
         chdir($filepath);
-        $fh = IO::File->new( ">>$filepath" . "_jsck.dat" );
-
+        if ( -e $filename ) {
+            $fh = IO::File->new(">>$filename");
+            $fh->print( join '|', @{$row}, "\n" );
+        }
+        else {
+            $fh = IO::File->new(">$filename");
+            #打印字段的表头
+            $fh->print(<<EOF);
+@dim
+EOF
+            $fh->print( join '|', @{$row}, "\n" );
+        }
         chdir("..");
     }
     else {
         mkdir "$filepath";
         chdir($filepath);
-        $fh = IO::File->new( ">>$filepath" . "_jsck.dat" );
+
+        if ( -e $filename ) {
+        	$fh = IO::File->new(">>$filename" );
+            $fh->print( join '|', @{$row}, "\n" );
+        }
+        else {
+            $fh = IO::File->new(">$filename");
+            #打印字段的表头
+            $fh->print(<<EOF);
+@dim
+EOF
+            $fh->print( join '|', @{$row}, "\n" );
+        }
         chdir("..");
     }
 }
-########mkdir end#########
-    #打印字段的表头
-    $fh->print(<<EOF);
-@dim
-EOF
 
-$sth->execute;
-while ( my $row = $sth->fetchrow_arrayref ) {
-	####array slice
-	$fh->print (join '|',@{$row},"\n") ;
+#$sth->execute();
+#while ( $row = $sth->fetchrow_arrayref ) {
+#    ####array slice
+#    $fh->print( join '|', @{$row}, "\n" );
 
-}
+#}
 ##释放$sth占用的资源
 $sth->finish();
 
 ##	生成结算委托的数据
 my $fh1;
-$sth   = $dbh->prepare("select * from source_jsck where c_out_type = '2' ");
+$sth = $dbh->prepare(
+"select C_MERCHANT_NO, C_OUT_SERIALNO, C_OUT_TYPE, F_OUT_BALANCE, F_INCOME_BALANCE, 
+	C_BANK_NO, D_BANK_CONFIRM_DATE, F_INNER_BANK_BALANCE, F_OUTER_BANK_BALANCE, D_CREATE_DATE 
+	from source_jsck where C_OUT_TYPE = '2' "
+);
+
 #$nhash = $sth->{NAME_hash};
-$sth->execute;
+$sth->execute();
 
 ######################mkdir###############################
-while ( my $row = $sth->fetchrow_arrayref ) {
+while ( $row = $sth->fetchrow_arrayref ) {
     my $filepath = join( "", split( "-", ( substr $row->[6], 0, 10 ) ) );
+    my $filename = "0009.src";
 
     #print "$filepath\n";
     if ( -d $filepath ) {
         chdir($filepath);
-        $fh1 = IO::File->new( ">>$filepath" . "_xswt.dat" );
+	
+        if ( -e $filename ) {
+        	$fh1 = IO::File->new( ">>$filename" );
+            $fh1->print( join '|', @{$row}, "\n" );
+        }
+        else {
+        	$fh1 = IO::File->new( ">$filename" );
+            $fh1->print(<<EOF);
+@dim
+EOF
+            $fh1->print( join '|', @{$row}, "\n" );
 
+        }
         chdir("..");
     }
     else {
         mkdir "$filepath";
         chdir($filepath);
-        $fh1 = IO::File->new( ">>$filepath" . "_xswt.dat" );
+
+        if ( -e $filename ) {
+        	$fh1 = IO::File->new( ">>$filename" );
+            $fh1->print( join '|', @{$row}, "\n" );
+        }
+        else {
+        	$fh1 = IO::File->new( ">$filename" );
+            $fh1->print(<<EOF);
+@dim
+EOF
+            $fh1->print( join '|', @{$row}, "\n" );
+        }
         chdir("..");
     }
 }
 #######################mkdir_end###########################
-$fh1->print(<<EOF);
-@dim
-EOF
-
-$sth->execute;
-while ( my $row = $sth->fetchrow_hashref() ) {
-    my @fld_name =
-      qw/C_MERCHANT_NO C_OUT_SERIALNO C_OUT_TYPE F_OUT_BALANCE F_INCOME_BALANCE C_BANK_NO D_BANK_CONFIRM_DATE F_INNER_BANK_BALANCE F_OUTER_BANK_BALANCE D_CREATE_DATE/;
-    $fh1->print( join '|', @{$row}{@fld_name}, "\n" );
-}
+#$sth->execute();
+#while ( my $row = $sth->fetchrow_hashref() ) {
+#    my @fld_name =
+#      qw/C_MERCHANT_NO C_OUT_SERIALNO C_OUT_TYPE F_OUT_BALANCE F_INCOME_BALANCE C_BANK_NO D_BANK_CONFIRM_DATE F_INNER_BANK_BALANCE F_OUTER_BANK_BALANCE D_CREATE_DATE/;
+#    $fh1->print( join '|', @{$row}{@fld_name}, "\n" );
+#}
 
 ##释放$sth占用的资源
 $sth->finish();
