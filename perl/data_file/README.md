@@ -6,3 +6,6 @@ data_file
 
 已解决上述BUG
 把库表数据生成竖线分割的文件
+perl copy.t 生成的数据带有表头
+perl fucn.pl 生成的数据没有表头
+
