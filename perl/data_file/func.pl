@@ -39,7 +39,7 @@ $sth->execute();
 my $row;
 ########mkdir begin#########
 while ( $row = $sth->fetchrow_arrayref ) {
-    my $filepath = join( "", split( "-", ( substr $row->[6], 0, 10 ) ) );
+    my $filepath = join( "", split( "-", ( substr $row->[9], 0, 10 ) ) );
     my $filename = "0007.src";
 #    Data::Dump->dump($filename);
 
@@ -95,7 +95,7 @@ $sth->execute();
 
 ######################mkdir###############################
 while ( $row = $sth->fetchrow_arrayref ) {
-    my $filepath = join( "", split( "-", ( substr $row->[6], 0, 10 ) ) );
+    my $filepath = join( "", split( "-", ( substr $row->[9], 0, 10 ) ) );
     my $filename = "0009.src";
 
     #print "$filepath\n";
