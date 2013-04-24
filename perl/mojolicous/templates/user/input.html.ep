@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>增加用户</title>
+<link rel="stylesheet" href="../css/ace.css" />
+<link rel="stylesheet" href="../css/skin.css" />
+<script type="text/javascript" src="../js/jquery-1.8.2.min.js"></script>
+<link href="../css/jquery-ui.css" rel="stylesheet" type="text/css" />
+<script src="../js/jquery-ui.min.js"></script>
+<script src="../js/mutipleSelect.js"></script>
+<script language="JavaScript">
+	 
+var flag = false; 
+//表单验证
+function sub() {
+	 //默认全选
+         SelectAll(document.form1.listRight);
+	 
+	 //表单验证
+	 var userName=$("#userName").val();
+	 var pass=$("#passWord").val();
+
+	    var user=userName.replace(/(^\s*)|(\s*$)/g,'');	    
+		if (user == "")  //判断输入框中全是空格时，表单不能提交
+		 {
+		  alert("请输入用户名称!");		  
+		 } else  if(pass ==""){//判断密码不能为空			 
+		  alert("请输入密码!");			  
+		 } else if(!flag){
+		  alert("用户名已经存在，请重新输入");
+		 }else if (pass.length > 0) {
+	          var str = /^[A-Za-z0-9]+$/;
+		        var str1 = /([a-zA-Z][0-9]|[0-9][a-zA-Z])+/;
+		        if (pass.length < 6||pass.length > 10) {
+		            alert("密码长度必须6-10位！");
+		       // }
+            //else if (!str.test(pass))
+		       // {
+		        //    alert("密码只允许输入数字或字母!");
+		        //}else if (!str1.test(pass))
+		        //{
+		        //    alert("密码请输入数字和字母的组合!!");
+		        }else {
+			    document.form1.submit();
+			}			 
+		 }
+		   
+ }
+ 
+ //用户名是否可用验证
+ function userCheck(){
+	 var userName=$("#userName").val();
+	 var user=userName.replace(/(^\s*)|(\s*$)/g,'');	    
+	 if (user != "")  //判断输入框中全是空格时，表单不能提交
+	 {	 
+	 $.ajax({//jquery 的ajax方法的调用
+		type : "get",
+		url:"/user/check.json",
+		dataType: "json",
+		data: jsonData(),
+		success : function(msg) {
+		  var result = msg["result"];
+		  if(result=="0"){
+			   flag=true;
+			   $("#userResult").text(" 恭喜你，该用户名可以用");
+			   $("#userResult").css("color","green");
+		  }else{
+			   flag=false;
+			   $("#userResult").text(" 该用户名已经存在");
+			   $("#userResult").css("color","red");			    
+		  }
+		}	
+	 });
+	 }
+}
+//组用户名json
+function jsonData(){	
+	return {"username" : $("#userName").val()};
+
+}
+
+
+
+</script> 
+</head>
+<body>
+<form name="form1" method = "get" action="/user/add">
+	<div class="right_1">
+		<span>当前位置:新增用户</span>
+	</div>
+	
+	<div class="c_one">
+ 		<table width="98%" id="DateList" border="0" cellspacing="1" cellpadding="0" 
+ 				align="center"  bgcolor="#C8DCF0" class="live_1_table">
+ 			   <tr bgcolor="#B4CFCF" align="center" class="parent" id="row1">
+   				    <td colspan="4" class="ice_one1">-----新增用户----- </td>
+ 			    </tr>
+ 				
+			   <tr >
+				    <td class="ice_one" width="20%">用户名称</td>
+				    <td class="ice_two" width="30%"><input type="text" size="30" id="userName" name="username" onblur="userCheck();"/><font id="userResult"></font></td>
+				    <td class="ice_one" width="20%">初始密码</td>
+				    <td class="ice_two" width="30%"><input type="password" size="30" id="passWord" name="password"/><font id="passResult"></font></td>
+			   </tr>
+			   <tr >
+				    <td class="ice_one" width="20%" height="150px">权限分配</td>
+				    <td class="ice_two" width="30%" height="150px">
+               			     未分配的角色：<br/>
+               			    <select style="width:80%" multiple="true" name="listLeft" size="10" onclick="moveOption(listLeft,listRight)"> 
+					     % for my $role (@{$pd->{roles}}) {
+					     <option name ="list2" value="<%= $role->{role_id}%>"><%= $role->{role_name}%></option>
+					     % }
+ 				    </select> 
+				    </td>
+				    <td class="ice_one" width="20%" height="150px">
+					     <div align="center">						
+					     <input type=button style="width:30px" onclick="MoveAllItems(listLeft,listRight)" value=">>"/><br/><br/>                       
+					     <input type=button style="width:30px" onclick="MoveSelectedItem(listLeft, listRight)"value=">"/><br/><br/> 
+					     <input type=button style="width:30px" onclick="MoveSelectedItem(listRight ,listLeft)"value="<"/><br/><br/> 
+					     <input type=button style="width:30px" onclick="MoveAllItems(listRight,listLeft)"value="<<"/>
+					     </div>
+ 				    </td> 
+				    <td class="ice_two" width="30%" height="150px">
+					      已分配的角色：<br/>
+					     <select style="width:80%" multiple="true" name="listRight" size="10" onclick="moveOption(listRight,listLeft)"></select>
+				    </td>
+			   </tr>
+			   <tr  bgcolor="#ffffff" align="center">
+				    <td colspan="4">
+					     <input  type="button" value="确定" onclick="sub();"/>&nbsp;&nbsp;
+					     <input  type="button"  value="取消" onclick="javascripr:location.href='/user/index'"/>
+				    </td>	  	
+			   </tr>	  
+			
+		  </table>
+	 </div>
+	 <div class="foor">
+		  <div id="div_Pager" class="c_start1" >
+		  <div class="clear"></div>
+	 </div>
+</div>
+</form>      
+</body>
+</html>

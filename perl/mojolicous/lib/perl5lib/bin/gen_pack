@@ -1,0 +1,67 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+use IO::File;
+use Getopt::Long;
+
+my $rtn;
+my $prj_name;
+my $manifest;
+
+$rtn = GetOptions(
+  'prj_name|p=s'  => \$prj_name,
+  'manifest|m=s'  => \$manifest,
+);
+unless($rtn) {
+    warn "usage: gen_pack -p zix -m \$PRJ_HOME/MANIFEST";
+	exit 0;
+}
+
+# 
+# install environment variable
+#
+my $prj_home_name = uc $prj_name . "_HOME";
+eval "use Env qw/$prj_home_name/;";
+if ($@) {
+  warn "load $prj_home_name failed";
+  exit 0;
+}
+my $home;
+{
+  no strict;
+  my $home_env = "${PRJ_NAME_UPPER}_HOME";
+  $cmd = "\$home = \$$home_env";
+  eval "$cmd";
+  die "can got home[$@]" if $@;
+}
+
+my $file = IO::File->new("<$manifest");
+unless($file) {
+  warn "can not open $home/sbin/MANIFEST";
+  exit 0;
+}
+
+my @files;
+while(<$file>) {
+  s/#.*//;
+  s/^\s+//g;
+  s/\s+$//g;
+  next if /^#/;
+  next if /^$/;
+  push @files, $_; 
+}
+
+my $date = `date +%Y-%m-%d_%H:%M:%S`;  
+chomp $date;
+chdir $home;
+
+my $tar_file = "$prj_name-" . $date . ".tar";
+my $cmd =<<EOF;
+tar -cvf $tar_file @files;
+mkdir -p build;
+mv $tar_file build
+EOF
+system($cmd);
+
+
+

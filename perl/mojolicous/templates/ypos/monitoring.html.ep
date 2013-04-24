@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>交易监控</title>
+<link rel="stylesheet" href="../css/ace.css" />
+<link rel="stylesheet" href="../css/skin.css" />
+<script type="text/javascript" src="../js/jquery-1.8.2.min.js"></script>
+<link href="../css/jquery-ui.css" rel="stylesheet" type="text/css" />
+<script src="../js/jquery-ui.min.js"></script>
+<script src="ajaxfileupload.js"></script>
+<script>
+<!--
+var limit="0:3"
+if (document.images){
+var parselimit=limit.split(":")
+parselimit=parselimit[0]*60+parselimit[1]*1
+}
+function beginrefresh(){
+if (!document.images)
+return
+if (parselimit==1)
+window.location.reload()
+else{
+parselimit-=1
+curmin=Math.floor(parselimit/60)
+cursec=parselimit%60
+if (curmin!=0)
+curtime=curmin+"分"+cursec+"秒后重刷本页！"
+else
+curtime=cursec+"秒后重刷本页！"
+window.status=curtime
+setTimeout("beginrefresh()",1000)
+}
+}
+window.onload=beginrefresh
+//-->
+</script>
+</head>
+<body>
+<form name="form1">
+	<div class="right_1">
+		<span>当前位置:交易监控</span>
+	</div>
+	<div class="c_one"> 		
+        <table id="datas" width="98%" id="applyterminal" border="0" cellspacing="1" cellpadding="0" align="center"  bgcolor="#C8DCF0" class="live_1_table">
+                        <tr bgcolor="#ffffff"   align="center" class="live_1_table_tr">
+				<td width="12%">ID</td>
+				<td width="11%" >步骤</td>
+ 				<td width="11%" >金额</td>
+  				<td width="11%">渠道交易类型</td>
+				<td width="11%">渠道交易名称</td>
+				<td width="11%">渠道返回码</td>
+				<td width="11%">机构1交易类型</td>
+				<td width="11%">机构1交易名称</td>
+				<td width="11%">机构1返回码</td>
+			</tr>
+                        % for my $row (@{$pd->{data}}) {
+			<tr  bgcolor="#ffffff" onmouseout="this.bgColor='#ffffff'" onmouseover="this.bgColor='#e3f1f1'"  align="center">
+				<td ><%= $row->{id}%></td>
+				<td ><%= $row->{step}%></td>	
+  				<td ><%= $row->{c_amt}%></td>
+  				<td ><%= $row->{i_tcode}%></td>
+				<td ><%= $row->{i_name}%></td>
+				<td ><%= $row->{i_resp}%></td>
+				<td ><%= $row->{tcode_1}%></td>
+				<td ><%= $row->{name_1}%></td>
+				<td ><%= $row->{resp_1}%></td>			
+			</tr>
+                        % }
+		</table>
+	</div>
+
+	<table id="datas" width="98%" id="applyterminal" border="0" cellspacing="1" cellpadding="0" align="center"  bgcolor="#C8DCF0" class="live_1_table">
+                        <tr bgcolor="#ffffff"   align="left" class="live_1_table_tr">
+				<td colspan='2' width="100%">统计信息</td>
+			</tr>
+			<tr bgcolor="#ffffff"   align="left">
+				<td width="20%"  class="live_1_table_tr">总计：</td>
+				<td width="80%"><%= $pd->{total} %></td>
+			</tr>
+			<tr bgcolor="#ffffff"   align="left">
+				<td width="20%" class="live_1_table_tr">完成：</td>
+				<td width="80%"><%= $pd->{fin} %></td>
+			</tr>
+			<tr bgcolor="#ffffff"   align="left">
+				<td width="20%" class="live_1_table_tr">未完成：</td>
+				<td width="80%"><%= $pd->{unfin} %></td>
+			</tr>
+			<tr bgcolor="#ffffff"   align="left">
+				<td width="20%" class="live_1_table_tr">异常：</td>
+				<td width="80%"><%= $pd->{unusual} %></td>
+			</tr>
+                        
+		</table>
+	</div>
+	<div class="foor">
+		<div id="div_Pager" class="c_start1" >
+		<div class="clear"></div>
+	</div>
+	</div>
+</form>      
+</body>
+</html>

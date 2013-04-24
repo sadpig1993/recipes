@@ -1,0 +1,73 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+
+use POE;
+use Util::Run;
+use Util::IPC::MB;
+use Util::IPC::MB::GC;
+use Env qw/MB_HOME/;
+use Getopt::Long;
+use Util::IniParse qw/ini_parse/;
+use POSIX qw/pause/;
+
+#######################################################
+# 参数解析  
+#######################################################
+my $conf;
+my $rtn = GetOptions(
+   "conf|c=s"  => $conf, 
+);
+unless($rtn) {
+  exit 0;
+}
+
+unless(defined $conf) {
+  die "usage: mbinit -c /path/of/mb.conf";
+}
+
+unless(-f $conf) {
+  die "file $conf does not exists";
+}
+
+my $config = ini_parse($conf);
+unless($config) {
+  cluck "can not ini_parse($conf)";
+  exit 0;
+}
+
+#######################################################
+# Util::Run 运行  
+#######################################################
+my $kernel = Util::Run->launch(
+  mode     => 'process_tree',
+  pidfile  => "$MB_HOME/log/mbinit.pid",
+  logurl   => "file://$MB_HOME/log/mbinit.log",
+  loglevel => 'DEBUG',
+  name     => 'Zmbinit',
+  channel  => [],
+  context  => {},
+);
+
+$kernel->run(
+   main    => sub { while(1) { pause();} },
+   args    => [],
+   modules => {
+     Zmbox => {
+       code  => \&mbox,
+       para  => {},
+       reap  => 1,
+       size  => 1,
+     },
+   }
+);
+
+#######################################################
+# Util::Run的run例程    
+#######################################################
+sub mbox {
+  Util::IPC::MB::GC->spawn(
+  );
+  $poe_kernel->run();
+}
+

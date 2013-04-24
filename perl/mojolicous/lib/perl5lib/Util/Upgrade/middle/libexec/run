@@ -1,0 +1,81 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use Util::Run;
+use Env qw/$APP_HOME/;
+use Util::Upgrade::Client;
+use POE;
+use POSIX qw/pause/;
+
+my $kernel = Util::Run->launch(
+  mode      => "process_tree",
+  pidfile   => "$APP_HOME/log/umid.pid",         # logger, loggerd need pidfile
+  logname   => "logd",
+  logurl    => "file://$APP_HOME/log/Zumid.log",  #
+  loglevel  => 'DEBUG',
+  name      => 'Zucli',
+);
+
+Data::Dump->dump($kernel);
+
+my %modules = (
+  Zmiddle  => {
+    code => \&middle,
+    para => {},
+    size => 1,
+    reap => 1,
+  },
+
+  Zworker => {
+    code => \&worker,
+    para => {},
+    size => 2,
+    reap => 1,
+  }
+);
+
+$kernel->run(
+  module  => \%modules,
+  main    => sub { while(1) { pause(); } },
+  args    => [],  
+);
+
+sub middle {
+
+  unless( Util::Upgrade::Client->spawn(
+    remoteaddr     => '192.168.1.29',
+    remoteport     => 5454,
+    chk_interval   => 10,
+    app_home       => "$PERL5LIB/Util/Upgrade/client",
+    upgrade_home   => "$PERL5LIB/Util/Upgrade/client/version",
+  )) {
+    exit 0;
+  }
+
+  unless( Util::Upgrade::Server->spawn(
+    localaddr      => '192.168.1.29',
+    localport      => 5454,
+    vscan_interval => 10,
+    app_home       => "/data1/hary/lib/Util/Upgrade/server",
+    upgrade_home   => "/data1/hary/lib/Util/Upgrade/server/version",
+  )) {
+    exit 0;
+  }
+
+  $poe_kernel->run();
+
+}
+
+sub worker {
+  my $logger = $run_kernel->{logger}->clone("$0.log");
+  my $i = 0;
+  while(1) {
+    $logger->debug("I am busy $i");
+    $i++;
+    sleep 2;
+  }
+}
+
+
+

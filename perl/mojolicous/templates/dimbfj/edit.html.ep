@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>修改备付金账户</title>
+<link rel="stylesheet" href="../css/ace.css" />
+<link rel="stylesheet" href="../css/skin.css" />
+<script type="text/javascript" src="../js/jquery-1.8.2.min.js"></script>
+<link href="../css/jquery-ui.css" rel="stylesheet" type="text/css" />
+<script src="../js/jquery-ui.min.js"></script>
+<script src="../js/mutipleSelect.js"></script>
+<script language="JavaScript"> 
+//表单验证
+function sub() {
+   document.form1.submit();						 
+}
+
+</script> 
+</head>
+
+<body>
+<form name="form1" method = "get" action="/dimbfj/submit">
+	<div class="right_1">
+		<span>当前位置:修改备付金账户</span>
+	</div>
+	
+	<div class="c_one">
+ 		<table width="98%" id="DateList" border="0" cellspacing="1" cellpadding="0" 
+ 				align="center"  bgcolor="#C8DCF0" class="live_1_table">
+ 		  <tr bgcolor="#B4CFCF" align="center" class="parent" id="row1">
+   			   <td colspan="4" class="ice_one1">-----修改备付金账户----- </td>
+ 		  </tr>
+          <tr>
+			   <td class="ice_one" width="20%">备付金账户编号</td>
+			   <td class="ice_two" width="30%"><input type="text" size="30" id="id" name="id" readOnly value="<%= $pd->{dimbfj_data}->{id}%>"/><font color="#FF0000"></font></td>
+		  </tr>
+		  <tr>
+			   <td class="ice_one" width="20%">备付金账户</td>
+			   <td class="ice_two" width="30%"><input type="text" size="30" id="b_acct" name="b_acct" value="<%= $pd->{dimbfj_data}->{b_acct}%>"/><font color="#FF0000"></font></td>
+          </tr>
+		  <tr>
+			   <td class="ice_one" width="20%">账户名称</td>
+			   <td class="ice_two" width="30%"><input type="text" size="30" id="acct_name" name="acct_name" value="<%= $pd->{dimbfj_data}->{acct_name}%>"/><font color="#FF0000"></font></td>
+          </tr>
+		  <tr>
+			   <td class="ice_one" width="20%">开户行名称</td>
+			   <td class="ice_two" width="30%"><input type="text" size="30" id="b_name" name="b_name" value="<%= $pd->{dimbfj_data}->{b_name}%>"/><font color="#FF0000"></font></td>
+          </tr>
+          <tr >
+			   <td class="ice_one" width="20%" >备注</td>
+			   <td class="ice_two" width="30%" ><input type="text" size="30" id="memo" name="memo" value="<%= $pd->{dimbfj_data}->{memo}%>"/></td>
+		  </tr>
+		  <tr  bgcolor="#ffffff" align="center">
+			   <td colspan="4">
+				    <input  type="button" value="确定" onclick="sub();"/>&nbsp;&nbsp;
+				    <input  type="button" value="取消" onclick="javascript:location.href='/dimbfj/index'"/>
+			   </td>	  	
+		  </tr>	  
+			
+</table>
+</div>
+<div class="foor">
+  <div id="div_Pager" class="c_start1" >
+    <div class="clear"></div>
+</form>      
+</body>
+</html>

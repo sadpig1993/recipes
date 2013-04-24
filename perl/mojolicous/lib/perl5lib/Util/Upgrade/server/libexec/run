@@ -1,0 +1,68 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use Util::Run;
+use Env qw/$APP_HOME $PERL5LIB/;
+use Util::Upgrade::Server;
+use POE;
+use POSIX qw/pause/;
+
+my $kernel = Util::Run->launch(
+  mode      => "process_tree",
+  pidfile   => "$APP_HOME/log/usvr.pid",         # logger, loggerd need pidfile
+  logname   => "logd",
+  logurl    => "file://$APP_HOME/log/usvr.log",  #
+  loglevel  => 'DEBUG',
+  name      => 'Zusvr',
+);
+
+Data::Dump->dump($kernel);
+
+my %modules = (
+  Zupgrade  => {
+    code => \&upgrade,
+    para => {},
+    size => 1,
+    reap => 1,
+  },
+
+  Zworker => {
+    code => \&worker,
+    para => {},
+    size => 2,
+    reap => 1,
+  }
+);
+
+$kernel->run(
+  module  => \%modules,
+  main    => sub { while(1) { pause(); } },
+  args    => [],  
+);
+
+sub upgrade {
+  unless( Util::Upgrade::Server->spawn(
+    localaddr      => '127.0.0.1',
+    localport      => 5454,
+    vscan_interval => 10,
+    app_home       => "$PERL5LIB/Util/Upgrade/server",
+    upgrade_home   => "$PERL5LIB/Util/Upgrade/server/version",
+  )) {
+    exit 0;
+  }
+  $poe_kernel->run();
+}
+
+sub worker {
+  my $logger = $run_kernel->{logger}->clone("$0.log");
+  my $i = 0;
+  while(1) {
+    $logger->debug("I am busy $i");
+    $i++;
+    sleep 2;
+  }
+}
+
+
+

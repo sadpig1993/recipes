@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>增加核算项</title>
+<link rel="stylesheet" href="../css/ace.css" />
+<link rel="stylesheet" href="../css/skin.css" />
+<script type="text/javascript" src="../js/jquery-1.8.2.min.js"></script>
+<link href="../css/jquery-ui.css" rel="stylesheet" type="text/css" />
+<script src="../js/jquery-ui.min.js"></script>
+<script src="../js/checkboxtree.js"></script>
+<script >
+var flag = false; 
+//表单验证
+function sub() {
+         
+         //表单验证
+         var dim=$("#dim").val();
+
+            var bip=dim.replace(/(^\s*)|(\s*$)/g,'');         
+                if (dim == "")  //判断输入框中全是空格时，表单不能提交
+                 {
+                  alert("请输入核算项!");               
+                 } 
+                  
+                 else if(!flag){
+                  alert("核算项已经存在，请重新输入");
+                 }
+                 else {
+                            document.form1.submit();
+                                         
+                 }
+                   
+ }
+
+//用户名是否可用验证
+ function dimCheck(){
+         var dim=$("#dim").val();
+         var bip=dim.replace(/(^\s*)|(\s*$)/g,'');            
+         if (bip != "")  //判断输入框中全是空格时，表单不能提交
+         {       
+         $.ajax({//jquery 的ajax方法的调用
+                type : "get",
+                url:"/dictdim/check.json",
+                dataType: "json",
+                data: jsonData(),
+                success : function(msg) {
+                  var result = msg["result"];
+                  if(result=="0"){
+                           flag=true;
+                           $("#dimResult").text(" 恭喜你，该核算项可以用");
+                           $("#dimResult").css("color","green");
+                  }else{
+                           flag=false;
+                           $("#dimResult").text(" 该核算项已经存在");
+                           $("#dimResult").css("color","red");      
+                }
+                }       
+         });
+         }
+}
+//组dim json
+function jsonData(){    
+        return {"dim" : $("#dim").val()};
+
+}
+
+
+</script>
+</head>
+
+<body >
+<form name="form1" method="get" action="/dictdim/add">
+	<div class="right_1">
+		<span>当前位置:新增核算项</span>
+	</div>
+	<div class="c_one">
+ 		<table width="98%" id="DateList" border="0" cellspacing="1" cellpadding="0" 
+ 				align="center"  bgcolor="#C8DCF0" class="live_1_table">
+ 				<tr bgcolor="#B4CFCF" align="center" class="parent" id="row1">
+   					 <td colspan="4" class="ice_one1">-----新增核算项----- </td>
+ 
+			    </tr>
+    <tr bgcolor="#B4CFCF" align="center" >
+                        <td class="ice_one" width="20%">核算项</td>
+                    <td class="ice_two" width="80%"><input type="text" size="30" id="dim" name="dim"  onblur="dimCheck();" /><font id = "dimResult"></font></td>
+                 </tr>
+
+                 <tr bgcolor="#B4CFCF" align="center">
+                        <td class="ice_one" width="20%">核算项中文名</td>
+                    <td class="ice_two" width="80%"><input type="text" size="30" id="name" name="name"  /></td>
+                 </tr>
+
+                 <tr bgcolor="#B4CFCF" align="center">
+                        <td class="ice_one" width="20%">核算项描述</td>
+                    <td class="ice_two" width="80%"><input type="text" size="30" id="memo" name="memo"  /></td>
+                 </tr>
+                 <tr bgcolor="#ffffff"  align="center">
+			<td colspan="6">
+			<input  type="button" value="确定" onclick="sub();"/>&nbsp;&nbsp;
+			<input  type="button" value="取消" onclick="javascripr:location.href='/dictdim/index'"/>
+			</td>	  	
+		</tr>	  
+    					
+</table>
+</div>
+<div class="foor">
+  <div id="div_Pager" class="c_start1" >
+    <div class="clear"></div>
+  </div>
+</div>
+</form>      
+</body>
+</html>

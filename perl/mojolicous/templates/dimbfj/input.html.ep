@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>增加产品类型</title>
+<link rel="stylesheet" href="../css/ace.css" />
+<link rel="stylesheet" href="../css/skin.css" />
+<script type="text/javascript" src="../js/jquery-1.8.2.min.js"></script>
+<link href="../css/jquery-ui.css" rel="stylesheet" type="text/css" />
+<script src="../js/jquery-ui.min.js"></script>
+<script src="../js/WdatePicker.js"></script>
+<script language="JavaScript">
+
+var flag = false ;
+
+//表单提交验证
+function sub() {
+	//备付金账户编号
+	var idvalue = $("#id").val();
+	var id = idvalue.replace(/(^\s*|\s*$)/g,'');
+	//备付金账户
+	var acctvalue = $("#acct").val();
+	var acct = acctvalue.replace(/(^\s*|\s*$)/g,'');
+	//备付金账户名称
+	var acctname = $("#acctname").val();
+	var acct_name = acctname.replace(/(^\s*|\s*$)/g,'');
+	//开户行名称
+	var bname = $("#bname").val();
+	var b_name = bname.replace(/(^\s*|\s*$)/g,'');
+
+	if ( id == "" ) {
+		alert("备付金账户编号不能为空");
+	}
+	else if ( !flag ) {
+		alert("备付金账户编号以存在，请重新输入");
+	}
+	else if ( acct == "" ) {
+		alert("备付金账户不能为空");
+	}
+	else if ( acct_name == "" ) {
+		alert("备付金账户名称不能为空");
+	}
+	else if ( b_name == "" ) {
+		alert("开户行名称不能为空");
+	}
+	else {
+		document.form1.submit();	
+	}
+
+}
+
+function checkid() {
+    //var code = document.getElementById("id");
+	var codevalue = $("#id").val();
+	var code = codevalue.replace(/(^\s*)|(\s*$)/g,''); 
+    if ( code == "" ) {
+        alert("备付金账户编号不能为空！");
+        //code.focus();     
+        return false;
+    }
+	else {
+	    $.ajax({//jquery 的ajax方法的调用
+        type : "get",
+        url:"/dimbfj/check.json",
+        dataType: "json",
+        data: jsonData(),
+        success : function(msg) {
+          var result = msg["result"];
+          if(result=="0"){
+				flag = true ;
+               $("#idResult").text(" 恭喜你，该备付金账户编号可以用");
+               $("#idResult").css("color","green");
+          }else{
+				flag = false ;
+               $("#idResult").text(" 该备付金账户编号已存在");
+               $("#idResult").css("color","red");             
+          }
+        }
+     });
+
+	}
+    //return true;
+}
+
+//组备付金编号
+function jsonData(){    
+    return {"id" : $("#id").val()};
+
+}
+
+</script>
+</head>
+<body>
+<form name="form1" method = "get" action="/dimbfj/add">
+	<div class="right_1">
+		<span>当前位置:新增备付金账户</span>
+	</div>
+	
+	<div class="c_one">
+ 		<table width="98%" id="DateList" border="0" cellspacing="1" cellpadding="0" 
+ 				align="center"  bgcolor="#C8DCF0" class="live_1_table">
+ 			   <tr bgcolor="#B4CFCF" align="center" class="parent" id="row1">
+   				    <td colspan="4" class="ice_one1">-----新增备付金账户----- </td>
+ 			    </tr>
+			   <tr >
+				    <td class="ice_one" width="20%">备付金账户编号</td>
+					<td class="ice_two" width="80%"><input type="text" name="id" id="id" value="" onblur="checkid();" /><font color="#FF0000" id="idResult"></font></td>
+			   </tr>
+			   <tr>
+				    <td class="ice_one" width="20%">备付金账户</td>
+					<td class="ice_two" width="80%"><input type="text" name="b_acct" id="acct" value="" onblur="checkacct();" /></td>
+			  	</tr>
+			   <tr>
+				    <td class="ice_one" width="20%">备付金账户名称</td>
+					<td class="ice_two" width="80%"><input type="text" name="acct_name" id="acctname" value="" onblur="checkacctname();" /></td>
+				</tr>
+			   <tr>
+				    <td class="ice_one" width="20%">备付金账户开户行名称</td>
+					<td class="ice_two" width="80%"><input type="text" name="b_name" id="bname" value="" onblur="checkbname();" /></td>
+				</tr>
+				<tr>
+				    <td class="ice_one" width="20%">备注</td>
+					<td class="ice_two" width="80%"><input type="text" name="memo" value="" /></td>
+			   </tr>
+			   <tr  bgcolor="#ffffff" align="center">
+				    <td colspan="4">
+					     <input  type="button" value="确定" onclick="sub();"/>&nbsp;&nbsp;
+					     <input  type="button"  value="取消" onclick="javascript:location.href='/dimbfj/index'"/>
+				    </td>	  	
+			   </tr>	  
+			
+		  </table>
+	 </div>
+	 <div class="foor">
+		  <div id="div_Pager" class="c_start1" >
+		  <div class="clear"></div>
+	 </div>
+</div>
+</form>      
+</body>
+</html>

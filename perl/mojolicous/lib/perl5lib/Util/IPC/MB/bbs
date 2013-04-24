@@ -1,0 +1,92 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use Util::IPC::MB::BBS;
+use Text::SimpleTable;
+use IPC::SysV qw/S_IRUSR/;
+use IPC::Msg;
+use Getopt::Long;
+
+my $bbs = Util::IPC::MB::BBS->new();
+my $summary = $bbs->summary();
+#Data::Dump->dump($summary);
+#exit 0;
+
+&report();
+print "\n";
+&detail();
+exit 0;
+
+###########################################################
+# 简单报告 
+###########################################################
+sub report {
+  my $t1 = Text::SimpleTable->new(
+    [9, 'attribute'],
+    [9, 'value'],
+  );
+  $t1->row('skey',  $summary->{skey}   );
+  $t1->row('qkey',  $summary->{qkey}   );
+  $t1->row('mbmax', $summary->{mbmax}  );
+  $t1->row('expire',$summary->{expire} );
+  $t1->row('slab',  $summary->{slab}   );
+  $t1->row('bsize', $summary->{bsize}  );
+  $t1->row('used',  $summary->{used}   ); 
+  $t1->row('last',  $summary->{last}   );
+  print $t1->draw;
+}
+
+###########################################################
+# 详细信息  
+###########################################################
+sub detail {
+  my $t2 = Text::SimpleTable->new(
+    [5,  'id'     ],
+    [11, 'mbox'   ],
+    [14, 'qid'    ],
+    [5,  'tmout'  ],
+    [9,  'qnum'   ],
+    [19, 'stime'  ],
+    [19, 'rtime'  ],
+  );
+  my $entry = $summary->{entry};
+  for ( my $i = 0; $i < @$entry; ++$i) {
+    next unless $entry->[$i]->{flag};
+
+    my $id      = $i;
+    my $qid     = $entry->[$i]->{qid};
+    my $timeout = $entry->[$i]->{timeout};
+    my $name    = $entry->[$i]->{name};
+    if ($qid >= 0 ) {
+      my $mq   = IPC::Msg->new( $summary->{qkey} + $i + 1, S_IRUSR);
+      my $ds    = $mq->stat;
+      unless($ds) {
+        return undef;
+      }
+      my $qnum  = $ds->[5];
+      my $stime = time_format($ds->[9]);
+      my $rtime = time_format($ds->[10]);
+      $t2->row($id, $name, $qid, $timeout, $qnum, $stime, $rtime);
+    }
+    else {
+      $t2->row($id, $name, $qid, $timeout, -1, -1, -1);
+    }
+  } 
+  print $t2->draw;
+}
+
+
+###########################################################
+# 时间转换 
+###########################################################
+sub time_format {
+  my ($y, $m, $d, $H, $M, $S) = (localtime(shift))[5,4,3,2,1,0];
+  $y += 1900;
+  $m += 1;
+  return sprintf("%04d-%02d-%02d %02d:%02d:%02d", $y, $m, $d, $H, $M, $S);
+}
+
+
+
+

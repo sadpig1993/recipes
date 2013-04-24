@@ -1,0 +1,84 @@
+03:48:00 20120226 <ib/Util/Run.pm>:0189 INFO--> [     Zucli]: begin start all...
+03:48:00 20120226 <ib/Util/Run.pm>:0876 DEBUG-> [     Zucli]: batch_child args:
+ (
+  "Data::Dump",
+  { code => sub { "???" }, name => "Zworker", para => {}, reap => 1, size => 2 },
+)
+03:48:00 20120226 <ib/Util/Run.pm>:0881 INFO--> [     Zucli]: batch_child[Zworker] size[2] reap[1]
+03:48:00 20120226 <ib/Util/Run.pm>:0832 DEBUG-> [     Zucli]: new child with args:
+ (
+  "Data::Dump",
+  { code => sub { "???" }, name => "Zupgrade", para => {}, reap => 1, size => 1 },
+)
+03:48:00 20120226 <ib/Util/Run.pm>:0189 INFO--> [     Zucli]: begin start all...
+03:48:00 20120226 <ib/Util/Run.pm>:0876 DEBUG-> [     Zucli]: batch_child args:
+ (
+  "Data::Dump",
+  { code => sub { "???" }, name => "Zworker", para => {}, reap => 1, size => 2 },
+)
+03:48:00 20120226 <ib/Util/Run.pm>:0881 INFO--> [     Zucli]: batch_child[Zworker] size[2] reap[1]
+03:48:00 20120226 <ib/Util/Run.pm>:0832 DEBUG-> [     Zucli]: new child with args:
+ (
+  "Data::Dump",
+  { code => sub { "???" }, name => "Zupgrade", para => {}, reap => 1, size => 1 },
+)
+03:48:00 20120226 <ib/Util/Run.pm>:0189 INFO--> [     Zucli]: begin start all...
+03:48:00 20120226 <ib/Util/Run.pm>:0876 DEBUG-> [     Zucli]: batch_child args:
+ (
+  "Data::Dump",
+  { code => sub { "???" }, name => "Zworker", para => {}, reap => 1, size => 2 },
+)
+03:48:00 20120226 <ib/Util/Run.pm>:0881 INFO--> [     Zucli]: batch_child[Zworker] size[2] reap[1]
+03:48:00 20120226 <ib/Util/Run.pm>:0832 DEBUG-> [     Zucli]: new child with args:
+ (
+  "Data::Dump",
+  { code => sub { "???" }, name => "Zupgrade", para => {}, reap => 1, size => 1 },
+)
+03:48:00 20120226 <ib/Util/Run.pm>:0189 INFO--> [     Zucli]: begin start all...
+03:48:00 20120226 <ib/Util/Run.pm>:0876 DEBUG-> [     Zucli]: batch_child args:
+ (
+  "Data::Dump",
+  { code => sub { "???" }, name => "Zworker", para => {}, reap => 1, size => 2 },
+)
+03:48:00 20120226 <ib/Util/Run.pm>:0881 INFO--> [     Zucli]: batch_child[Zworker] size[2] reap[1]
+03:48:00 20120226 <ib/Util/Run.pm>:0832 DEBUG-> [     Zucli]: new child with args:
+ (
+  "Data::Dump",
+  { code => sub { "???" }, name => "Zupgrade", para => {}, reap => 1, size => 1 },
+)
+03:48:00 20120226 <ib/Util/Run.pm>:0189 INFO--> [     Zucli]: begin start all...
+03:48:00 20120226 <ib/Util/Run.pm>:0876 DEBUG-> [     Zucli]: batch_child args:
+ (
+  "Data::Dump",
+  { code => sub { "???" }, name => "Zworker", para => {}, reap => 1, size => 2 },
+)
+03:48:00 20120226 <ib/Util/Run.pm>:0881 INFO--> [     Zucli]: batch_child[Zworker] size[2] reap[1]
+03:48:00 20120226 <ib/Util/Run.pm>:0832 DEBUG-> [     Zucli]: new child with args:
+ (
+  "Data::Dump",
+  { code => sub { "???" }, name => "Zupgrade", para => {}, reap => 1, size => 1 },
+)
+03:48:00 20120226 <ib/Util/Run.pm>:0189 INFO--> [     Zucli]: begin start all...
+03:48:00 20120226 <ib/Util/Run.pm>:0876 DEBUG-> [     Zucli]: batch_child args:
+ (
+  "Data::Dump",
+  { code => sub { "???" }, name => "Zworker", para => {}, reap => 1, size => 2 },
+)
+03:48:00 20120226 <ib/Util/Run.pm>:0881 INFO--> [     Zucli]: batch_child[Zworker] size[2] reap[1]
+03:48:00 20120226 <ib/Util/Run.pm>:0832 DEBUG-> [     Zucli]: new child with args:
+ (
+  "Data::Dump",
+  { code => sub { "???" }, name => "Zupgrade", para => {}, reap => 1, size => 1 },
+)
+03:48:01 20120226 <ib/Util/Run.pm>:0189 INFO--> [     Zucli]: begin start all...
+03:48:01 20120226 <ib/Util/Run.pm>:0876 DEBUG-> [     Zucli]: batch_child args:
+ (
+  "Data::Dump",
+  { code => sub { "???" }, name => "Zworker", para => {}, reap => 1, size => 2 },
+)
+03:48:01 20120226 <ib/Util/Run.pm>:0881 INFO--> [     Zucli]: batch_child[Zworker] size[2] reap[1]
+03:48:01 20120226 <ib/Util/Run.pm>:0832 DEBUG-> [     Zucli]: new child with args:
+ (
+  "Data::Dump",
+  { code => sub { "???" }, name => "Zupgrade", para => {}, reap => 1, size => 1 },
+)

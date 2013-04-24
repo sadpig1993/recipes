@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>修改用户</title>
+<link rel="stylesheet" href="../css/ace.css" />
+<link rel="stylesheet" href="../css/skin.css" />
+<script type="text/javascript" src="../js/jquery-1.8.2.min.js"></script>
+<link href="../css/jquery-ui.css" rel="stylesheet" type="text/css" />
+<script src="../js/jquery-ui.min.js"></script>
+<script src="../js/mutipleSelect.js"></script>
+<script language="JavaScript"> 
+//表单验证
+function sub() {
+	  //默认全选
+         SelectAll(document.form1.listRight);
+	 //表单验证
+	 var userName=$("#userName").val();
+	 var pass=$("#passWord").val();
+	 var user=userName.replace(/(^\s*)|(\s*$)/g,'');	    
+		  if (user == ""||null==user)  //判断输入框中全是空格时，表单不能提交
+		  {
+			   alert("请输入用户名称!");		  
+		  } else {
+			   document.form1.submit();						 
+		  } 	 
+ }
+ 
+ //用户名是否可用验证
+ function userCheck(){	
+	$.ajax({//jquery 的ajax方法的调用
+		type : "get",
+		url:"/user/check.json",
+		dataType: "json",
+		data: jsonData(),
+		success : function(msg) {
+		  var result = msg["result"];
+		  if(result=="0"){
+			   $("#userResult").text(" 恭喜你，该用户名可以用");
+			   $("#userResult").css("color","green");
+		  }
+		  else{
+			    $("#userResult").text(" 该用户名已经存在");
+			    $("#userResult").css("color","red");
+		  }
+		}	
+	});
+}
+//组用户名json
+function jsonData(){
+	return {
+	  "username" : $("#userName").val()
+	};
+
+}
+
+</script> 
+</head>
+
+<body>
+<form name="form1" method = "get" action="/user/submit">
+	 <input type="hidden" name="user_id" value="<%= $pd->{user_data}->{user_id}%>">
+	<div class="right_1">
+		<span>当前位置:修改用户</span>
+	</div>
+	
+	<div class="c_one">
+ 		<table width="98%" id="DateList" border="0" cellspacing="1" cellpadding="0" 
+ 				align="center"  bgcolor="#C8DCF0" class="live_1_table">
+ 		  <tr bgcolor="#B4CFCF" align="center" class="parent" id="row1">
+   			   <td colspan="4" class="ice_one1">-----修改用户----- </td>
+ 		  </tr>
+ 				
+                 <tr >
+			   <td class="ice_one" width="20%">用户名称</td>
+			   <td class="ice_two" width="30%"><input type="text" size="30" id="userName" name="username" onblur="userCheck();" value="<%= $pd->{user_data}->{username}%>" readOnly/><font color="#FF0000"></font></td>
+			   <td class="ice_one" width="20%">初始密码</td>
+			   <td class="ice_two" width="30%"><input type="password" size="30" id="passWord" name="password" value=""/><font color="#FF0000"></font></td>
+                 </tr>
+                 <tr >
+			   <td class="ice_one" width="20%" height="150px">权限分配</td>
+			   <td class="ice_two" width="30%" height="150px">
+               			     未分配的角色：<br/>
+				     <select style="width:80%" multiple="true" name="listLeft" size="10" ondblclick="moveOption(listLeft,listRight)"> 
+				    % for my $left (@{$pd->{left}}) {
+				    <option value="<%= $left->{role_id}%>"><%= $left->{role_name}%></option>
+				    % }
+				    </select> 
+			   </td>
+			   <td class="ice_one" width="20%" height="150px">
+				    <div align="center">						
+					     <input type=button style="width:30px" onclick="MoveAllItems(listLeft,listRight)" value=">>"/><br/><br/>                       
+					     <input type=button style="width:30px" onclick="MoveSelectedItem(listLeft, listRight)"value=">"/><br/><br/> 
+					     <input type=button style="width:30px" onclick="MoveSelectedItem(listRight ,listLeft)"value="<"/><br/><br/> 
+					     <input type=button style="width:30px" onclick="MoveAllItems(listRight,listLeft)"value="<<"/>
+				    </div>
+ 			   </td> 
+			   <td class="ice_two" width="30%" height="150px">
+                 		   已分配的角色：<br/>
+			   <select style="width:80%" multiple="true" id="listRight" name="listRight" size="10" ondblclick="moveOption(listRight,listLeft)">
+				    % for my $right (@{$pd->{right}}) {
+				    <option name="list2" value="<%= $right->{role_id}%>"><%= $right->{role_name}%></option>
+				    % }
+			    </select>
+			   </td>
+		  </tr>
+		  <tr  bgcolor="#ffffff" align="center">
+			   <td colspan="4">
+				    <input  type="button" value="确定" onclick="sub();"/>&nbsp;&nbsp;
+				    <input  type="button" value="取消" onclick="javascripr:location.href='/user/index'"/>
+			   </td>	  	
+		  </tr>	  
+			
+</table>
+</div>
+<div class="foor">
+  <div id="div_Pager" class="c_start1" >
+    <div class="clear"></div>
+  </div>
+</div>
+</form>      
+</body>
+</html>

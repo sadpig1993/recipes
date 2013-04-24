@@ -1,0 +1,35 @@
+@charset "utf-8";
+/* CSS Document */
+/*
+选项卡
+----------------------------------------------------------------
+*/
+body{font-size:12px;font-family:Arial,Helvetica,sans-serif;text-align:center;margin:12px auto 0 auto;width:98%;position:relative;}
+h1,h2,h3,h4,h5,h6,p,form,dl,dt,dd,ul,ol{margin:0;padding:0;font-size:100%;}
+ul{list-style:none;}
+a{text-decoration:none;color:#000;}
+.display_none{display:none;}
+.container{clear:both; width:100%;float:left;}
+/*选项卡的样式*/
+.convention_tab{width:100%;text-align:left;float:left;}
+.convention_tab li{margin:0;padding:0;float:left;padding-right:10px;position:relative;z-index:2;bottom:-1px;}
+.convention_tab li a{background:#eee;height:28px;line-height:28px;overflow:hidden;float:left;padding:0 8px;border:solid 1px #444;border-bottom:none;}
+.convention_tab li a:hover{background:#e0e0e0;color:#000;}
+/*选中后的样式*/
+.convention_tab li.current_tab a,.convention_tab li.current_tab a:hover{background:#999;color:#fff;padding-top:1px;}
+/*单独设置第二个tab的某些样式*/
+#nav2 li.current_tab a,#nav2 li.current_tab a:hover{background:#ffffe1;color:#000;}
+/*第2层*/
+#childArea{border:solid 1px #f60;clear:both;}
+#child_tab li a{background:#ffaaaa;border:solid 1px #a00;}
+#child_tab li.current_tab a,#child_tab li .current_tab a:hover{border:solid 1px red;border-bottom:none;background:#f20;}
+/*第三层*/
+#childArea2{clear:both;border:solid 1px #0a0;}
+#child_tab2 li a{border:solid 1px #0a0;background:#f6fff6;}
+#child_tab2 li.current_tab a,#child_tab2 li .current_tab a:hover{border:solid 1px #0a0;border-bottom:none;background:#0a0;}
+/*其它*/
+#cardarea,#cardarea2{border:solid 1px #666;text-align:left;clear:both;}
+#cardarea p,#cardarea2 p,#cardarea2 dl{padding:20px;line-height:23px;}
+#nav2{margin-top:18px;}
+/*.iframe_style{marginwidth:0;marginheight:0;frameborder:0;scrolling:no; width:98%; height:100%;}*/
+

@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>交易查询</title>
+<link rel="stylesheet" href="../css/ace.css" />
+<link rel="stylesheet" href="../css/skin.css" />
+<script type="text/javascript" src="../js/jquery-1.8.2.min.js"></script>
+<link href="../css/jquery-ui.css" rel="stylesheet" type="text/css" />
+<script src="../js/jquery-ui.min.js"></script>
+<script src="ajaxfileupload.js"></script>
+
+</head>
+<body>
+<form name="form1">
+	<div class="right_1">
+		<span>当前位置:交易查询</span>
+	</div>
+	<div class="c_one"> 		
+        <table id="datas" width="98%" id="applyterminal" border="0" cellspacing="1" cellpadding="0" align="center"  bgcolor="#C8DCF0" class="live_1_table">
+                        <tr bgcolor="#ffffff"   align="center" class="live_1_table_tr">
+			    <td width="20%">用户编号</td>
+				<td width="30%" >用户名称</td>
+ 				<td width="20%" >上次密码修改日期</td>
+  				<td width="30%">操作</td>  				
+			</tr>
+                        % for my $row (@{$pd->{data}}) {
+			<tr  bgcolor="#ffffff" onmouseout="this.bgColor='#ffffff'" onmouseover="this.bgColor='#e3f1f1'"  align="center">
+				<td ><%= $row->{user_id}%></td>	
+  				<td ><%= $row->{username}%></td>
+  				<td ><%= $row->{pwd_chg_date}%></td>			
+			</tr>
+                        % }
+                        <tr>
+				<td colspan="4" align="center">第<%= $pd->{index}%>页&nbsp;
+				共<%= $pd->{total_page}%>页(<%= $pd->{count}%>条) &nbsp;
+				<a href="index?index=1&amp;<%=$pd->{params} %>">首页</a>&nbsp;&nbsp;
+				<a href="index?index=<%= $pd->{next_page}%>&amp;<%=$pd->{params} %>">下一页</a>&nbsp;&nbsp;
+				<a href="index?index=<%= $pd->{prev_page}%>&amp;<%=$pd->{params} %>"> 上一页</a>&nbsp;&nbsp;
+                                <a href="index?index=<%= $pd->{total_page}%>&amp;<%=$pd->{params} %>">末页</a>
+				</td>
+			</tr>	
+		</table>
+	</div>
+	<div class="foor">
+		<div id="div_Pager" class="c_start1" >
+		<div class="clear"></div>
+	</div>
+	</div>
+</form>      
+</body>
+</html>

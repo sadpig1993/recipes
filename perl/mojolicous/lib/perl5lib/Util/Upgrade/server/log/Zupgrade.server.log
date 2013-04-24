@@ -1,0 +1,22 @@
+09:23:04 20120713 <rade/Server.pm>:0050 DEBUG-> [  Zupgrade]: Zupgrade spawn with:
+do {
+  require Symbol;
+  (
+    "Data::Dump",
+    bless({
+      app_home       => "/Users/haryinst/workspace/perl5lib/Util/Upgrade/server",
+      localaddr      => "127.0.0.1",
+      localport      => 5454,
+      logger         => bless({
+                          address  => "/Users/haryinst/workspace/perl5lib/Util/Upgrade/server/log/Zupgrade.server.log",
+                          logfh    => bless(Symbol::gensym(), "IO::File"),
+                          loglevel => 5,
+                          proto    => "file",
+                        }, "Util::Log"),
+      upgrade_home   => "/Users/haryinst/workspace/perl5lib/Util/Upgrade/server/version",
+      vscan_interval => 10,
+    }, "Util::Upgrade::Server"),
+  );
+}
+09:23:04 20120713 <rade/Server.pm>:0120 DEBUG-> [  Zupgrade]: begin check...
+09:23:14 20120713 <rade/Server.pm>:0120 DEBUG-> [  Zupgrade]: begin check...

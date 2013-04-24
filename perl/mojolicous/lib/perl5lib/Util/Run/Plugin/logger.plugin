@@ -1,0 +1,60 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+use Util::Run;
+use Util::Log;
+
+########################################################################
+#                        daemonize.plugin
+#-----------------------------------------------------------------------
+#  dependencies          :  
+#  initialization param  : Util::Log的参数
+#  interface             :
+#   1. logger            : 获取logger对象
+#   2. logger_child      : 子进程logger复制
+########################################################################
+
+my $logger;
+helper logger => sub { $logger };
+
+
+##
+# internal child logger clone
+# $self->logger_child('ModuleA', 'ERROR');
+##
+helper logger_child => sub {
+    my $self     = shift;
+    my $name     = shift;
+    my $loglevel = shift;
+    return $logger->clone( "$name.log", $loglevel );
+};
+
+helper logger_reset => sub {
+    shift;
+    $logger = shift;
+};
+
+
+
+warn "-------------------------\n"  and
+warn "kernel.plugin loaded:\n"     and
+warn "-------------------------\n"  and
+warn <<EOF if $ENV{PLUGIN_LOAD_DEBUG};
+#  dependencies          :  
+#  initialization param  : Util::Log的参数
+#  interface             :
+#   1. logger            : 获取logger对象
+#   2. logger_child      : 子进程logger复制
+EOF
+
+
+#
+# $initor->(@_)
+#
+sub {
+    $logger = Util::Log->new(@_);
+    return 1;
+};
+
+
+__END__
