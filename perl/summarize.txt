@@ -1,0 +1,18 @@
+关于perl的一些要熟记于心的要点
+
+########需要多研究perldoc##########
+perlintro -- a brief introduction and overview of Perl
+perlvar - Perl predefined variables
+perldata - Perl data types
+perlreftut - Mark's very short tutorial about references
+perlref - Perl references and nested data structures
+perllol - Manipulating Arrays of Arrays in Perl
+perldsc - Perl Data Structures Cookbook
+perlpacktut -tutorial on pack and unpack
+perlop - Perl operators and precedence
+
+##############################
+1 .If you write just [] , you get a new, empty anonymous array,and returns a reference to that array. If you write just {} , you get a new, empty anonymous hash, and returns a reference to that hash.
+
+可以用下面的方法引入在另一个模块中定义的子过程:
+use MODULE qw(NAME1 NAME2 NAME2...)
