@@ -1,9 +1,9 @@
 #!/bin/bash
-#function usage()
-#{
-#	echo "Usage:${BASH_NAME} [-f] [-d|--date YYYYMMDD] [-t|--time HHMMSS]"
-#	exit 1
-#}
+function usage
+{
+	echo "Usage:${BASH_NAME} [-f] [-d|--date YYYYMMDD] [-t|--time HHMMSS]"
+	exit 1
+}
     ARGS=`getopt -o fd:t: -l date:,time:,help -- "$@"`  
     [ $? -ne 0 ] && usage
     #set -- "${ARGS}"  
