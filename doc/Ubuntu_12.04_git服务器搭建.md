@@ -126,7 +126,7 @@
 
 <h3 id="test_new">测试搭建的项目库</h3>
  服务器搭建完了，并且有一个空的项目test在服务器上。接下来测试一下，空仓库是不能clone的，所以需要某一个有写权限的人初始化一个版本。
- 下面是在ltl@it-c-015客户端完成。 
+ 下面是在ltl@it-c-015客户端完成。   
 `mkdir test-ori`  
 `cd test-ori/`  
 `git init`    
