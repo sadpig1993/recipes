@@ -31,7 +31,7 @@
 1.  安装gitosis前准备
 
  - 初始化git用户。在任何一台机器上使用git，第一次必须初始化一下。在当前用户下初始化全局的git信息：  
- `git config --global user.name "jackliu"` 
+ `git config --global user.name "jackliu"`  
  `git config --global user.email "xcltl618@gmail.com"`  
  `git config --global core.editor vim`  
  `git config --global merge.tool vimdiff`  
