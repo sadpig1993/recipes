@@ -14,4 +14,4 @@ print "@va\n";	#print hello nihao
 $Hoh{a} = \@va ;
 print "改变\$Hoh{a}的值为@va\n";
 print "改变hash Hoh之后的数据\n";
-Data::Dump->dump([\%Hoh]);	#	a => "hello nihao", b => "world"
+Data::Dump->dump(\%Hoh);	#	a => "hello nihao", b => "world"
