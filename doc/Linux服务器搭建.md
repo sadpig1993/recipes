@@ -3,7 +3,7 @@
 1.  [LVM简介](#lvm_intro)
 2.  [LVM基本术语](#lvm_basic)
 3.  [LVM安装](#lvm_install)
-4.  [创建和管理LVM](#lvm_create_mana)
+4.  创建和管理LVM
     - [创建LVM分区](#lvm_create)
     - [创建PV](#pv_create)
     - [创建VG](#vg_create)
