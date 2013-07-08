@@ -69,6 +69,28 @@ fdisk /dev/sda3(设备文件的绝对路径)
 ![分区管理-修改分区格式](data/lvm_create_4.png)  
 **一定要指定分区的格式为8e，这是LVM的分区格式**  
 <h5 id="pv_create">创建PV</h5>
+创建PV  
+![创建PV](data/pv_create.png)
 <h5 id="vg_create">创建VG</h5>
+创建VG  
+![创建VG](data/vg_create.png)  
+![创建VG2](data/vg_create_2.png)  
 <h5 id="lv_create">创建LV</h5>
+创建LV  
+![创建LV](data/lv_create.png)  
+创建完VG之后，才能从VG中划分LV。
 <h5 id="lv_mount">LV格式化及挂载</h5>
+下一步需要对LV进行格式化（使用mksf进行格式化操作），然后LV才能存储资料  
+![LV格式化](data/mkfs.ext4_1.png)  
+将格式化后的LV分区挂载到指定的目录下，就可以像普通目录一样存储数据了  
+![LV挂载](data/mount_lv.png)  
+挂载之后，可以看到此LV的容量。
+
+如果要在系统启动的时候启动LV，最好是将mount命令写入/etc/rc.local文件中，如下所示： 
+```
+mount /dev/VolGroup/db2tbsp_lv  /db2tbsp
+mount /dev/VolGroup/db2inst_lv  /db2inst
+mount /dev/VolGroup/db2auto_lv  /db2auto
+mount /dev/VolGroup/db2plog_lv  /db2plog
+
+```
