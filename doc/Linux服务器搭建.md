@@ -18,7 +18,7 @@ LVM是 Logical Volume Manager(逻辑卷管理)的简写，它由Heinz Mauelshage
 与传统的磁盘与分区相比，LVM为计算机提供了更高层次的磁盘存储。它使系统管理员可以更方便的为应用与用户分配存储空间。在LVM管理下的存储卷可以按需要随时改变大小与移除(可能需对文件系统工具进行升级)。LVM也允许按用户组对存储卷进行管理，允许管理员用更直观的名称(如"sales'、 'development')代替物理磁盘名(如'sda'、'sdb')来标识存储卷。
 
 如图所示LVM模型： 
-![](data/lvm_model.png)
+![LVM模型](data/lvm_model.png)
 
 <h4 id="lvm_basic">2. LVM基本术语</h4>
 <h4 id="lvm_install">3. LVM安装</h4>
