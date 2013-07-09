@@ -154,9 +154,9 @@ db2ilist
 
 <h4 id="inst_param">5. 实例参数</h4>
 每个实例都有一个配置参数文件用于控制实例相关的参数，如诊断路径，监控开关，安全相关的控制及服务端口号等。通过`db2 get dbm cfg`命令查看实例参数，以下对一些重要的参数进行来标注：  
-! [实例参数1](data/inst_param1.JPG)
+! [实例参数1](data/inst_param1.png)
   
-! [实例参数2](data/inst_param2.JPG)
+! [实例参数2](data/inst_param2.png)
 
-! [实例参数3](data/inst_param3.JPG)
+! [实例参数3](data/inst_param3.png)
 
