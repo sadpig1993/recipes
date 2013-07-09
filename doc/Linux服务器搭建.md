@@ -81,7 +81,7 @@ fdisk /dev/sda3(设备文件的绝对路径)
 创建完VG之后，才能从VG中划分LV。
 <h5 id="lv_mount">LV格式化及挂载</h5>
 下一步需要对LV进行格式化（使用mksf进行格式化操作），然后LV才能存储资料  
-![LV格式化](data/mkfs.ext4_1.png)  
+![LV格式化](data/mkfs.ext4_lv_1.png)  
 将格式化后的LV分区挂载到指定的目录下，就可以像普通目录一样存储数据了  
 ![LV挂载](data/mount_lv.png)  
 挂载之后，可以看到此LV的容量。
