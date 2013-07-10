@@ -292,3 +292,7 @@ db2 "alter tablespace tbs_dat begin new stripe set (file '/db2tbsp/zdb/dat_3' 50
 `
 db2 drop tablespace <tablespace_name>
 `
+
+**参考**
+《DB2数据库最佳管理实践》
+http://www.dblotus.com
