@@ -7,9 +7,10 @@
 4.  [删除实例](#inst_delete)
 5.  [实例参数](#inst_param)  
 
-### [创建数据库](#db_create)
-  - 数据库结构  
-  - 创建数据库
+### [数据库管理](#database)
+1.  [数据库结构](#db_intro)  
+2.  [创建数据库](#db_create)
+3.  [删除数据库](#db_drop)
 
 ### [表空间管理](#tablespace)
 1.  [缓冲池了解](#bufferpool)
@@ -170,19 +171,24 @@ db2ilist
 
 
 
-<h3 id="db_create">创建数据库</h3>
- - 数据库结构  
+<h3 id="database">数据库管理</h3>
+<h4 id="db_intro">1.数据库结构</h4>  
 创建完实例后，就可以创建数据库，一个实例可以包含多个数据库，但一个数据库只能归属于一个实例。每个数据库是由一组对象构成的，如表，视图，索引等。表是二维结构，由一些行和列构成，表数据存放在表空间里，表空间是数据库的逻辑存储层，每个数据库包含多个表空间，每个表空间只能归属于一个数据库。从实例->数据库->表空间->表构成了DB2的逻辑层次关系，从物理存储上，每个表空间由一个或多个容器构成，容器映射到物理存储，容器可以是目录，也可以是文件或裸设备，每个容器只能属于一个表空间。根据数据的管理方式，表空间分为系统管理（SMS）和数据库管理（DMS）。
 DB2将表和索引数据存在页里（PAGE），页是DB2最小的物理分配单元，表中每行数据只能包含在一页，不能跨页。DB2支持的页大小共4种：4K，8K，16K和32K，假定一行数据大小是20K，那么需要的页的大小是32K。
 每个表空间是由一个或多个容器构成的，表空间仅仅是逻辑存储层，具体的数据是存在容器里。容器是由多个extent构成的。
 表空间->容器->extent->page就构成了DB2的存储模型。  
 
- - 创建数据库  
+<h4 id="db_create">2.创建数据库</h4>  
 ```
 db2 "create database zdb automatic storage yes on /db2auto dbpath on '/db2path' using codeset utf-8 territory cn collate using system";
 ```  
 DBPATH ON ： 表示数据库创建目录  
 USING CODESET codeset TERRITORY territory ： 表示数据库编码集（codeset）和区域（territory）。数据库一旦创建，编码就无法改变。  
+
+<h4 id="db_drop">3.删除数据库</h4>
+`
+db2 drop database <database_name>
+`
 
 <h3 id="tablespace">表空间管理</h3>
 <h4 id="bufferpool">缓冲池了解</h4>
