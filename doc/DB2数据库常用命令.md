@@ -277,7 +277,7 @@ db2 "alter tablespace tbs_dat extend (file '/db2tbsp/zdb/dat_1' 10240M ,
 db2 "alter tablespace tbs_dat add (file '/db2tbsp/zdb/dat_3' 50G ) "
 `
 
- - 通过alter tablespace begin new stripe set选项。Begin new stripe set选项是当已有容器使用完后，再使用新增加的容器。
+ - 通过alter tablespace begin new stripe set选项。Begin new stripe set选项是当已有容器使用完后，再使用新增加的容器。  
 `
 db2 "alter tablespace tbs_dat begin new stripe set (file '/db2tbsp/zdb/dat_3' 50G ) "
 `
