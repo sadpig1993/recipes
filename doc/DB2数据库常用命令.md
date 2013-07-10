@@ -7,8 +7,16 @@
 4.  [删除实例](#inst_delete)
 5.  [实例参数](#inst_param)  
 
+### [创建数据库](#db_create)
+  - 数据库结构  
+  - 创建数据库
+
 ### [表空间管理](#tablespace)
-1.  [表空间创建]()
+1.  [缓冲池了解](#bufferpool)
+2.  [表空间创建](#tbsp_create)
+3.  [表空间查看](#tbsp_list)
+4.  [表空间修改](#tbsp_modify)
+5.  [表空间删除](#tbsp_delete)
 
 ------------------------------
 
@@ -154,9 +162,127 @@ db2ilist
 
 <h4 id="inst_param">5. 实例参数</h4>
 每个实例都有一个配置参数文件用于控制实例相关的参数，如诊断路径，监控开关，安全相关的控制及服务端口号等。通过`db2 get dbm cfg`命令查看实例参数，以下对一些重要的参数进行来标注：  
-! [实例参数1](data/inst_param1.png)
+! [实例参数1](data/inst_param1.JPG)
   
-! [实例参数2](data/inst_param2.png)
+! [实例参数2](data/inst_param2.JPG)
 
-! [实例参数3](data/inst_param3.png)
+! [实例参数3](data/inst_param3.JPG)  
 
+
+
+<h3 id="db_create">创建数据库</h3>
+ - 数据库结构  
+创建完实例后，就可以创建数据库，一个实例可以包含多个数据库，但一个数据库只能归属于一个实例。每个数据库是由一组对象构成的，如表，视图，索引等。表是二维结构，由一些行和列构成，表数据存放在表空间里，表空间是数据库的逻辑存储层，每个数据库包含多个表空间，每个表空间只能归属于一个数据库。从实例->数据库->表空间->表构成了DB2的逻辑层次关系，从物理存储上，每个表空间由一个或多个容器构成，容器映射到物理存储，容器可以是目录，也可以是文件或裸设备，每个容器只能属于一个表空间。根据数据的管理方式，表空间分为系统管理（SMS）和数据库管理（DMS）。
+DB2将表和索引数据存在页里（PAGE），页是DB2最小的物理分配单元，表中每行数据只能包含在一页，不能跨页。DB2支持的页大小共4种：4K，8K，16K和32K，假定一行数据大小是20K，那么需要的页的大小是32K。
+每个表空间是由一个或多个容器构成的，表空间仅仅是逻辑存储层，具体的数据是存在容器里。容器是由多个extent构成的。
+表空间->容器->extent->page就构成了DB2的存储模型。  
+
+ - 创建数据库  
+```
+db2 "create database zdb automatic storage yes on /db2auto dbpath on '/db2path' using codeset utf-8 territory cn collate using system";
+```  
+DBPATH ON ： 表示数据库创建目录  
+USING CODESET codeset TERRITORY territory ： 表示数据库编码集（codeset）和区域（territory）。数据库一旦创建，编码就无法改变。  
+
+<h3 id="tablespace">表空间管理</h3>
+<h4 id="bufferpool">缓冲池了解</h4>
+创建完数据库后，就需要我们来创建表空间了。在创建表空间前，我们先了解下缓冲池。  
+
+缓冲池指的是从磁盘读取表和索引数据时，数据库管理器分配的用于高速缓存这些表或索引数据的主存储器区域。每个 DB2 数据库都必须具有一个缓冲池。  
+
+每个新数据库都定义了一个称为 IBMDEFAULTBP 的缺省缓冲池。可以使用 CREATE BUFFERPOOL、DROP BUFFERPOOL 和 ALTER BUFFERPOOL 语句来创建、删除和修改缓冲池。SYSCAT.BUFFERPOOLS 目录视图访问数据库中所定义的缓冲池的信息（具体参数可baidu or google）。  
+
+首次访问表中的数据行时，数据库管理器会将包含该数据的页放入缓冲池中。这些页将一直保留在缓冲池中，直到关闭数据库或者其他页需要使用某一页所占用的空间为止。缓冲池中的页可能正在使用，也可能没有使用，它们可能是脏页，也可能是干净页：  
+  
+ -  正在使用的页就是当前正在读取或更新的页。为了保持数据一致性，数据库管理器只允许一次只有一个代理程序更新缓冲池中的给定页。如果正在更新某页，那么它正在内一个代理程序互斥地访问。如果正在读取该页，那么多个代理程序可以同时读取该页。
+ -  “脏”页包含已更改但尚未写入磁盘的数据。
+ - 将一个已更改的页写入磁盘之后，它就是一个“干净”页，并且可能仍然保留在缓冲池中。
+
+简单点说：缓冲池是把存储在磁盘中的数据缓存起来，便于我们访问数据，提高应用程序对数据库的访问速度。  
+
+**缓冲池和表空间关系**  
+
+ - 每个表空间都与一个特定的缓冲池相关。IBMDEFAULTBP 是缺省缓冲池。要使另一个缓冲池与表空间相关，那么该缓冲池必须存在并且它们具有相同的页大小。关联是在使用 CREATE TABLESPACE 语句创建表空间时定义的，但以后可使用 ALTER TABLESPACE 语句更改此关联。  
+ - 缓冲池页大小。缺省缓冲池的页大小是在使用 CREATE DATABASE 命令时设置的。此缺省值表示所有将来 CREATE BUFFERPOOL 和 CREATE TABLESPACE 语句的缺省页大小。如果在创建数据库时不指定页大小，那么缺省页大小是 4 KB。  
+注： 如果确定数据库需要 8 KB、16 KB 或 32 KB 的页大小，那么必须至少定义一个具有相匹配的页大小并且与数据库中的表空间相关联的缓冲池。
+
+**创建缓冲池**  
+`
+db2 "create bufferpool bp32k size 10000 pagesize 32k"
+`  
+创建一个名为bp32k的缓冲池，包含10000页，页大小为32k。
+
+建立数据库时，DB2会创建三个默认的表空间。  
+
+  - 系统表空间（system tablespace），用来存储系统表，也就是数据字典的信息，一个数据库只能有一个系统表空间
+  - 临时表空间（temporary tablespace），用来保存语句执行时产生的中间临时数据，如join，排序等操作都可能产生一些临时数据
+  - 用户表空间（user tablespace），用来存储表，索引，大对象等数据  
+  - 只有建库时启用了automatic storage yes，表空间才支持自动存储管理  
+  - 创建缓冲池时，size表示页数，pagesize表示页大小，size*pagesize就是缓冲池的内存大小
+
+<h4 id="tbsp_create">2.表空间创建</h4>
+
+```
+#!/bin/bash
+# connect to db
+db2 connect to zdb;
+
+DMS="managed by database";  
+STMP_TBSP="temporary tablespace";
+UTMP_TBSP="user temporary tablespace";
+LARG_TBSP="large tablespace";
+
+# 关闭文件系统缓存，减少系统开销，因为已使用bufferpool缓存数据
+NFSC="no file system caching";  
+
+db2 "create $LARG_TBSP tbs_dat pagesize 32k $DMS using(FILE '/db2tbsp/zdb/dat_1' 10240M) bufferpool bp32k $NFSC";
+db2 "create $LARG_TBSP tbs_idx pagesize 32k $DMS using(FILE '/db2tbsp/zdb/idx_1' 5120M) bufferpool bp32k $NFSC";
+db2 "create $STMP_TBSP tbs_tmp pagesize 32k $DMS using(FILE '/db2tbsp/zdb/tmp_1' 5120M) bufferpool bp32k $NFSC";
+db2 "create $UTMP_TBSP tbs_utmp pagesize 32k $DMS using(FILE '/db2tbsp/zdb/utmp_1' 5120M) bufferpool bp32k $NFSC";  
+
+```  
+
+<h4 id="tbsp_list">3.表空间查看</h4>
+常用的表空间监控方法：
+```
+# 显示每个表空间的最核心的信息 简单，直观
+db2 list tablespaces [show detail]
+
+# 显示表空间容器的相关信息
+db2 list tablespace containers for <tablespace_id> [show detail]
+
+# 显示表空间的配置信息、使用情况和容器信息
+db2pd -d <db_name> tablespaces
+
+# 显示的信息比list tablespaces更全面，比如是否启用了自动存储功能，以及表空间map信息
+db2 get snapshot for tablespaces on <db_name>
+
+# 通过查询管理视图 来查看表空间信息
+db2 "select * from sysibmadm.snaptbsp"
+db2 "select * from sysibmadm.snapcontainer"
+
+```
+
+<h4 id="tbsp_modify">4.表空间修改</h4>
+表空间更改。对于DMS表空间，提供了Add用来增加新的容器，Drop删除容器，Extend用来扩展已有容器大小，Reduce用来缩减已有容器大小，Resize重新设定容器大小。对于Add和Drop操作，表空间容器间会发生数据重新平衡（Rebalance)。对于Reduce和Resize操作，需要确保更改后的表空间容器有足够的空间，否则DB2会拒绝该操作。当遇到DMS表空间满的情况时，根据存储空间和对运维的影响，有以下三种方案：
+
+ - 如果表空间容器对应的存储中还有未分配空间，可通过alter tablespace的extend或resize选项扩展已有表空间容器的大小。下例是在每个容器上扩展了50GB：  
+`
+db2 "alter tablespace tbs_dat extend (file '/db2tbsp/zdb/dat_1' 10240M ,
+ file /db2tbsp/zdb/dat_2' 50G ) "
+`  
+
+ - 如果表空间容器对应的存储中没有剩余空间时，可通过alter tablespace的add选项增加新的容器。需要注意的是：通过add增加容器会在容器间进行数据Reblance，即数据重新平衡。如果数据量很大，Reblance的时间会很长，对系统性能会造成很大影响。下例增加一个新容器，表空间发生reblance    
+`
+db2 "alter tablespace tbs_dat add (file '/db2tbsp/zdb/dat_3' 50G ) "
+`
+
+ - 通过alter tablespace begin new stripe set选项。Begin new stripe set选项是当已有容器使用完后，再使用新增加的容器。
+`
+db2 "alter tablespace tbs_dat begin new stripe set (file '/db2tbsp/zdb/dat_3' 50G ) "
+`
+
+<h4 id="tbsp_delete">5.表空间删除</h4>
+`
+db2 drop tablespace <tablespace_name>
+`
