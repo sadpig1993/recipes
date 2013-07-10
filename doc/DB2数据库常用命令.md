@@ -294,5 +294,6 @@ db2 drop tablespace <tablespace_name>
 `
 
 **参考**
-《DB2数据库最佳管理实践》
+《DB2数据库最佳管理实践》  
+
 http://www.dblotus.com
