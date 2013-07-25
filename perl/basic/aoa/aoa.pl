@@ -11,14 +11,30 @@ is arrays。数组的数组即二维数组
 =cut
 
 my @AoA = ( [ 2, 3 ], [ 4, 5, 7 ], [ 1 .. 6 ] );
-print "$AoA[1][2]\n";    #打印出 [4,5,7]中的7
-print @AoA, "\n";        #打印出数组元素的地址
+warn "-----\@AoA------";
 
-#print @AoA[0],"\n";	#打印@AoA第一个元素的地址
-#print @AoA[1],"\n";	#打印@AoA第二个元素的地址
-#print @AoA[2],"\n";	#打印@AoA第三个元素的地址
-#print "@{@AoA[0]}\n";
+#Data::Dump->dump(@AoA);
+warn "----------------";
+
+warn "---\$AOA[1][2]---";
+print "$AoA[1][2]\n";    #打印出 [4,5,7]中的7
+warn "----------------";
+
+warn "----打印出数组的地址------";
+print @AoA, "\n";        #打印出数组元素的地址
+warn "-------------------------";
+
+warn "address";
+print @AoA[0],"\n";	#打印@AoA第一个元素的地址
+print @AoA[1],"\n";	#打印@AoA第二个元素的地址
+print @AoA[2],"\n";	#打印@AoA第三个元素的地址
+print "@{@AoA[0]}\n";
+warn "address";
+
+warn "------------------";
 print "@{$AoA[0]}\n@{$AoA[1]}\n@{$AoA[2]}\n";
+warn "------------------";
+
 
 my $i;
 my @array;
@@ -62,4 +78,4 @@ my $aref = [
 #print $aref[2][2];	    #wrong
 #print $aref->[2][2];	#print elroy
 #print $$aref[2][2];	#print elroy $$aref[2][2]先进行解引用,解引用后
-#aref等同与二维数组，所以print $aref[2][2] ok
+                        #aref等同与二维数组，所以print $aref[2][2] ok
