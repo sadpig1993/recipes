@@ -20,14 +20,19 @@ print "000000\n";
 ####keys 获取hash的所有key,返回是array
 my @akey   = keys %hashs;
 my @avalue = values %hashs;
+
+warn "-------------- key 的个数：" ;
 my $count  = @akey;
 print "the count of hashs is $count\n";
+warn "--------------------------" ;
 
-print "hash的所有key\n";
-print "@akey\n";
-print "hash的所有value\n";
-print "@avalue\n";
-print "111111\n";
+warn "------------hash的所有key";
+warn "@akey";
+
+warn "------------hash的所有value";
+warn "@avalue";
+
+warn "----------------------------";
 print "取出hash中的部分片段\n";
 #####取出hash中多个key对应的value,返回array
 print "取出hash中多个key对应的value,返回array\n";
