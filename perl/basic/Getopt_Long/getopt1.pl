@@ -7,6 +7,7 @@ use Getopt::Long;
 #########################################
 # declare default values for variables
 #########################################
+
 my $data    = '';
 my $length  = '';
 my $verbose = '';
@@ -16,8 +17,10 @@ my $result  = GetOptions(
     "verbose+" => \$verbose    # flag
 );
 
+&usage unless ( $length && $data );
+
 #Data::Dump->dump($result);
-if ( $result ) {
+if ($result) {
 #################################################################
     # test perl getopt1.pl --length 10 --data dat --verbose 2
     # test perl getopt1.pl -length 10 -data dat -verbose 2
@@ -28,8 +31,10 @@ file:		$data
 verbose:	$verbose
 EOF
 }
-else {
+
+sub usage {
     print <<EOF;
-Usage : getop1.pl -length|-file|-verbose
+usage : getop1.pl -length num -file filename
 EOF
+    exit -1;
 }

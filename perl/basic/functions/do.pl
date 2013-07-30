@@ -13,5 +13,5 @@ use Data::Dump;
 ######### do EXPR ########
 #Uses the value of EXPR as a filename and executes the contents of the file as a Perl script.
 #my $ret = do '/home/liutailin/tmp/study/perl_demo/functions/hello';
-my $ret = do '/home/jackliu/do.pl';
+my $ret = do 'test/hello2';
 Data::Dump->dump($ret);

@@ -1,8 +1,10 @@
 #!/usr/bin/perl
 
+#
+# 哈希的哈希
+#
 use strict;
 use warnings;
-
 use Data::Dump;
 
 # Declaration of a HASH OF HASHES,means that this is a hash,and it's key/value is hash again
@@ -27,23 +29,24 @@ my %HoH = (
     
 );
 
-#print Data::Dumper->Dump([\%HoH]);
-#print Data::Dumper->Dump([%HoH]);	#注意这个和上行的区别
-print "%HoH\n";    #cannot print the key/value of %HoH
+warn "-------------打印hash的地址";
+print "%HoH\n";    #打印哈希的地址
 
 ##########根据一个key得到该key对应的value
 # $tmpH 是一个哈希引用
+warn "-------------1哈希引用使用访问key/value对";
 my $tmpH = $HoH{flintstones};
 warn "-----哈希引用使用------";
-print "$tmpH\n";
+print "$tmpH\n";    # 打印出来的是地址
 #Data::Dump->dump($tmpH);
 print "$tmpH->{lead}\n";
+print "$HoH{flintstones}->{lead}\n";
 
 ##########根据多个key得到多个key对应的value list
 # @tmpa 是一个引用数组
+warn "-------------2哈希引用使用访问key/value对";
 my @tmpa = @HoH{ "flintstones", "simpsons" };
-
-warn "-----数组引用使用-------";
+warn "-----哈希引用使用-------";
 print "$tmpa[0]->{pal}\n";
 print "$tmpa[1]->{wife}\n";
 

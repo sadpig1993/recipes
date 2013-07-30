@@ -14,7 +14,6 @@ print @a, "\n";
 =cut
 
 #example1====
-
 my %hash = (
     'one' => {
         'first'  => 1,
@@ -30,15 +29,14 @@ my $key = 'one';
 my @list = ( 'first', 'second' );
 
 ## 用到hash slice
-print $_, "\n" for @{ $hash{$key} }{@list};    #print 1
-                                               #      2
+print $_ . " " for @{ $hash{$key} }{@list};    #print 1 2
+print "\n";
 
 #example2====
 
-=p
-my %foo = ( a => 4, b => 5, c => 6 );
-my $href = \%foo;
-print @foo{ 'a', 'b' }, "\n";                  # print 45
+my $foo = { a => 4, b => 5, c => 6 };
+my $href = $foo;
+
 my %bar = ( foo => $href );                    # foo is now a reference in %bar
 print @{ $bar{foo} }{ 'a', 'b' }, "\n";
 print ${ $bar{foo} }{'a'}, "\n";
@@ -46,4 +44,17 @@ print ${ $bar{foo} }{'b'}, "\n";
 ###通过引用和箭头来访问数据
 print $bar{foo}->{'a'}, "\n";
 print $bar{foo}->{'b'}, "\n";
-=cut
+
+#example3====
+no strict "refs";
+$foo = { a => 4, b => 5, c => 6 };
+$href = $foo;
+my @arr = keys %$foo ;
+warn "keys:@arr";
+
+
+$foo = { a => 4, b => 5, c => 6 };
+print "$foo->{a}\n";
+
+my %foo = ( a => 4, b => 5, c => 6 );
+print "$foo{a}\n";
