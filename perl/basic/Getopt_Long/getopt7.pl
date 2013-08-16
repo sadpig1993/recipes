@@ -13,5 +13,5 @@ GetOptions( \%h, 'length=i' );    # will store in $len
 Data::Dump->dump( \%h );
 
 ######## demo 2 ############
-#GetOptions( 'length=i' => \$len );
-#Data::Dump->dump( $len );
+# GetOptions( 'length=i' => \$len );
+# Data::Dump->dump( $len );

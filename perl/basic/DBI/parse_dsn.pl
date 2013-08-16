@@ -20,4 +20,4 @@ attr_hash	:	$attr_hash
 driver_dsn	:	$driver_dsn
 EOF
 
-Data::Dump->dump();
+# Data::Dump->dump();

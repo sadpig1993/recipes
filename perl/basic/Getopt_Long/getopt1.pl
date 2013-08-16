@@ -19,6 +19,10 @@ my $result  = GetOptions(
 
 &usage unless ( $length && $data );
 
+if ( $verbose eq '' ) {
+    print "\$verbose is '' \n";
+}
+
 #Data::Dump->dump($result);
 if ($result) {
 #################################################################
@@ -34,7 +38,7 @@ EOF
 
 sub usage {
     print <<EOF;
-usage : getop1.pl -length num -file filename
+usage : getop1.pl -length num -file filename [-verbose]
 EOF
     exit -1;
 }

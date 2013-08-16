@@ -34,6 +34,7 @@ my %TV = (
             { name => "bart",  role => "kid",  age => 11, },
         ],
     },
+
 );
 
 #
@@ -46,4 +47,11 @@ print "$href->{nights}->[0]\n";
 print "$href->{members}->[0]->{name}\t";
 print "$href->{members}->[0]->{role}\t";
 print "$href->{members}->[0]->{age}\n";
+
+
+no strict 'refs' ;
+warn "-----------------";
+$href = \%TV ;
+print "$href->{jetsons}{series}\n";
+print "$href->{jetsons}->{series}\n";
 
