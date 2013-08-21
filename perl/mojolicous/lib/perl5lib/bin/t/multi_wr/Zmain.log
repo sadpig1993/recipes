@@ -1,9 +1,0 @@
-01:18:46 20121015 <il/Run/Main.pm>:0029 DEBUG-> [      Zprj]: main working hard 50
-01:18:56 20121015 <il/Run/Main.pm>:0029 DEBUG-> [      Zprj]: main working hard 51
-01:19:06 20121015 <il/Run/Main.pm>:0029 DEBUG-> [      Zprj]: main working hard 52
-01:19:16 20121015 <il/Run/Main.pm>:0029 DEBUG-> [      Zprj]: main working hard 53
-01:19:26 20121015 <il/Run/Main.pm>:0029 DEBUG-> [      Zprj]: main working hard 54
-01:19:27 20121015 <ib/Util/Run.pm>:0867 WARN--> [      Zprj]: pid[3151] got SIGTERM
-01:19:27 20121015 <ib/Util/Run.pm>:0888 WARN--> [      Zprj]: begin kill Zmreader pid[3152]
-01:19:27 20121015 <ib/Util/Run.pm>:0888 WARN--> [      Zprj]: begin kill Zmwriter pid[3154]
-01:19:27 20121015 <ib/Util/Run.pm>:0909 WARN--> [      Zprj]: Zprj: all child died

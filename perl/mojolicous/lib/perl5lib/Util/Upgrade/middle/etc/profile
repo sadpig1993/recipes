@@ -1,3 +1,0 @@
-export APP_HOME=/data1/hary/lib/Util/Upgrade/client
-export PATH=$APP_HOME/libexec:$PATH
-

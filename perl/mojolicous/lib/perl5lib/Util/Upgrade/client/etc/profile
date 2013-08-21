@@ -1,3 +1,0 @@
-export APP_HOME=$HOME/workspace/perl5lib/Util/Upgrade/client
-export PATH=$APP_HOME/libexec:$PATH
-

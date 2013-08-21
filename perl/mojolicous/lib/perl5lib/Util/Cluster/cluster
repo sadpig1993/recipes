@@ -1,9 +1,0 @@
-#!/usr/bin/perl
-use strict;
-use warnings;
-
-use Util::Cluster;
-
-Util::Cluster->run(
-  
-);
