@@ -29,6 +29,11 @@ my $dbh = DBI->connect(
     }
 );
 
+
+# my $tt = $dbh->quote("one\ntwo\0three");
+my $tt = $dbh->quote("don't");
+printf "$tt\n";
+
 # Data::Dump->dump( $dbh ) ;
 my %attr;
 
