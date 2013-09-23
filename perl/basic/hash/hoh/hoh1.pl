@@ -3,7 +3,7 @@
 #
 # 哈希的哈希
 #
-use strict;
+#use strict;
 use warnings;
 use Data::Dump;
 
@@ -39,8 +39,10 @@ my $tmpH = $HoH{flintstones};
 warn "-----哈希引用使用------";
 print "$tmpH\n";    # 打印出来的是地址
 #Data::Dump->dump($tmpH);
+warn "===============================";
 print "$tmpH->{lead}\n";
 print "$HoH{flintstones}->{lead}\n";
+print "$HoH{flintstones}{lead}\n";
 
 ##########根据多个key得到多个key对应的value list
 # @tmpa 是一个引用数组
