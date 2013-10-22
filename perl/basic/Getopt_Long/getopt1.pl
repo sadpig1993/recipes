@@ -8,9 +8,9 @@ use Getopt::Long;
 # declare default values for variables
 #########################################
 
-my $data    = '';
-my $length  = '';
-my $verbose = '';
+my $data;
+my $length ;
+my $verbose ;
 my $result  = GetOptions(
     "length=i" => \$length,    # numeric
     "file=s"   => \$data,      # string
