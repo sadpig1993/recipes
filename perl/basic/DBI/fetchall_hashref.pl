@@ -1,5 +1,10 @@
 #!/usr/bin/perl
 
+
+#
+# fetchall_hashref fetch所有的数据并且返回一个hash引用，并且
+# 该引用指向的hash的每一个key对应的value也是一个hash引用
+#
 use strict;
 use warnings;
 use DBI;
@@ -29,11 +34,6 @@ my $dbh = DBI->connect(
     }
 );
 
-
-# my $tt = $dbh->quote("one\ntwo\0three");
-my $tt = $dbh->quote("don't");
-printf "$tt\n";
-
 # Data::Dump->dump( $dbh ) ;
 my %attr;
 
@@ -41,7 +41,7 @@ my %attr;
 my $sql = "select id,value  from dict_book";
 
 # 创建statement handle object (sth)
-my $sth_sel = $dbh->prepare( $sql, \%attr ) or die $dbh->errstr ;  
+my $sth_sel = $dbh->prepare( $sql, \%attr ) or die $dbh->errstr;
 
 # SQL 语句结束
 $sth_sel->finish();
@@ -50,10 +50,22 @@ $sth_sel->finish();
 $sth_sel->execute();
 
 # fetch 数据
-my $aref = $sth_sel->fetchall_arrayref();
-foreach my $row (@$aref) {
-    print " ID: $row->[0]\t Name: $row->[1]\n";
-}
+my $href = $sth_sel->fetchall_hashref('id');
 
+Data::Dump->dump( $href );
+
+#my $i = 1;
+#while ( $i < 50 ) {
+#
+#    if ( exists $href->{$i}->{id} ) {
+#        warn "$href->{$i}->{id}, $href->{$i}->{value}";
+#        $i++;
+#    }
+#    else {
+#        last;
+#    }
+#}
+
+warn "-----break while-----";
 $dbh->commit();
-$dbh->disconnect;
+$dbh->disconnect();

@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/perl
 
 use strict;
 use warnings;
@@ -12,9 +12,10 @@ my $cfg = {
     schema => "$ENV{DB_SCHEMA}",
 };
 
-Data::Dump->dump($cfg);
+# Data::Dump->dump($cfg);
 
 # 建立数据库连接
+# 创建database handle object dbh
 my $dbh = DBI->connect(
     $cfg->{dsn},
     $cfg->{user},
@@ -28,15 +29,18 @@ my $dbh = DBI->connect(
     }
 );
 
-# Data::Dump->dump( $dbh ) ;
-my $sql = "select * from dim_p";
-my $aref = $dbh->selectall_arrayref( $sql, { Slice => {} } );
+my %dim;
+my $sth = $dbh->prepare(qq/select * from dict_dim/) or return;
+$sth->execute();
+while ( my $row = $sth->fetchrow_hashref() ) {
+    Data::Dump->dump($row);
+    $dim{ delete $row->{dim} } = $row;
+    Data::Dump->dump($row);
+}
 
-Data::Dump->dump( $aref );
+Data::Dump->dump(%dim);
+$sth->finish();
 
-#foreach my $row (@$aref) {
-#   print " ID: $row->{id}\t Name: $row->{name}\n";
-#}
-
+warn "-----break while-----";
 $dbh->commit();
-$dbh->disconnect;
+$dbh->disconnect();

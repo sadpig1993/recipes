@@ -112,12 +112,12 @@ dbm.sh  restore                 (*恢复操作)
  ./dbm.sh restore -s 'zdb' -p '/db2back' -v '20131012225521' -t 'zdb' -r yes -a '/db2auto'
  ```
  
- 2. 修改`redirect.ddl`脚本中的表空间容器的文件及大小。将`redirect.ddl`中的表空间容器的文件及大小修改成恢复的目标数据库的表空间容器的文件及大小，并且保存修改后的脚本文件。
+ 2. 修改`redirect.ddl`脚本中的表空间容器的文件及大小。将`redirect.ddl`中的表空间容器的文件及大小修改成恢复的目标数据库的表空间容器的文件及大小，并且保存修改后的脚本文件。比如，恢复的数据源的tbs\_dat表空间容器文件是`/zdb/db2tbsp/dat`，并且文件页大小是`262144`，而目标数据库的tbs\_dat表空间容器是`/db2tbsp/dat`，并且文件大小是`327680`，则需要将redirect.ddl中的tbs_dat中的表空间容器文件及大小修改成`/db2tbsp/dat`和`327680`。
  
  3. 执行`db2 -tvf redirect.ddl`命令来进行数据库的恢复。 
 
- 4. 更改目标库的配置为原有配置（恢复前的配置）
-    
+ 4. 更改目标库的配置为原有配置（恢复前的配置）  
+    如何得到目标库的原有配置呢？有两种方法，一是查看目标库的相关建表语句获得；二是通过执行`db2 get db cfg for zdb`命令来得到数据库zdb的原有配置。如为了得到主日志目录，我们可以执行`db2 get db cfg for zdb | grep -i newlogpath` 命令来得到此配置。
     
     `db2 update db cfg for zdb using newlogpath /db2plog;    #主日志目录`
     `db2 update db cfg for zdb using logfilsiz 25600;        #单日志大小`

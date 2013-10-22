@@ -1,5 +1,9 @@
 #!/usr/bin/perl
 
+#
+# fetchall_arrayref fetch所有的数据，返回一个数组的引用，并且
+# 该引用指向的数组的每个元素又是一个数组的引用
+#
 use strict;
 use warnings;
 use DBI;
@@ -29,14 +33,19 @@ my $dbh = DBI->connect(
     }
 );
 
+
+# my $tt = $dbh->quote("one\ntwo\0three");
+my $tt = $dbh->quote("don't");
+printf "$tt\n";
+
 # Data::Dump->dump( $dbh ) ;
 my %attr;
 
 # SQL
-my $sql = "select id,value  from dict_book";
+my $sql = "select id,value from dict_book";
 
 # 创建statement handle object (sth)
-my $sth_sel = $dbh->prepare( $sql, \%attr ) or die $dbh->errstr;
+my $sth_sel = $dbh->prepare( $sql, \%attr ) or die $dbh->errstr ;  
 
 # SQL 语句结束
 $sth_sel->finish();
@@ -45,22 +54,13 @@ $sth_sel->finish();
 $sth_sel->execute();
 
 # fetch 数据
-my $href = $sth_sel->fetchall_hashref('id');
+my $aref = $sth_sel->fetchall_arrayref();
 
-# Data::Dump->dump( $href );
-my $i = 1;
+#foreach my $row (@$aref) {
+#    print " ID: $row->[0]\t Name: $row->[1]\n";
+#}
 
-while ( $i < 50 ) {
+Data::Dump->dump( $aref ) ;
 
-    if ( exists $href->{$i}->{id} ) {
-        warn "$href->{$i}->{id}, $href->{$i}->{value}";
-        $i++;
-    }
-    else {
-        last;
-    }
-}
-
-warn "-----break while-----";
 $dbh->commit();
-$dbh->disconnect();
+$dbh->disconnect;

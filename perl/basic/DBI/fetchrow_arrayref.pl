@@ -30,16 +30,15 @@ my $dbh = DBI->connect(
 );
 
 my %dim;
-my $sth = $dbh->prepare(qq/select * from dict_dim/) or return;
+my $sth = $dbh->prepare(qq/select * from dict_dim where dim='acct'/) or return;
 $sth->execute();
-while ( my $row = $sth->fetchrow_hashref() ) {
-    Data::Dump->dump($row);
-    $dim{ delete $row->{dim} } = $row;
-    Data::Dump->dump($row);
+while ( my $row = $sth->fetchrow_arrayref() ) {
+    #Data::Dump->dump($row);
+    $dim{$row->[0]} = $row ; 
 }
-$sth->finish();
 
-# Data::Dump->dump( \%dim ) ;
+Data::Dump->dump(\%dim);
+$sth->finish();
 
 warn "-----break while-----";
 $dbh->commit();

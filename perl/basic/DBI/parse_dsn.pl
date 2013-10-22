@@ -5,6 +5,10 @@ use warnings;
 use DBI;
 use Data::Dump;
 
+
+#
+# 解析 数据库连接
+#
 my ( $scheme, $driver, $attr_string, $attr_hash, $driver_dsn ) =
   DBI->parse_dsn("DBI:MyDriver(RaiseError=>1):db=test;port=42");
 #$scheme      = 'dbi';
