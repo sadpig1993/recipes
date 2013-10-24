@@ -1,0 +1,3 @@
+-- alter table table_name alter column column_name set data type 
+
+alter table bip alter column content set data type BOLB (102400) 

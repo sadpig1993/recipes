@@ -1,0 +1,6 @@
+# 查询bufferpool
+--select bpname,pagesize,npages from syscat.bufferpools
+
+
+# alter bufferpool
+--alter bufferpool ibmdefaultbp size 32768
