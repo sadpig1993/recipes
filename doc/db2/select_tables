@@ -1,0 +1,6 @@
+# select  tbspaceid,  tableid, substr(tabschema,1,18) as tabschema, substr(tabname,1,18) as tabname
+from syscat.tables where tbspaceid=3 and tableid=1422
+  
+   
+#  select all tables
+select * from syscat.tables;
