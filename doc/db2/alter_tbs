@@ -30,6 +30,9 @@ Add和Drop操作，表空间容器之间会发生数据重新平衡(rebalance)�
 3). 通过alter tablespace begin new stripe set 选项。begin new stripe set 选项是当已有容器使用完后，再使用新增加的容器。与方法2不同，该选项不会在容器之间做reblance，不会对系统造成性能影响，但它会造成数据偏移。如下：
     db2 "alter tablespace tbs_dat begin new stripe set (file '/db2tbsp/dat_2' 10G) "
 
-
 # 删除表空间tbs_dat的容器dat_2
 db2 "alter tablespace tbs_dat drop ( file '/db2tbsp/dat_2' )"
+
+
+表空间容器的路径变化时，需要建立一个软链接(容器的原路径软链接到容器的新路径)，如：
+ln -s /db2tbs/zdb/dat_1 /db2tbsp/dat_1

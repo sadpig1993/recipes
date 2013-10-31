@@ -109,6 +109,7 @@ use Data::Dump;
 
 my $cfg = {
     dsn    => "dbi:DB2:$ENV{DB_NAME}",
+    #dsn    => "dbi:DB2:zdb_test",
     user   => "$ENV{DB_USER}",
     pass   => "$ENV{DB_PASS}",
     schema => "$ENV{DB_SCHEMA}",
@@ -175,7 +176,7 @@ The original value will automatically and reliably be restored by Perl, regardle
 
 =cut
 
-my $dbh = DBI->connect(
+my $dbh1= DBI->connect(
     @{$cfg}{
         qw/dsn user pass/},
         {
@@ -186,16 +187,37 @@ my $dbh = DBI->connect(
         }
     );
 
-      if ($dbh) {
-        warn "connect to db";
+   if ($dbh1) {
+        warn "connect to db this is 1st dbh \n";
     }
     else {
-        warn "cannot connect to db";
+        warn "cannot connect 1st dbh $DBI::errstr\n";
     }
 
-$dbh->disconnect ;
+my $dbh2= DBI->connect(
+    @{$cfg}{
+        qw/dsn user pass/},
+        {
+            AutoCommit => 0, #默认属性是on , 此处关闭
+            PrintError => 0, #
+            RaiseError => 1, # 
+
+        }
+    );
+
+   if ($dbh2) {
+        warn "connect to db this is 2st dbh \n";
+    }
+    else {
+        warn "cannot connect 2st dbh $DBI::errstr\n";
+    }
 
 
+my $rv = $dbh1->disconnect();
+warn "the return value of succeed disconnect is :$rv";
+my $rc = $dbh2->disconnect();
+warn "the return code of succeed disconnect is :$rc";
+exit ;
 
 
 =comment

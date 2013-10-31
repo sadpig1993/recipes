@@ -1,0 +1,23 @@
+在sqllib/bnd目录下，执行
+
+" db2 bind @db2cli.lst blocking all grant public sqlerror continue CLIPKG 5 "
+
+命令
+
+
+
+
+Depending on the type of statement you are executing, DB2 will use a particular package on the server. By default, DB2 creates three packages 
+for each type of package. In this case NULLID.SYSLH2yy is reserved for statements with CURSORHOLD on and isolation level Cursor Stability. 
+The package SYSLH203 means that DB2 is looking for the 4th package (200 is first, 201 is second, etc) of this type, but it does not exist. 
+You can create more packages on the server by connecting to the database and issuing the following bind command from the " /sqllib/bnd " 
+directory:
+
+db2 bind @db2cli.lst blocking all grant public sqlerror continue CLIPKG 5
+
+Note: CLIPKG 5 will create 5 large packages, and will give you the package that your application is looking for, as well as one more in 
+this case.
+
+
+大致的意思是说DB2在执行SQL语句的时候会使用内部定义的包(package)来保持不同级别的游标的稳定性，包的名字就是“NULLID.SYSLH2XX”。DB2里面默认的时候会创建3个这样的包即SYSLH200, SYSLH201, SYSLH202，而当你的程序报“找不到程序包”的错误，并且程序包的名字的序号大于SYSLH202，也就说明DB2默认的包不够用了，DB2要求使用更多的包，但是这些包在DB2中并没有创建，因此DB2抛出了异常。
+
