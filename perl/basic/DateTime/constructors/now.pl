@@ -1,5 +1,4 @@
-#!/usr/bin/env perl
-
+#!/usr/bin/env perl 
 # All constructors can die when invalid parameters are given.
 
 use strict;
@@ -137,41 +136,7 @@ Alternately, you could create the object with the UTC time zone,
 =cut
 
 # This object represent 01:30:00 standard time
+my $dt = DateTime->now(time_zone => 'local') ;
+print "now is $dt\n";
 
-print "the first constructor called :\n";
-my $dt = DateTime->new(
-    year      => 2003,
-    month     => 10,
-    day       => 26,
-    hour      => 1,
-    minute    => 30,
-    second    => 0,
-    time_zone => 'America/Chicago',
-);
-
-print $dt->hms . "\n";    # prints 01:30:00
-
-# Now the object represent 01:30:00 saving time
-$dt->subtract( hours => 1 );
-print $dt->hms . "\n";    # still prints 01:30:00
-
-print "-------------------------------------\n";
-print "the second constructor called :\n";
-
-my $dt2 = DateTime->last_day_of_month(
-    year  => 2013,
-    month => 10,
-);
-warn $dt2->day . "\n";
-warn $dt2->year . "\n";
-warn $dt2->era_name . "\n";
-warn $dt2->day_of_week . "\n";
-
-
-print "-------------------------------------\n";
-print "the third constructor called :\n";
-my $dt3 = DateTime->new( 
-        year    => 2013,
-        time_zone => 'local' 
-    );
-print "$dt3\n";
+print $dt->hms. "\n" ;
