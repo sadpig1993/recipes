@@ -6,9 +6,9 @@ use warnings;
 
 my $c ;
 my $d ;
-my $money = '1000' ; 
+my $money = '10' ; 
 my $a = '0.97' ;
-my $b = '0.95' ;
+my $b = '0.90' ;
 #my $a ;
 #my $b ;
 
