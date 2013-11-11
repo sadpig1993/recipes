@@ -1,0 +1,33 @@
+此次实验是在sample数据库上做的
+
+
+--创建employee的MQT表 emp_summary
+create table emp_summary as (select workdept, job, count(*) as count
+ from employee group by workdept, job) 
+data initially deferred refresh deferred ;
+
+-- 创建MQT表emp_summary的staging表emp_summary_s
+create table emp_summary_s for emp_summary propagate immediate ;
+
+set integrity for emp_summary materialized query immediate unchecked ;
+
+set integrity for emp_summary_s staging immediate unchecked ;
+
+
+-- 1. 查询物化表数据，此时是空的
+select * from emp_summary ;
+
+--2. 刷新物化表
+refresh table emp_summary       ;
+
+--3.刷新物化表后，查询物化表仍然是空的
+select * from emp_summary ;
+
+--4. 向基本表employee 插入数据
+insert into employee  values ('006900', 'RUSS', 'L', 'DYERS', 'D21', '1234', '1960-05-05', 'FIELDREP', 5, 'M', '1940-04-02', 10000, 100, 1000); 
+ 
+--5.查询物化表emp_summary的staging表 emp_summary_s，此时该表里有一条数据
+select * from emp_summary_s ;
+    
+--6.查询物化表emp_summary，该表的数据仍然是空的
+select * from emp_summary ;
