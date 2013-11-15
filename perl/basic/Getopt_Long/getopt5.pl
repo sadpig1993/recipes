@@ -29,7 +29,7 @@ EOF
 # Alternatively you can use:
 ################ demo 2 ###############
 my $defines;
-GetOptions ("define=s%" => \$defines);
+GetOptions ("d|define=s%" => \$defines);
 my @k = keys %{$defines};
 my @v = values %{$defines};
 print <<EOF;
@@ -38,9 +38,9 @@ define  :   @v
 EOF
 
 Data::Dump->dump( $defines );
-# When used with command line options:
 
-#   --define os=linux --define vendor=redhat
+# When used with command line options:
+# --define os=linux --define vendor=redhat
 
 # the hash %defines (or %$defines ) will contain two keys, 
 # "os" with value "linux" and "vendor" with value "redhat" 

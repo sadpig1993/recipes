@@ -9,9 +9,11 @@ use Getopt::Long;
 #########################################
 # declare default values for variables
 #########################################
+# 三个变量的默认值都是空值''
 my $data    = '';
 my $length  = '';
 my $verbose = '';
+
 my $result  = GetOptions(
     "length=i" => \$length,    # numeric
     "file=s"   => \$data,      # string
@@ -39,5 +41,5 @@ sub usage {
     print <<EOF;
 usage : getopt2.pl -length num -file filename -verbose
 EOF
-    exit -1;
+    exit 1;
 }
