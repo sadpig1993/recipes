@@ -6,7 +6,7 @@ sub make_saying {
 	my $salute = shift;
 	#print "$salute\n"; #
 	my $newfunc = sub {
-	my $target = shift;
+	    my $target = shift;
 		print "$salute, $target!\n";
 	};
 	return $newfunc;		# 返回一个闭合

@@ -13,7 +13,7 @@ sub max_str {
 	my ($i,$j) = 0;
 	for($i; $i < $#_; $i++) {
 		for($j = $i + 1 ; $j < $#_ ; $j++) {
-			if ($_[$j] + 1 == $_[$j+1]) {
+			if ($_[$j] + 1 cmp $_[$j+1]) {
 					next;
 			}
 			else {

@@ -18,5 +18,5 @@ use Data::Dump;
 my @odd_numbers = grep { $_ % 2 } 1 .. 10;
 
 ## 打印@odd_numbers数组中的元素
-Data::Dump->dump( \@odd_numbers );
+Data::Dump->dump(\@odd_numbers);
 Data::Dump->dump(@odd_numbers);

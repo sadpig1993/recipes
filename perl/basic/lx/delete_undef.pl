@@ -10,7 +10,7 @@ my %hash=(
 	c => );
 Data::Dump->dump(\%hash);
 
-########删除hash中未定义的key/value对
+########删除hash中value未定义的key/value对
 for ( keys %hash ) {
     delete $hash{$_} unless defined $hash{$_};
 }
