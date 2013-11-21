@@ -52,6 +52,7 @@ sudo make prefix=/usr/local/git install
  - 增加软连接
 ```
 sudo ln -s /usr/local/git/bin/* /usr/bin/
+
 git --version  #如果能显示版本号，即表示成功`
 
 ```
@@ -61,9 +62,15 @@ git --version  #如果能显示版本号，即表示成功`
 sudo yum install python python-setuptools
 
 cd /usr/local/src
+
 git clone git://github.com/res0nat0r/gitosis.git
+
 cd gitosis
-python setup.py install  #显示Finished processing dependencies for gitosis==0.2即表示成功
+
+python setup.py install  
+
+#显示Finished processing dependencies for gitosis==0.2即表示成功
+
 ```
 
 
@@ -108,6 +115,7 @@ gitosis-init < /tmp/id_rsa.pub
 
 #删除密钥
 rm -rf /tmp/id_rsa.pub
+
 ```
 
 6.在个人开发机上导出项目管理
@@ -123,16 +131,26 @@ git clone git@zgit:gitosis-admin.git
 cd /repo/gitosis-admin
 
 # 查看git服务器已经上传密钥
-ls keydir
-cat keydir/ltl@jackliu-ThinkPad.pub #ltl@jackliu-ThinkPad.pub为已经上传的开发机生成的公密
+ls keydir  
+
+cat keydir/ltl@jackliu-ThinkPad.pub  
+
+#ltl@jackliu-ThinkPad.pub为已经上传的开发机生成的公密
 
 #显示密钥 最后的字符串为 密钥用户名 这里为 ltl@jackliu-ThinkPad
 vim gitosis.conf
 
 #在文件尾增加以下内容
-[group test-git]            # 组名称
-writable = test-git         # 项目名称
-members = ltl@jackliu-ThinkPad  guangyun.ni@yeepay.com     #密钥用户名 多个用户协同开发时，以空格分隔
+
+[group test-git]            # 具有写权限的组名称
+writable = test-git         # 该组可写的项目名称
+members = ltl@jackliu-ThinkPad  guangyun.ni@yeepay.com     #该组的成员(密钥用户名) 多个用户协同开发时，以空格分隔
+
+# 如果要增加只读的组 参考如下
+# [group test-git-readnoly]          # 具有都权限的组名称 
+# readonly = test-git                # 该组只读的项目名称 
+# members = ltl@jackliu-ThinkPad     # 该组的成员
+
 
 #提交修改
 git add .
@@ -144,15 +162,23 @@ git push
 8.在个人开发机上初始，增加及使用项目test-git
 
 ```
-cd ~/repo
-mkdir test-git
-cd test-git
-git init
-touch readme
-git add .
-git commit -a -m "init test-git"
-git remote add origin git@zgit:test-git.git
-git push origin master
+cd ~/repo  
+
+mkdir test-git   
+
+cd test-git  
+
+git init  
+
+touch readme  
+
+git add .   
+
+git commit -a -m "init test-git"  
+
+git remote add origin git@zgit:test-git.git  
+
+git push origin master  
 
 ```
 
