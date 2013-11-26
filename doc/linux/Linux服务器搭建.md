@@ -19,7 +19,7 @@ LVM是 Logical Volume Manager(逻辑卷管理)的简写，它由Heinz Mauelshage
 与传统的磁盘与分区相比，LVM为计算机提供了更高层次的磁盘存储。它使系统管理员可以更方便的为应用与用户分配存储空间。在LVM管理下的存储卷可以按需要随时改变大小与移除(可能需对文件系统工具进行升级)。LVM也允许按用户组对存储卷进行管理，允许管理员用更直观的名称(如"sales'、 'development')代替物理磁盘名(如'sda'、'sdb')来标识存储卷。
 如图所示LVM模型：
 
-![LVM模型][data/lvm_model.png] 
+![LVM模型][../data/lvm_model.png] 
 
 <h4 id="lvm_basic">2. LVM基本术语</h4>
 LVM是在磁盘分区和文件系统之间添加的一个逻辑层，LVM为文件系统屏蔽下层磁盘分区布局，提供一个抽象的盘卷，在盘卷上建立文件系统。现在我们来学习以下几个LVM术语：
@@ -42,7 +42,7 @@ PV:是物理的磁盘分区
 VG:LVM中的物理的磁盘分区；VG是由PV组成的，可以将VG理解为一个仓库或者是几个大的硬盘。  
 LV：也就是从VG中划分的逻辑分区  
 如下图所示PV、VG、LV三者关系：  
-![PV VG LV三者关系](data/pv_vg_lv.png)
+![PV VG LV三者关系](../data/pv_vg_lv.png)
 
 <h4 id="lvm_install">3. LVM安装</h4>
 首先确定系统中是否安装了lvm工具：  
@@ -58,26 +58,26 @@ which lvm
 <h4 id="lvm_install">4. 创建和管理LVM</h4>
 <h5 id="lvm_create">创建LVM分区</h5>
 使用分区工具（如：fdisk等）创建LVM分区，方法和创建其他一般分区的方式是一样的，区别仅仅是LVM的分区类型为8e。如下列图所示：  
-![fdisk -l分区](data/lvm_create_1.png)  
+![fdisk -l分区](../data/lvm_create_1.png)  
 查看磁盘分区列表：
 `
 fdisk /dev/sda3(设备文件的绝对路径)
 `  
-![fdisk /dev/hda](data/lvm_create_2.png)   
+![fdisk /dev/hda](../data/lvm_create_2.png)   
 使用fdisk创建分区，根据设备文件的绝对路径（/dev/sda3）进入分区管理  
-![分区管理-创建新的分区](data/lvm_create_3.png)  
-![分区管理-修改分区格式](data/lvm_create_4.png)  
+![分区管理-创建新的分区](../data/lvm_create_3.png)  
+![分区管理-修改分区格式](../data/lvm_create_4.png)  
 **一定要指定分区的格式为8e，这是LVM的分区格式**  
 <h5 id="pv_create">创建PV</h5>
 创建PV  
-![创建PV](data/pv_create.png)
+![创建PV](../data/pv_create.png)
 <h5 id="vg_create">创建VG</h5>
 创建VG  
-![创建VG](data/vg_create.png)  
-![创建VG2](data/vg_create_2.png)  
+![创建VG](../data/vg_create.png)  
+![创建VG2](../data/vg_create_2.png)  
 <h5 id="lv_create">创建LV</h5>
 创建LV  
-![创建LV](data/lv_create.png)  
+![创建LV](../data/lv_create.png)  
 创建完VG之后，才能从VG中划分LV。
 <h5 id="lv_mount">LV格式化及挂载</h5>
 下一步需要对LV进行格式化（使用mksf进行格式化操作），然后LV才能存储资料  
