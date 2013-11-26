@@ -28,6 +28,7 @@ my $thash = {
 warn "-------before delete--------";
 Data::Dump->dump($thash);
 
+warn "-------delete key/value a=>hello world------\n";
 my $a = delete $thash->{a};
 warn "$a";
 

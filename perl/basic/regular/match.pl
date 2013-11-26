@@ -28,12 +28,14 @@ print ($first,"\n");
 # 打印""
 print ($last,"\n");
 # 打印 ""
-close DICT;
+# close DICT;
 
 ######## 将所以的hello转换成大写######
-#print "22222222222222222";
-#open DICT,"aa.txt" or die "Can't open words: $!\n";
-#our $tmp5;
-#while(<DICT>){
-#	$tmp5=s/hello|Hello/\u$&/g;
-#}
+print "22222222222222222\n";
+open DICT,"aa.txt" or die "Can't open words: $!\n";
+our $tmp5;
+while(<DICT>){
+	$tmp5=s/hello|Hello/\u$&/g;
+    print "$tmp5\n";
+}
+close DICT;

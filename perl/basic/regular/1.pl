@@ -3,7 +3,6 @@
 use strict;
 use warnings;
 
-=p
 my @string = (
 	"Fred and Barney",
 	"Gilligan or Skipper",
@@ -16,5 +15,3 @@ foreach my $string ( @string ) {
 	print "\$1: $1\n\$2: $2\n\$3: $3\n";
 	print "-" x 10,"\n";
 }
-=cut
-
