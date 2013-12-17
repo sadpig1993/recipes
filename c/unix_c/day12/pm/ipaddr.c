@@ -5,28 +5,28 @@ main()
 {
 	char *ip="192.168.0.26";
 
-	//ipµÄÕûÊı±íÊ¾ 
+	//ipçš„æ•´æ•°è¡¨ç¤º 
 	struct in_addr sip={};
-	//Ö÷»úIPµÄÕûÊı±íÊ¾
+	//ä¸»æœºIPçš„æ•´æ•°è¡¨ç¤º
 	struct in_addr hip={};
-	//ÍøÂçIPµÄÕûÊı±íÊ¾
+	//ç½‘ç»œIPçš„æ•´æ•°è¡¨ç¤º
 	struct in_addr nip={};
 
-	//ipÔÚ¼ÆËã»úÄÚ²¿µÄÕûÊı±íÊ¾ ÎŞ·ûºÅÕûÊı
+	//ipåœ¨è®¡ç®—æœºå†…éƒ¨çš„æ•´æ•°è¡¨ç¤º æ— ç¬¦å·æ•´æ•°
 	sip.s_addr=inet_addr(ip);
 	printf("%u\n",sip.s_addr);
 
-	//ipÔÚ¼ÆËã»úÄÚ²¿µÄÕûÊı±íÊ¾ ÎŞ·ûºÅÕûÊı
+	//ipåœ¨è®¡ç®—æœºå†…éƒ¨çš„æ•´æ•°è¡¨ç¤º æ— ç¬¦å·æ•´æ•°
 	inet_aton(ip,&sip);
 	printf("%u\n",sip.s_addr);
 
-	//µÃµ½Ö÷»ú±êÊ¶
+	//å¾—åˆ°ä¸»æœºæ ‡è¯†
 	hip.s_addr=inet_lnaof(sip);
-	//µÃµ½ÍøÂç±êÊ¶
+	//å¾—åˆ°ç½‘ç»œæ ‡è¯†
 	nip.s_addr=inet_netof(sip);
 	
 
-	printf("Ö÷»ú±êÊ¶:%s\n",inet_ntoa(hip));
-	printf("ÍøÂç±êÊ¶:%s\n",inet_ntoa(nip));
+	printf("ä¸»æœºæ ‡è¯†:%s\n",inet_ntoa(hip));
+	printf("ç½‘ç»œæ ‡è¯†:%s\n",inet_ntoa(nip));
 
 }

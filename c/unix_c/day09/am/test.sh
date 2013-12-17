@@ -5,4 +5,4 @@
 
 #for popen.c write
 read a
-echo $a
+echo "$a byebye"

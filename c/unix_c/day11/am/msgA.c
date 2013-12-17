@@ -6,8 +6,8 @@
 #include <sys/msg.h>
 
 /* 
-* ÏûÏ¢¸ñÊ½ÓÃ»§×Ô¼º¶¨Òå
-* ÏÂÃæ¶¨ÒåÁËÁ½¸öÏûÏ¢½á¹¹Ìå
+* æ¶ˆæ¯æ ¼å¼ç”¨æˆ·è‡ªå·±å®šä¹‰
+* ä¸‹é¢å®šä¹‰äº†ä¸¤ä¸ªæ¶ˆæ¯ç»“æ„ä½“
 */
 
 struct charmsg
@@ -30,19 +30,19 @@ main()
 
 	//printf("msgid:%x\n",msgid);
 
-	//·¢ËÍ×Ö·û´®ÏûÏ¢
+	//å‘é€å­—ç¬¦ä¸²æ¶ˆæ¯
 	struct charmsg cmsg={};
 	int i;
 	for(i=0;i<10;i++)
 	{
 		cmsg.type = 1;
 		bzero(cmsg.data,sizeof(cmsg.data));
-		sprintf(cmsg.data,"ÏûÏ¢:%d",i);
+		sprintf(cmsg.data,"æ¶ˆæ¯:%d",i);
 		msgsnd(msgid,&cmsg,strlen(cmsg.data),0);
 	}
 
 	
-	//·¢ËÍÕûÊıÏûÏ¢
+	//å‘é€æ•´æ•°æ¶ˆæ¯
 	struct intmsg imsg={};
 	for(i=0;i<10;i++)
 	{

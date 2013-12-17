@@ -10,38 +10,38 @@
 main()
 {
 
-	/*	1.½¨Á¢socket	*/
+	/*	1.å»ºç«‹socket	*/
 		int fd=socket(AF_INET,SOCK_DGRAM,0);
 		if(fd == -1)
 		{
 			perror("socket failure"),exit(-1);
 		}
-		printf("½¨Á¢socket³É¹¦!\n");
+		printf("å»ºç«‹socketæˆåŠŸ!\n");
 
-	/*	2.°ó¶¨µØÖ·		*/
+	/*	2.ç»‘å®šåœ°å€		*/
 		struct sockaddr_in addr={};
 		addr.sin_family=AF_INET;
-		//	¶ÔÓ¦µÄ¶Ë¿Ú
+		//	å¯¹åº”çš„ç«¯å£
 		addr.sin_port=htons(8888);
 
-		// °ÑIPµØÖ·½øĞĞ×ª»»²¢ÇÒ´æ·Åµ½½á¹¹Ìå¶ÔÓ¦µÄ±äÁ¿ÖĞ
+		// æŠŠIPåœ°å€è¿›è¡Œè½¬æ¢å¹¶ä¸”å­˜æ”¾åˆ°ç»“æ„ä½“å¯¹åº”çš„å˜é‡ä¸­
 		inet_aton("192.168.1.188",&(addr.sin_addr));
 
-		// °ó¶¨
+		// ç»‘å®š
 		int r = bind(fd,(struct sockaddr *)&addr,sizeof(addr));
 		if(r==-1)
 		{
 			perror("bind failure\n"),close(fd),exit(-1);	
 		}
-		printf("µØÖ·°ó¶¨³É¹¦!\n");
+		printf("åœ°å€ç»‘å®šæˆåŠŸ!\n");
 		
-	/*	3.Ñ­»·½ÓÊÕ¿Í»§Êı¾İ£¬²¢·µ·¢Ò»¸öĞÅÏ¢		*/
+	/*	3.å¾ªç¯æ¥æ”¶å®¢æˆ·æ•°æ®ï¼Œå¹¶è¿”å‘ä¸€ä¸ªä¿¡æ¯		*/
 		char buf[256]={};
 		struct sockaddr_in caddr={};
 		socklen_t len=sizeof(caddr);
 		while(1)
 		{
-			// ¶ÁÈ¡Êı¾İ À´ÅĞ¶ÏÊÇ·ñÓĞÁ¬½ÓÇëÇó	
+			// è¯»å–æ•°æ® æ¥åˆ¤æ–­æ˜¯å¦æœ‰è¿æ¥è¯·æ±‚	
 			//r = read(fd,buf,sizeof(buf)-1);
 
 			r=recvfrom(fd,buf,sizeof(buf)-1,0,(struct sockaddr *)&caddr,&len);
@@ -50,17 +50,17 @@ main()
 				break;
 			}
 			buf[r]=0;
-			printf("À´×Ô%s:%uµÄÊı¾İ::%s\n",
+			printf("æ¥è‡ª%s:%uçš„æ•°æ®::%s\n",
 					inet_ntoa(caddr.sin_addr)		
 					,ntohs(caddr.sin_port)
 					,buf);
 
-			//·µ·¢Êı¾İ
+			//è¿”å‘æ•°æ®
 			sendto(fd,"Cow Boy",strlen("Cow Boy"),0,
 					(struct sockaddr *)&caddr,sizeof(caddr));
 		}
 		
-	/*  4.Í¨¹ıĞÅºÅ¹Ø±ÕsocketÁ¬½Ó		*/
+	/*  4.é€šè¿‡ä¿¡å·å…³é—­socketè¿æ¥		*/
 		close(fd);	
 
 }

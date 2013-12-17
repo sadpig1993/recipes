@@ -5,7 +5,7 @@
 
 /* 
 * 
-*
+* 
 */
 main()
 {	
@@ -21,14 +21,17 @@ main()
 		p1 = fork();
 		if( p1==0 )
 		{
-			printf("child%d pid:%d\n",i,getpid());
-	//		exit(0);
+			printf("child:%d pid:%d\n",i,getpid());
+            // child process exit
+			// exit(0);
 		}
 		else if(p1 > 0)
 		{
-			printf("parent pid:%d\tppid:%d\n",getpid(),getppid());
+			printf("parent pid:%d\tppid:%d, status:%d\n",getpid(),getppid(), status);
 		}
 		p2 = wait(p1,&status,0);		
+	    printf("parent pid:%d\t ppid:%d\n",getpid(),getppid());
 	}
+
 	printf("parent process%d end\n",getpid());
 }

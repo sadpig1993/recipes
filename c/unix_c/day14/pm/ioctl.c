@@ -1,6 +1,6 @@
 /*
-1.»ñÈ¡ËùÓĞ½Ó¿Ú
-2.»ñÈ¡Ä³¸ö½Ó¿ÚµÄµØÖ·£¬¹ã²¥µØÖ·,MTU
+1.è·å–æ‰€æœ‰æ¥å£
+2.è·å–æŸä¸ªæ¥å£çš„åœ°å€ï¼Œå¹¿æ’­åœ°å€,MTU
 */
 
 #include <stdio.h>
@@ -14,37 +14,37 @@
 
 main()
 {
-	struct ifreq reqs[5]; /* ´æ·Å·µ»ØµÄ½Ó¿Ú	*/
+	struct ifreq reqs[5]; /* å­˜æ”¾è¿”å›çš„æ¥å£	*/
 	struct ifconf conf;
 
 	conf.ifc_len=sizeof(reqs);
-/*	conf.ifc_ifcu.ifcu_req=reqs;ÓëÏÂÃæĞĞµÈ¼Û	*/
+/*	conf.ifc_ifcu.ifcu_req=reqs;ä¸ä¸‹é¢è¡Œç­‰ä»·	*/
 	conf.ifc_req=reqs;	
 
 	int fd = socket(AF_INET,SOCK_STREAM,0);
 	int r=ioctl(fd,SIOCGIFCONF,&conf);
 	if(!r){
-		printf("»ñÈ¡³É¹¦!\n");
+		printf("è·å–æˆåŠŸ!\n");
 	}
 
 	int len=conf.ifc_len/sizeof(struct ifreq);
-	printf("½Ó¿Ú¸öÊı:%d\n",len);
+	printf("æ¥å£ä¸ªæ•°:%d\n",len);
 	int i;
 	for(i=0;i<len;i++)
 	{
-		printf("½Ó¿Ú%d:%s\n",i+1,reqs[i].ifr_name);
+		printf("æ¥å£%d:%s\n",i+1,reqs[i].ifr_name);
 	}
 
-/* »ñÈ¡eth0µÄIPµØÖ·Óë¹ã²¥µØÖ·	*/
+/* è·å–eth0çš„IPåœ°å€ä¸å¹¿æ’­åœ°å€	*/
 	struct ifreq req;
-	/* ÊäÈëµÄÊÇ½Ó¿ÚÃû×Ö£¬Êä³ö½Ó¿ÚµÄ¸÷ÖÖ²ÎÊı	*/
+	/* è¾“å…¥çš„æ˜¯æ¥å£åå­—ï¼Œè¾“å‡ºæ¥å£çš„å„ç§å‚æ•°	*/
 	memcpy(req.ifr_name,"eth0",5);
 	ioctl(fd,SIOCGIFADDR,&req);
 	
 	struct sockaddr_in *addr=
 	(struct sockaddr_in*)&req.ifr_addr ;
 	
-	printf("µØÖ·:%s\n",inet_ntoa(addr->sin_addr));
+	printf("åœ°å€:%s\n",inet_ntoa(addr->sin_addr));
 
 	close(fd);
 }

@@ -9,11 +9,11 @@
 
 #define BUF_LEN 1024
 
-// ±¾³ÌĞò»¹ÊÇ´¦Àí µ¥¿Í»§Á¬½Ó
+// æœ¬ç¨‹åºè¿˜æ˜¯å¤„ç† å•å®¢æˆ·è¿æ¥
 main()
 {
 
-	/* 	1.½¨Á¢socket		*/
+	/* 	1.å»ºç«‹socket		*/
 		int fd=socket(AF_INET,SOCK_STREAM,0);
 		if(fd==-1)
 		{
@@ -22,7 +22,7 @@ main()
 		}
 		printf("socket ok!\n");
 
-	/*  2.°ó¶¨µØÖ·			*/
+	/*  2.ç»‘å®šåœ°å€			*/
 		struct sockaddr_in addr={};
 		addr.sin_family=AF_INET;
 		addr.sin_port=htons(9998);
@@ -36,7 +36,7 @@ main()
 			exit(-1);
 		}
 		printf("bind ok!\n");
-	/* 3.¼àÌı				*/
+	/* 3.ç›‘å¬				*/
 		r = listen(fd,10);	
 		if(r==-1)
 		{
@@ -46,7 +46,7 @@ main()
 		}
 		printf("listen ok!\n");	
 
-	/* 4.½ÓÊÕÒ»¸ö¿Í»§		*/
+	/* 4.æ¥æ”¶ä¸€ä¸ªå®¢æˆ·		*/
 		int cfd;
 		cfd=accept(fd,0,0);
 		if(cfd==-1)
@@ -55,34 +55,34 @@ main()
 			close(fd);
 			exit(-1);
 		}
-		printf("¿ªÊ¼½ÓÊÕ´«ËÍÎÄ¼ş!\n");
+		printf("å¼€å§‹æ¥æ”¶ä¼ é€æ–‡ä»¶!\n");
 
-	/* 5.Ñ­»·½ÓÊÕ¿Í»§´«µİµÄÎÄ¼ş		*/
-		/* 5.1	½ÓÊÕÎÄ¼şÃû³¤¶È		*/
+	/* 5.å¾ªç¯æ¥æ”¶å®¢æˆ·ä¼ é€’çš„æ–‡ä»¶		*/
+		/* 5.1	æ¥æ”¶æ–‡ä»¶åé•¿åº¦		*/
 		  int len;	
 		  r=recv(cfd,&len,sizeof(int),MSG_WAITALL);
-		  printf("ÎÄ¼şÃû³¤¶È:%u\n",len);
+		  printf("æ–‡ä»¶åé•¿åº¦:%u\n",len);
 
-		/* 5.2 ½ÓÊÕÎÄ¼şÃû		*/
-			char buf[BUF_LEN];	//½ÓÊÕÊı¾İµÄ»º³å
+		/* 5.2 æ¥æ”¶æ–‡ä»¶å		*/
+			char buf[BUF_LEN];	//æ¥æ”¶æ•°æ®çš„ç¼“å†²
 			bzero(buf,BUF_LEN);
 			recv(cfd,buf,len,MSG_WAITALL);
-			printf("´«µİµÄÎÄ¼şÃû:%s\n",buf);
+			printf("ä¼ é€’çš„æ–‡ä»¶å:%s\n",buf);
 			int filefd = open(buf,O_RDWR|O_CREAT,0666);
-			//Òì³£´¦Àí´Ë´¦ºöÂÔ
+			//å¼‚å¸¸å¤„ç†æ­¤å¤„å¿½ç•¥
 
-		/* 5.3 ½ÓÊÕÎÄ¼ş³¤¶È		*/
+		/* 5.3 æ¥æ”¶æ–‡ä»¶é•¿åº¦		*/
 			recv(cfd,&len,sizeof(int),MSG_WAITALL); 	
-			printf("ÎÄ¼ş³¤¶ÈÊÇ:%d\n",len);	
+			printf("æ–‡ä»¶é•¿åº¦æ˜¯:%d\n",len);	
 
-		/* 5.4 ½ÓÊÕÎÄ¼şÄÚÈİ		*/
+		/* 5.4 æ¥æ”¶æ–‡ä»¶å†…å®¹		*/
 			int count = len/BUF_LEN ;
 			int remainder = len%BUF_LEN ;
 			int i;
 			for(i=0;i<count;i++)
 			{
 				recv(cfd,buf,BUF_LEN,MSG_WAITALL);
-				//°Ñ½ÓÊÕµ½µÄÊı¾İĞ´ÈëÎÄ¼ş
+				//æŠŠæ¥æ”¶åˆ°çš„æ•°æ®å†™å…¥æ–‡ä»¶
 				write(filefd,buf,BUF_LEN);
 			}
 			if(remainder>0)
@@ -91,10 +91,10 @@ main()
 				write(filefd,buf,remainder);
 			}
 			close(filefd);
-	/* 6.¹Ø±Õ¿Í»§			*/
+	/* 6.å…³é—­å®¢æˆ·			*/
 			close(cfd);	
 			
-	/* 7.¹Ø±Õsocket			*/
+	/* 7.å…³é—­socket			*/
 			close(fd);
 
 }

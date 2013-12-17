@@ -16,7 +16,7 @@ void handle(int s)
 main()
 {
 
-	//绑定信号 SIGIO处理函数
+	//缁戝畾淇″彿 SIGIO澶勭悊鍑芥暟
 	signal(SIGIO,handle);
 
 	/*
@@ -30,7 +30,7 @@ main()
 	fcntl(0,F_SETOWN,getpid());
 	//ioctl(0,FIOSETOWN,&pid);
 
-	printf("修改异步成功!\n");
+	printf("淇敼寮傛鎴愬姛!\n");
 	
 	while(1);
 	

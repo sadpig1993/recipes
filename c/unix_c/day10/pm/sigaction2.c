@@ -4,37 +4,39 @@
 #include <unistd.h>
 
 /*
-*	ĞÂ °æ±¾µÄĞÅºÅ´¦Àíº¯Êı
+*	æ–° ç‰ˆæœ¬çš„ä¿¡å·å¤„ç†å‡½æ•°
 */
 void handle(int s,siginfo_t *info,void * m)
 {
-	printf("¿ªÊ¼ÆÁ±Î´¦Àí!\n");
+	printf("å¼€å§‹å±è”½å¤„ç†!\n");
 
+	sleep(5);
+    // info->si_pid å‘é€ä¿¡å·çš„è¿›ç¨‹ID info->si_int å‘é€çš„ä¿¡å·
 	printf("%d:%d\n",info->si_pid,info->si_int);
 
-	sleep(2);
-	printf("ÆÁ±Î´¦ÀíÍê±Ï!\n");
+	//sleep(5);
+	printf("å±è”½å¤„ç†å®Œæ¯•!\n");
 }
 
 main()
 {
-	/* ¶¨Òå³õÊ¼»¯ĞÅºÅ´¦Àí½á¹¹Ìå	*/
+	/* å®šä¹‰åˆå§‹åŒ–ä¿¡å·å¤„ç†ç»“æ„ä½“	*/
 	struct sigaction act={0};
-	/* sigaction ½á¹¹ÌåµÄµÚÒ»¸ö³ÉÔ±	*/
+	/* sigaction ç»“æ„ä½“çš„ç¬¬ä¸€ä¸ªæˆå‘˜	*/
 //	act.sa_handler=handle;
 	
-	/* sigaction ½á¹¹ÌåµÄµÚ¶ş¸ö³ÉÔ±	*/
+	/* sigaction ç»“æ„ä½“çš„ç¬¬äºŒä¸ªæˆå‘˜	*/
 	act.sa_sigaction=handle;
 
-	/* ÖĞ¶Ïº¯ÊıÔÚÖ´ĞĞÊ±±» ÆÁ±ÎĞÅºÅ10 	*/
+	/* ä¸­æ–­å‡½æ•°åœ¨æ‰§è¡Œæ—¶è¢« å±è”½ä¿¡å·10 	*/
 	sigemptyset(&act.sa_mask);
 	sigaddset(&act.sa_mask,SIGUSR1);
 	
-	/* Ê¹ÓÃÀÏ°æ±¾µÄĞÅºÅ´¦Àíº¯Êı	*/
+	/* ä½¿ç”¨è€ç‰ˆæœ¬çš„ä¿¡å·å¤„ç†å‡½æ•°	*/
 	//act.sa_flags = 0;
 
-	// ÎªÁËÄÜ´«µİÊı¾İ,Ê¹ÓÃsiginfo_t½á¹¹Ìå
-	//ÓÅÏÈµ÷ÓÃĞÂ°æ±¾µÄ´¦Àíº¯Êı
+	// ä¸ºäº†èƒ½ä¼ é€’æ•°æ®,ä½¿ç”¨siginfo_tç»“æ„ä½“
+	//ä¼˜å…ˆè°ƒç”¨æ–°ç‰ˆæœ¬çš„å¤„ç†å‡½æ•°
 	act.sa_flags = SA_SIGINFO;
 
 	printf("::%d\n",getpid());

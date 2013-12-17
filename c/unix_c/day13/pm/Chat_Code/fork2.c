@@ -21,7 +21,7 @@ main()
 		else
 		{
 			printf("idx=%d\n",idx);
-			exit(0);	//子进程退出
+			exit(0);	//脳脫陆酶鲁脤脥脣鲁枚
 		}
 	}
 

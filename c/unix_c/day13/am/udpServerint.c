@@ -6,13 +6,13 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-//	Ê¹ÓÃºÜ´ó»º³å½ÓÊÕ¿Í»§Êý¾Ý
-//	Ã¿´ÎÖ»´¦ÀíÒ»¸ö¿Í»§
+//	ä½¿ç”¨å¾ˆå¤§ç¼“å†²æŽ¥æ”¶å®¢æˆ·æ•°æ®
+//	æ¯æ¬¡åªå¤„ç†ä¸€ä¸ªå®¢æˆ·
 
 main()
 {
 
-	/* 1.½¨Á¢socketÁ¬½Ó		*/
+	/* 1.å»ºç«‹socketè¿žæŽ¥		*/
 		int fd=socket(PF_INET,SOCK_DGRAM,0);
 		if(fd == -1)
 		{
@@ -20,7 +20,7 @@ main()
 		 }
 		printf("scoket OK!\n");
 
-	/* 2.°ó¶¨µØÖ·			*/
+	/* 2.ç»‘å®šåœ°å€			*/
 		struct sockaddr_in addr={};
 		addr.sin_family=PF_INET;
 		addr.sin_port=htons(9999);
@@ -36,16 +36,16 @@ main()
 		printf("bind OK!\n");
 
 
-	/* 5.½ÓÊÕ¿Í»§Êý¾Ý 		*/
+	/* 5.æŽ¥æ”¶å®¢æˆ·æ•°æ® 		*/
 		int a;
 		while(1)
 		{
-			//r = read(fd,&a,sizeof(int)); ×¢ÒâÓëÏÂÃæÒ»ÐÐµÄÇø±ð
-			// ¶ÁÈ¡¶¨³¤³¤¶ÈµÄÊý¾Ý recvº¯Êý£¬²¢ÇÒÊ¹ÓÃMSG_WAITALL
+			//r = read(fd,&a,sizeof(int)); æ³¨æ„ä¸Žä¸‹é¢ä¸€è¡Œçš„åŒºåˆ«
+			// è¯»å–å®šé•¿é•¿åº¦çš„æ•°æ® recvå‡½æ•°ï¼Œå¹¶ä¸”ä½¿ç”¨MSG_WAITALL
 			r = recv(fd,&a,sizeof(int),MSG_WAITALL);
 			if(r==0)
 			{
-				printf("¿Í»§ÍË³ö!\n");
+				printf("å®¢æˆ·é€€å‡º!\n");
 				break;
 			}
 			if(r>0)
@@ -55,11 +55,11 @@ main()
 			}
 			if(r==-1)
 			{
-				printf("ÍøÂç¹ÊÕÏ!\n");
+				printf("ç½‘ç»œæ•…éšœ!\n");
 				break;
 			}
 		}
-	/* 7.¹Ø±Õsocket			*/
+	/* 7.å…³é—­socket			*/
 		close(fd);	
 
 }

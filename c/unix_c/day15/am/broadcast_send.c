@@ -7,23 +7,23 @@
 #include <arpa/inet.h>
 
 /*
-1.ÉèÖÃ¹ã²¥Ñ¡Ïî
-2.Ïò¹ã²¥µØÖ·¹ã²¥
+1.æ‰¢ç¦»å«˜ç•¦æç 
+2.ç ƒå«˜ç•¦è¯ç¡Šå«˜ç•¦
 */
 
 main()
 {
 	int fd=socket(AF_INET,SOCK_DGRAM,0);
 
-	/* ÉèÖÃ¹ã²¥Ñ¡Ïî	*/
+	/* æ‰¢ç¦»å«˜ç•¦æç 	*/
 	int b=1;
 	int r=setsockopt(fd,SOL_SOCKET,SO_BROADCAST,&b,sizeof(b));
 
-	/* Ïò¹ã²¥µØÖ·¹ã²¥	*/
+	/* ç ƒå«˜ç•¦è¯ç¡Šå«˜ç•¦	*/
 	struct sockaddr_in addr={};
 	addr.sin_family=AF_INET;
 	addr.sin_port=htons(8888);
-	addr.sin_addr.s_addr=inet_addr("192.168.1.255"); /* ¹ã²¥µØÖ· */
+	addr.sin_addr.s_addr=inet_addr("192.168.1.255"); /* å«˜ç•¦è¯ç¡Š */
 	
 	int i;
 	for(i=0;i<100;i++)

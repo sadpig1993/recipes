@@ -12,18 +12,18 @@ main()
 
 	int fd=socket(AF_INET,SOCK_STREAM,0);
 	
-	/* Òª×¥È¡µÄÍøÕ¾µÄIPºÍ¶Ë¿Ú */
+	/* è¦æŠ“å–çš„ç½‘ç«™çš„IPå’Œç«¯å£ */
 	struct sockaddr_in addr;	
 	addr.sin_family=AF_INET;
 	addr.sin_port=htons(80);
-	/* °Ù¶ÈµÄIP 	*/
+	/* ç™¾åº¦çš„IP 	*/
 	addr.sin_addr.s_addr=inet_addr("192.168.1.107");
 
-	/* Á¬½Ó·şÎñÆ÷	*/
+	/* è¿æ¥æœåŠ¡å™¨	*/
 	int r;
 	r=connect(fd,(struct sockaddr *)&addr,sizeof(addr));
 
-	/*	Æ´½ÓHTTPµÄÇëÇó±¨ÎÄ	*/
+	/*	æ‹¼æ¥HTTPçš„è¯·æ±‚æŠ¥æ–‡	*/
 	char buf[1024];
 	sprintf(buf,
 			"GET /Default.htm HTTP/1.1\r\n"

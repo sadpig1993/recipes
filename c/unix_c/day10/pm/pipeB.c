@@ -5,13 +5,13 @@
 #include <fcntl.h>
 #include <signal.h>
 
-char pipefile[]="p.pipe"; //¹ÜµÀÎÄ¼şÃû
-int fd;	//´ò¿ª¹ÜµÀµÄÎÄ¼şÃèÊö·ûºÅ
+char pipefile[]="p.pipe"; //ç®¡é“æ–‡ä»¶å
+int fd;	//æ‰“å¼€ç®¡é“çš„æ–‡ä»¶æè¿°ç¬¦å·
 int r ;
 
 void closeproc(int s)
 {
-	/* 4.¹Ø±Õ¹ÜµÀ	*/
+	/* 4.å…³é—­ç®¡é“	*/
 	close(fd);
 	exit(0);
 
@@ -22,7 +22,7 @@ main()
 
 	signal(2,closeproc);
 
-	/* 2.´ò¿ª¹ÜµÀÎÄ¼ş	*/
+	/* 2.æ‰“å¼€ç®¡é“æ–‡ä»¶	*/
 	fd = open(pipefile,O_RDWR);
 	if(fd == -1)
 	{
@@ -31,11 +31,11 @@ main()
 		exit(-1);
 	}
 
-	/* 3.Ã¿¸ôÒ»ÃëÖÓ£¬¶ÁÈ¡ Ò»¸öÊı¾İ	*/
+	/* 3.æ¯éš”ä¸€ç§’é’Ÿï¼Œè¯»å– ä¸€ä¸ªæ•°æ®	*/
 	while(1)
 	{
 		read(fd,&r,sizeof(int));
-		printf("%d\n",r);
+		printf("get data :: %d\n",r);
 	}
 
 }

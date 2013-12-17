@@ -9,15 +9,15 @@
 
 main()
 {
-	/* 1.½¨Á¢socket 	*/
+	/* 1.å»ºç«‹socket 	*/
 		int fd=socket(AF_INET,SOCK_DGRAM,0);
 		if(fd == -1)
 		{
 			perror("sock"),exit(-1);
 		}
-		printf("½¨Á¢socket³É¹¦!\n");
+		printf("å»ºç«‹socketæˆåŠŸ!\n");
 
-	/* 2.Á¬½Óµ½Ä¿±êsocket		*/
+	/* 2.è¿æ¥åˆ°ç›®æ ‡socket		*/
 		struct sockaddr_in addr={};	
 		addr.sin_family=AF_INET;
 		addr.sin_port=htons(8888);
@@ -28,39 +28,39 @@ main()
 		r=connect(fd,(struct sockaddr *)&addr,sizeof(addr));
 		if(r==-1)
 		{
-			perror("connectÊ§°Ü!\n");
+			perror("connectå¤±è´¥!\n");
 			close(fd);
 			exit(-1);
 		}
-		printf("Á¬½Ó³É¹¦!\n");
+		printf("è¿æ¥æˆåŠŸ!\n");
 		*/
 
-	/* 3.ÊäÈëÊı¾İ²¢·¢ËÍ		*/
+	/* 3.è¾“å…¥æ•°æ®å¹¶å‘é€		*/
 
 		while(1)
 		{
 			char buf[256]={};
 		
-			// ´Ó±ê×¼¼üÅÌÊäÈë
+			// ä»æ ‡å‡†é”®ç›˜è¾“å…¥
 			r=read(0,buf,sizeof(buf)-1);
 			if(r<=0)
 			{
-				printf("ÊäÈëÊ§°Ü\n");
+				printf("è¾“å…¥å¤±è´¥\n");
 			}
 			else
 			{
-				//°ÑÊı¾İĞ´µ½socket
+				//æŠŠæ•°æ®å†™åˆ°socket
 				//write(fd,buf,r);
 				sendto(fd,buf,r,0,
 						(struct sockaddr *)&addr,sizeof(addr));
 
-				//´Ósocket¶ÁÈ¡Êı¾İ
+				//ä»socketè¯»å–æ•°æ®
 				r = read(fd,buf,sizeof(buf));
 				buf[r]=0;
 				printf("::%s\n",buf);
 			}
 		}
 
-	/* 4.¹Ø±ÕÁ¬½Ó		*/
+	/* 4.å…³é—­è¿æ¥		*/
 		close(fd);	
 }

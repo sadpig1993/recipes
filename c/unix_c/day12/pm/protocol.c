@@ -18,7 +18,7 @@ main()
 					ent->p_proto);
 	}
 
-	// 	¸ù¾ÝÐ­ÒéÃûµÃµ½Ð­Òé±àºÅ
+	// 	æ ¹æ®åè®®åå¾—åˆ°åè®®ç¼–å·
 	struct protoent *tent;
 	tent=getprotobyname("tcp");
 	printf("%u\n",tent->p_proto);

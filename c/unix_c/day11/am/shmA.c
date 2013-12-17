@@ -9,14 +9,14 @@ main()
 {
 	key_t key;
 	int shmid;
-	/* 1.根据目录创建key	*/
+	/* 1.鏍规嵁鐩綍鍒涘缓key	*/
 	key=ftok(".",2);
 	if(key==-1)
 	{
 		perror("ftok");
 		exit(-1);
 	}
-	/* 2.根据key唯一产生共享内存，返回其ID	*/
+	/* 2.鏍规嵁key鍞竴浜х敓鍏变韩鍐呭瓨锛岃繑鍥炲叾ID	*/
 	shmid=shmget(key,4,IPC_CREAT|IPC_EXCL|0666);
 	if(shmid == -1)
 	{
@@ -25,7 +25,7 @@ main()
 	}
 	printf("key:%x,id:%d\n",key,shmid);
 
-	/* 3.挂载内存	*/
+	/* 3.鎸傝浇鍐呭瓨	*/
 	int *p=shmat(shmid,0,0);
 	if(!p)
 	{
@@ -33,10 +33,10 @@ main()
 		exit(-1);
 	}
 
-	/* 4.操作内存	*/
+	/* 4.鎿嶄綔鍐呭瓨	*/
 	*p = 9999;
 
-	/* 5.卸载地址	*/
+	/* 5.鍗歌浇鍦板潃	*/
 	sleep(20);
 	shmdt(p);
 

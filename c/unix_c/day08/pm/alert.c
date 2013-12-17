@@ -4,13 +4,14 @@
 
 void handle(int s)
 {
-	printf("¶¨Ê±Æ÷!\n");
+	printf("catch SIGALRM signal!%d\n",s);
 }
 main()
 {
 	//5Ãëºó·¢ËÍSIGALRMÐÅºÅ
 	alarm(5);
 
+    // ¿¿¿¿¿¿¿¿ ¿SIGALRM¿¿¿¿¿¿¿¿handle
 	signal(SIGALRM,handle);
 	while(1);
 }

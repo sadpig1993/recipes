@@ -9,14 +9,14 @@
 
 main()
 {
-	/*	1.½¨Á¢socket	*/
+	/*	1.å»ºç«‹socket	*/
 	int fd=socket(AF_INET,SOCK_STREAM,0);
 	if(fd == -1){
 		perror("socket"),exit(-1);
 	}
-	printf("socket½¨Á¢³É¹¦!\n");
+	printf("socketå»ºç«‹æˆåŠŸ!\n");
 
-	/*	2.Á¬½Ó·şÎñÆ÷	*/
+	/*	2.è¿æ¥æœåŠ¡å™¨	*/
 	struct sockaddr_in addr={};
 	addr.sin_family=AF_INET;
 	addr.sin_port=htons(9999);
@@ -27,39 +27,39 @@ main()
 	if(r == -1){
 		perror("connect"),close(fd),exit(-1);
 	}
-	printf("Á¬½Ó·şÎñÆ÷³É¹¦,¿ÉÒÔÁÄÌì!\n");
+	printf("è¿æ¥æœåŠ¡å™¨æˆåŠŸ,å¯ä»¥èŠå¤©!\n");
 
-	/*	3.½¨Á¢×Ó½ø³Ì	*/
+	/*	3.å»ºç«‹å­è¿›ç¨‹	*/
 
 	if(fork())
 	{
-		//¸¸½ø³Ì
+		//çˆ¶è¿›ç¨‹
 		char buf[256]={};
 		while(1)
 		{
-			/* 4.1 ÊäÈëÊı¾İ		*/
-			//´Ó±ê×¼ÊäÈë¶ÁÈ¡×Ö·û
+			/* 4.1 è¾“å…¥æ•°æ®		*/
+			//ä»æ ‡å‡†è¾“å…¥è¯»å–å­—ç¬¦
 			read(0,buf,sizeof(buf)-1);
 			if(r<=0){
 				break;
 			}
-			/*	4.2·¢ËÍÊı¾İ		*/	
+			/*	4.2å‘é€æ•°æ®		*/	
 			write(fd,buf,r);
 		}
 
 	}
 	else
 	{
-		//×Ó½ø³Ì
+		//å­è¿›ç¨‹
 		char rcvbuf[256]={};
 		while(1)
 		{
-			/*	5.1	½ÓÊÕÊı¾İ	*/
+			/*	5.1	æ¥æ”¶æ•°æ®	*/
 			r =read(fd,rcvbuf,sizeof(rcvbuf)-1);
 			if(r<=0){
-				printf("Óë·şÎñÆ÷¶Ï¿ªÁ¬½Ó!\n");
+				printf("ä¸æœåŠ¡å™¨æ–­å¼€è¿æ¥!\n");
 				close(fd);
-				exit(-1);	//ÍË³ö×Ó½ø³Ì
+				exit(-1);	//é€€å‡ºå­è¿›ç¨‹
 			}
 			printf(":%s\n",rcvbuf);
 		}

@@ -6,12 +6,12 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-//	Ê¹ÓÃºÜ´ó»º³å·¢ËÍÊı¾İ
+//	ä½¿ç”¨å¾ˆå¤§ç¼“å†²å‘é€æ•°æ®
 
 main()
 {
 
-	/* 1.½¨Á¢socketÁ¬½Ó		*/
+	/* 1.å»ºç«‹socketè¿æ¥		*/
 		int fd=socket(AF_INET,SOCK_STREAM,0);
 		if(fd == -1)
 		{
@@ -19,7 +19,7 @@ main()
 		 }
 		printf("scoket OK!\n");
 
-	/* 2.Á¬½Ó·şÎñÆ÷		*/
+	/* 2.è¿æ¥æœåŠ¡å™¨		*/
 		struct sockaddr_in addr={};
 		addr.sin_family=AF_INET;
 		addr.sin_port=htons(9999);
@@ -32,14 +32,14 @@ main()
 		{
 			perror("connect"),close(fd),exit(-1);
 		}
-	/* 3.Ñ­»··¢ËÍ10ÌõÊı¾İ		*/
+	/* 3.å¾ªç¯å‘é€10æ¡æ•°æ®		*/
 		int i;
 		for(i=0;i<10;i++)
 		{
 			write(fd,"Hello TCP Server",16);
 		}
 		
-	/* 4.¹Ø±Õsocket			*/
+	/* 4.å…³é—­socket			*/
 		close(fd);	
 
 }

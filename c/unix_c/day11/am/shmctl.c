@@ -7,13 +7,13 @@
 
 main()
 {
-	/*	1.µÃµ½key	*/
+	/*	1.å¾—åˆ°key	*/
 	key_t key=ftok(".",2);
 
-	/* 	2.¸ù¾İkeyµÃµ½ID */
+	/* 	2.æ ¹æ®keyå¾—åˆ°ID */
 	int shmid = shmget(key,4,0);
 
-	/*  3.¸ù¾İIDµÃµ½¹²ÏíÄÚ´æµÄ×´Ì¬	*/
+	/*  3.æ ¹æ®IDå¾—åˆ°å…±äº«å†…å­˜çš„çŠ¶æ€	*/
 	struct shmid_ds ds={};
 
 	//int r = shmctl(shmid,IPC_STAT,&ds);

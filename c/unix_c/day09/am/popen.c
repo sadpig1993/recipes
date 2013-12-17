@@ -7,21 +7,21 @@
 int main(int argc, char **argv)
 {
 	
-	/* ¼ÓÔØ³ÌĞò£¬´òÍ¨¹ÜµÀ	*/
-	//ÒÔÖ»¶Á·½Ê½½¨Á¢¹ÜµÀ
+	/* åŠ è½½ç¨‹åºï¼Œæ‰“é€šç®¡é“	*/
+	//ä»¥åªè¯»æ–¹å¼å»ºç«‹ç®¡é“
 	//	FILE *f = popen("test.sh","r"); 
 
-	//ÒÔÖ»Ğ´·½Ê½½¨Á¢¹ÜµÀ
-	FILE *f = popen("./test.sh","w"); //ÒÔÖ»Ğ´·½Ê½½¨Á¢¹ÜµÀ
+	//ä»¥åªå†™æ–¹å¼å»ºç«‹ç®¡é“
+	FILE *f = popen("./test.sh","w"); //ä»¥åªå†™æ–¹å¼å»ºç«‹ç®¡é“
 	if(!f)
 	{
 		perror("popen error");
 		exit(-1);
 	}
 
-	/* °Ñ f ×ª»»³ÉÎÄ¼şÃèÊö·ûºÅ	*/
+	/* æŠŠ f è½¬æ¢æˆæ–‡ä»¶æè¿°ç¬¦å·	*/
 	int fd = fileno(f);
-	//Ğ´Êı¾İ
+	//å†™æ•°æ®
 	write(fd,"hello world\n",strlen("hello world\n"));
 
 	/* for read info
@@ -29,7 +29,7 @@ int main(int argc, char **argv)
 	int r;
 	while(1)
 	{
-		//¶ÁÈ¡À´×Ôtest.sh ÔËĞĞµÄ±ê×¼Êä³ö
+		//è¯»å–æ¥è‡ªtest.sh è¿è¡Œçš„æ ‡å‡†è¾“å‡º
 		bzero(buf,sizeof(buf));
 		r = read(fd,buf,sizeof(buf)-1);
 		if(r<=0)
@@ -38,6 +38,6 @@ int main(int argc, char **argv)
 	}
  	read end	*/
 
-	/* ¹Ø±ÕÎÄ¼şÓëÍ¨µÀ 	*/
+	/* å…³é—­æ–‡ä»¶ä¸é€šé“ 	*/
 	pclose(f);
 }

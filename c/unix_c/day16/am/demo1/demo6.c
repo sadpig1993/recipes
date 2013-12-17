@@ -1,8 +1,8 @@
 /*
-* 4¸öÏß³ÌÀ´ÊµÏÖÒ¡½±³ÌĞò£¬Ò»¸öÏß³ÌÏÔÊ¾Ëæ»úÊı£¬Ò»¸öÏß³ÌÏÔÊ¾Ê±¼ä 
-* Ò»¸öÏß³ÌÀ´Ë¢ĞÂÆÁÄ»£¬Ò»¸öÏß³ÌÀ´ÊµÏÖ¿Õ¸ñ°´¼ü·¢ËÍĞÅºÅµ½Ëæ»úÊıÏß³Ì£¬À´¿ØÖÆËæ»úÊı
-* ÏÔÊ¾ 
-* Ê¹ÓÃpthread_kill + pause + ²¼¶ûÖµ + ĞÅºÅ´¦Àíº¯Êı À´ÊµÏÖ¿Õ¸ñ°´¼ü¶ÔËæ»úÊıµÄ¿ØÖÆ
+* 4ä¸ªçº¿ç¨‹æ¥å®ç°æ‘‡å¥–ç¨‹åºï¼Œä¸€ä¸ªçº¿ç¨‹æ˜¾ç¤ºéšæœºæ•°ï¼Œä¸€ä¸ªçº¿ç¨‹æ˜¾ç¤ºæ—¶é—´ 
+* ä¸€ä¸ªçº¿ç¨‹æ¥åˆ·æ–°å±å¹•ï¼Œä¸€ä¸ªçº¿ç¨‹æ¥å®ç°ç©ºæ ¼æŒ‰é”®å‘é€ä¿¡å·åˆ°éšæœºæ•°çº¿ç¨‹ï¼Œæ¥æ§åˆ¶éšæœºæ•°
+* æ˜¾ç¤º 
+* ä½¿ç”¨pthread_kill + pause + å¸ƒå°”å€¼ + ä¿¡å·å¤„ç†å‡½æ•° æ¥å®ç°ç©ºæ ¼æŒ‰é”®å¯¹éšæœºæ•°çš„æ§åˆ¶
 */
 #include <stdio.h>
 #include <math.h>
@@ -16,13 +16,13 @@
 
 pthread_t th_time,th_num,th_winrefresh,th_signal;
 
-/* ÏÔÊ¾Ëæ»úÊıºÍÊ±¼äµÄ´°Ìå	*/
+/* æ˜¾ç¤ºéšæœºæ•°å’Œæ—¶é—´çš„çª—ä½“	*/
 WINDOW *wnum,*wtime;
 int num;
 time_t tt;
 struct tm *t;
 
-/* ¿ØÖÆ²¼¶ûÖµ	*/
+/* æ§åˆ¶å¸ƒå°”å€¼	*/
 int flag=0;
 void handle(int s)
 {
@@ -36,7 +36,7 @@ void handle(int s)
 	}
 }
 
-/* ¿Õ¸ñ¿ØÖÆº¯Êı		*/
+/* ç©ºæ ¼æ§åˆ¶å‡½æ•°		*/
 void *control(void *data)
 {
 	int ch;
@@ -52,27 +52,27 @@ void *control(void *data)
 
 }
 
-/* Ë¢ĞÂÏß³Ìº¯Êı	*/
+/* åˆ·æ–°çº¿ç¨‹å‡½æ•°	*/
 void *winrefresh(void *data)
 {
-	while(1)	/* ËÀÑ­»··ÀÖ¹Ïß³ÌËÀÈ¥	*/
+	while(1)	/* æ­»å¾ªç¯é˜²æ­¢çº¿ç¨‹æ­»å»	*/
 	{
-		/* ÏÔÊ¾Ëæ»úÊı		*/
+		/* æ˜¾ç¤ºéšæœºæ•°		*/
 		mvwprintw(wnum,1,1,"%07d",num);
 
-		/* 	ÏÔÊ¾Ê±¼ä		*/
+		/* 	æ˜¾ç¤ºæ—¶é—´		*/
 		mvwprintw(wtime,1,1,"%02d:%02d:%02d",
 					t->tm_hour,t->tm_min,t->tm_sec);
 
-		/*	Ë¢ĞÂÆÁÄ»		*/
+		/*	åˆ·æ–°å±å¹•		*/
 		refresh();
 		wrefresh(wnum);
 		wrefresh(wtime);
-		usleep(10000);/* ĞİÏ¢10ºÁÃë	*/
+		usleep(10000);/* ä¼‘æ¯10æ¯«ç§’	*/
 	}
 }
 
-/* Ëæ»úÊıÏß³Ìº¯Êı	*/
+/* éšæœºæ•°çº¿ç¨‹å‡½æ•°	*/
 void *num_run(void *data)
 {
 	signal(34,handle);
@@ -82,21 +82,21 @@ void *num_run(void *data)
 		{
 			pause();
 		}
-		/* ²úÉú7Î»Ëæ»úÊı	*/
+		/* äº§ç”Ÿ7ä½éšæœºæ•°	*/
 		num=random()%10000000;
-		usleep(10000);/* ĞİÏ¢10ºÁÃë	*/
+		usleep(10000);/* ä¼‘æ¯10æ¯«ç§’	*/
 	}
 }
 
-/* Ê±¼äÏß³Ìº¯Êı		*/
+/* æ—¶é—´çº¿ç¨‹å‡½æ•°		*/
 void *time_run(void *data)
 {
 	while(1)
 	{
-		/* »ñÈ¡ÏµÍ³Ê±¼ä		*/
+		/* è·å–ç³»ç»Ÿæ—¶é—´		*/
 		tt=time(0);
 		t=localtime(&tt);
-		sleep(1);	/* ĞİÏ¢1Ãë	*/
+		sleep(1);	/* ä¼‘æ¯1ç§’	*/
 	}
 
 }
@@ -104,33 +104,33 @@ void *time_run(void *data)
 main()
 {
 
-	/* 1.³õÊ¼»¯curses 	*/
+	/* 1.åˆå§‹åŒ–curses 	*/
 	initscr();
-	/* Òş²Ø¹â±ê			*/
+	/* éšè—å…‰æ ‡			*/
 	curs_set(0);
 	wnum=derwin(stdscr,3,9,LINES/2,(COLS-9)/2);
 	wtime=derwin(stdscr,3,11,0,COLS-11);
-		/* ¼Ó±ß¿ò	*/
+		/* åŠ è¾¹æ¡†	*/
 	box(wnum,0,0);
 	box(wtime,0,0);
-		/* Ë¢ĞÂÖ÷´°¿Ú¼°Á½¸öĞ¡´°¿Ú	*/
+		/* åˆ·æ–°ä¸»çª—å£åŠä¸¤ä¸ªå°çª—å£	*/
 	refresh();
 	wrefresh(wnum);
 	wrefresh(wtime);
 
-	/* 2.´´½¨Ïß³Ì		*/
+	/* 2.åˆ›å»ºçº¿ç¨‹		*/
 	pthread_create(&th_time,0,time_run,0);
 	pthread_create(&th_num,0,num_run,0);
 	pthread_create(&th_winrefresh,0,winrefresh,0);
 	pthread_create(&th_signal,0,control,0);
 
-	/* 3.µÈ´ı×ÓÏß³Ì½áÊø	*/
+	/* 3.ç­‰å¾…å­çº¿ç¨‹ç»“æŸ	*/
 	pthread_join(th_time,(void **)0);
 	pthread_join(th_num,(void **)0);
 	pthread_join(th_winrefresh,(void **)0);
 	pthread_join(th_signal,(void **)0);
 
-	/* 4.ÊÍ·Åcurses		*/
+	/* 4.é‡Šæ”¾curses		*/
 	delwin(wnum);
 	delwin(wtime);
 	endwin();

@@ -1,5 +1,5 @@
-/*  ¼ÆËã 1 - 10000 Ö®¼äµÄºÍ	*/
-/* ÆÁ±Îctrl+c·¢³öµÄSIGINTĞÅºÅ	*/
+/*  è®¡ç®— 1 - 10000 ä¹‹é—´çš„å’Œ	*/
+/* å±è”½ctrl+cå‘å‡ºçš„SIGINTä¿¡å·	*/
 
 #include <signal.h>
 #include <stdio.h>
@@ -7,7 +7,9 @@
 
 void handle(int s)
 {
-	printf("´¦Àíctrl+c!\n");
+    int i =0;
+	printf("å¤„ç†ctrl+c! [%d]\n",i);
+    i++;
 
 }
 
@@ -16,24 +18,27 @@ main()
 	int sum = 0;
 	int i;
 
-	//¶¨Òåfor sigsuspend function
+	//å®šä¹‰for sigsuspend function
 	sigset_t sigset;
 	sigemptyset(&sigset);
 
+
+    /*
 	sigset_t masksigs;
 	sigemptyset(&masksigs);
+    */
 
-	/* 1.¶¨ÒåÒ»¸öĞÅºÅ¼¯ºÏ	*/
+
+	/* 1.å®šä¹‰ä¸€ä¸ªä¿¡å·é›†åˆ	*/
 	sigset_t sigs;
-
-	/* 2.Ìí¼Ó ÆÁ±Î ĞÅºÅ	*/
+	/* 2.æ·»åŠ  å±è”½ ä¿¡å·	*/
 	sigemptyset(&sigs);
 	sigaddset(&sigs,SIGINT);
 
-	//	ÆÁ±ÎËùÓĞµÄĞÅºÅ
+	//	å±è”½æ‰€æœ‰çš„ä¿¡å·
 	//	sigfillset(&sigs);
 
-	/* 3.ÉèÖÃĞÅºÅ¼¯ºÏ±»ÆÁ±Î		*/
+	/* 3.è®¾ç½®ä¿¡å·é›†åˆè¢«å±è”½		*/
 	signal(2,handle);
 
 	sigprocmask(SIG_BLOCK,&sigs,0);
@@ -53,18 +58,18 @@ main()
 		}
 		*/
 		
-	// Çå³ıÔ­À´µÄÆÁ±ÎĞÅºÅ£¬ÉèÖÃĞÂµÄÆÁ±ÎĞÅºÅÍ¬Ê±ÔİÍ£½ø³Ì, Ö±µ½Ô­À´ĞÅºÅ·¢Éú²¢´¦Àíºó
-	// ¸Ãº¯Êı¼ÌĞø´¦Àí²¢·µ»Ø£¬Í¬Ê±»Ö¸´Ô­À´ÆÁ±ÎĞÅºÅ
+	// æ¸…é™¤åŸæ¥çš„å±è”½ä¿¡å·ï¼Œè®¾ç½®æ–°çš„å±è”½ä¿¡å·åŒæ—¶æš‚åœè¿›ç¨‹, ç›´åˆ°åŸæ¥ä¿¡å·å‘ç”Ÿå¹¶å¤„ç†å
+	// è¯¥å‡½æ•°ç»§ç»­å¤„ç†å¹¶è¿”å›ï¼ŒåŒæ—¶æ¢å¤åŸæ¥å±è”½ä¿¡å·
 		sigsuspend(&sigset);
 	}
 
 	printf("sum is %d\n",sum);
-	printf("¼ÆËã½áÊø!\n");
+	printf("è®¡ç®—ç»“æŸ!\n");
 
-	/*  ½â³ıĞÅºÅÆÁ±Î	*/
+	/*  è§£é™¤ä¿¡å·å±è”½	*/
 	sigprocmask(SIG_UNBLOCK,&sigs,0);
 
 	/**********************************/
 
-	printf("Õı³£½áÊø!\n");
+	printf("æ­£å¸¸ç»“æŸ!\n");
 }

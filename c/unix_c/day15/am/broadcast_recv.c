@@ -7,21 +7,21 @@
 #include <arpa/inet.h>
 
 /*
-绑定广播地址
-端口要统一
+缁戝畾骞挎挱鍦板潃
+绔彛瑕佺粺涓�
 */
 main()
 {
 	int fd=socket(AF_INET,SOCK_DGRAM,0);
 
-	/* 设置地址重用	*/
+	/* 璁剧疆鍦板潃閲嶇敤	*/
 	/*
 	int b=1;
 	setsockopt(fd,SOL_SOCKET,SO_REUSEADDR,&b,sizeof(b));
 	*/
 
 
-	/*	绑定广播地址	*/
+	/*	缁戝畾骞挎挱鍦板潃	*/
 	struct sockaddr_in addr={};
 	addr.sin_family=AF_INET;
 	addr.sin_port=htons(8888);

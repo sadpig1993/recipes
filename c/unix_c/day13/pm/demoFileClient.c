@@ -13,7 +13,7 @@
 main()
 {
 
-	/* 	1.½¨Á¢socket		*/
+	/* 	1.å»ºç«‹socket		*/
 		int fd=socket(AF_INET,SOCK_STREAM,0);
 		if(fd==-1)
 		{
@@ -22,7 +22,7 @@ main()
 		}
 		printf("socket ok!\n");
 
-	/*  2.Á¬½Ó·şÎñÆ÷			*/
+	/*  2.è¿æ¥æœåŠ¡å™¨			*/
 		struct sockaddr_in addr={};
 		addr.sin_family=AF_INET;
 		addr.sin_port=htons(9998);
@@ -37,19 +37,19 @@ main()
 	    }
 		printf("connect ok!\n");
 		
-	/*  3.1 ·¢ËÍÎÄ¼şÃû³¤¶È				*/
+	/*  3.1 å‘é€æ–‡ä»¶åé•¿åº¦				*/
 		char filename[]="file.txt";	
 		char path[]="/home/ltl/linux_c_danei/day13";
-		char file[256]; //ÎÄ¼şµÄÍêÕûÂ·¾¶
+		char file[256]; //æ–‡ä»¶çš„å®Œæ•´è·¯å¾„
 		int len;
 		len=strlen(filename);
 		write(fd,&len,sizeof(int));
-		printf("ÎÄ¼şÃû³¤¶È:%u\n",len);
+		printf("æ–‡ä»¶åé•¿åº¦:%u\n",len);
 
-	/*  3.2 ·¢ËÍÎÄ¼şÃû 	*/
+	/*  3.2 å‘é€æ–‡ä»¶å 	*/
 		write(fd,filename,len);
 
-	/*  3.3 ´ò¿ªÎÄ¼ş			*/
+	/*  3.3 æ‰“å¼€æ–‡ä»¶			*/
 		sprintf(file,"%s/%s",path,filename);
 		int filefd=open(file,O_RDONLY);
 		if(filefd==-1)
@@ -58,30 +58,30 @@ main()
 		}
 		printf("file open ok!\n");
 
-	/*  3.4 »ñÈ¡ÎÄ¼ş³¤¶È 	*/
+	/*  3.4 è·å–æ–‡ä»¶é•¿åº¦ 	*/
 		struct stat st;
 		fstat(filefd,&st);
-		//ÎÄ¼ş³¤¶È
+		//æ–‡ä»¶é•¿åº¦
 		len = st.st_size;
-		printf("ÎÄ¼ş³¤¶È:%u\n",len);
+		printf("æ–‡ä»¶é•¿åº¦:%u\n",len);
 
-	/*  3.5 ·¢ËÍÎÄ¼ş³¤¶È		*/
+	/*  3.5 å‘é€æ–‡ä»¶é•¿åº¦		*/
 		write(fd,&len,sizeof(int));
 
-	/*  3.6 ·¢ËÍÎÄ¼şÊı¾İ		*/
+	/*  3.6 å‘é€æ–‡ä»¶æ•°æ®		*/
 		char buf[1024];
 		while(1)
 		{
 			r = read(filefd,buf,sizeof(buf));
-			if(r<=0) //¶Áµ½ÎÄ¼şÎ²
+			if(r<=0) //è¯»åˆ°æ–‡ä»¶å°¾
 			{
 				break;
 			}
 			write(fd,buf,r);
 		}
-	/*  3.7 ¹Ø±ÕÎÄ¼ş		*/
+	/*  3.7 å…³é—­æ–‡ä»¶		*/
 		close(filefd);
-	/*  4.¹Ø±Õsocket			*/
+	/*  4.å…³é—­socket			*/
 		close(fd);
 
 

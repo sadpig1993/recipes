@@ -12,7 +12,7 @@ void MyThread::join()
 
 void MyThread::run()
 {
-	// 被覆盖实现用户自己的业务逻辑
+	// 琚鐩栧疄鐜扮敤鎴疯嚜宸辩殑涓氬姟閫昏緫
 	
 }
 

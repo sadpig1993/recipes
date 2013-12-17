@@ -1,4 +1,4 @@
-/*  接收处理信号	*/
+/* 娉ㄥ唽淇″彿澶勭悊鍑芥暟 */
 
 #include <signal.h>
 #include <stdio.h>
@@ -7,8 +7,7 @@
 
 void handle(int s)
 {
-printf("处理信号:%d\n",s);
-
+    printf("received signal :%d\n",s);
 }
 
 main()

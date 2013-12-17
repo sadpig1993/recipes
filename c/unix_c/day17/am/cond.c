@@ -1,87 +1,87 @@
 /*
-*	 Ìõ¼şÁ¿ÊµÏÖ¶àÏß³ÌµÄ¿ØÖÆ
-* 	¶ÔÏß³Ì½øĞĞ¾ùÔÈµÄµ÷¶È
-* 	pthread_cond_signal ¶Ôµ¥¸öÏß³Ì·¢ËÍ
-* 	pthread_cond_broadcast ¶Ô¶à¸öÏß³Ì¹ã²¥·¢ËÍ
+*	 æ¡ä»¶é‡å®ç°å¤šçº¿ç¨‹çš„æ§åˆ¶
+* 	å¯¹çº¿ç¨‹è¿›è¡Œå‡åŒ€çš„è°ƒåº¦
+* 	pthread_cond_signal å¯¹å•ä¸ªçº¿ç¨‹å‘é€
+* 	pthread_cond_broadcast å¯¹å¤šä¸ªçº¿ç¨‹å¹¿æ’­å‘é€
 */
 #include <stdio.h>
 #include <semaphore.h>
 #include <pthread.h>
 #include <unistd.h>
 
-/* ¶¨Òå3¸öÏß³Ìtid	*/
+/* å®šä¹‰3ä¸ªçº¿ç¨‹tid	*/
 pthread_t t1,t2,t3;
 
-/* Ïß³Ì»¥³âÁ¿	*/
+/* çº¿ç¨‹äº’æ–¥é‡	*/
 pthread_mutex_t m;
 
-/*	Ïß³ÌÌõ¼şÁ¿		*/
+/*	çº¿ç¨‹æ¡ä»¶é‡		*/
 pthread_cond_t c;
 
-/* Ïß³Ìt1µÄ´¦Àíº¯Êı	*/
+/* çº¿ç¨‹t1çš„å¤„ç†å‡½æ•°	*/
 void *r1(void *d)
 {
-	while(1)	//±»¿ØÖÆÏß³Ì
+	while(1)	//è¢«æ§åˆ¶çº¿ç¨‹
 	{
 		pthread_cond_wait(&c,&m);
-		printf("Ïß³Ì---1!\n");
+		printf("çº¿ç¨‹---1!\n");
 	}
 }
 
-/* Ïß³Ìt2µÄ´¦Àíº¯Êı	*/
+/* çº¿ç¨‹t2çš„å¤„ç†å‡½æ•°	*/
 void *r2(void *d)
 {
-	while(1)	//±»¿ØÖÆÏß³Ì
+	while(1)	//è¢«æ§åˆ¶çº¿ç¨‹
 	{
 		pthread_cond_wait(&c,&m);
-		printf("Ïß³Ì----2!\n");
+		printf("çº¿ç¨‹----2!\n");
 	}
 }
 
-/* Ïß³Ìt3µÄ´¦Àíº¯Êı	*/
+/* çº¿ç¨‹t3çš„å¤„ç†å‡½æ•°	*/
 void *r3(void *d)
 {
-	while(1)	//±»¿ØÖÆÏß³Ì
+	while(1)	//è¢«æ§åˆ¶çº¿ç¨‹
 	{
 		pthread_cond_wait(&c,&m);
-		printf("Ïß³Ì-----3!\n");
+		printf("çº¿ç¨‹-----3!\n");
 	}
 
 }
 
 main()
 {
-	// ³õÊ¼»¯»¥³âÁ¿£¬ÏÈ³õÊ¼»¯µÄ×îºóÊÍ·Å
+	// åˆå§‹åŒ–äº’æ–¥é‡ï¼Œå…ˆåˆå§‹åŒ–çš„æœ€åé‡Šæ”¾
 	pthread_mutex_init(&m,0);
 
-	// ³õÊ¼»¯Ìõ¼şÁ¿
+	// åˆå§‹åŒ–æ¡ä»¶é‡
 	pthread_cond_init(&c,0);
 	
-	/* ´´½¨3¸öÏß³Ì	*/
+	/* åˆ›å»º3ä¸ªçº¿ç¨‹	*/
 	pthread_create(&t1,0,r1,0);
 	pthread_create(&t2,0,r2,0);
 	pthread_create(&t3,0,r3,0);
 
 	while(1)
 	{
-		//¿ØÖÆ3¸ö×ÓÏß³Ì
+		//æ§åˆ¶3ä¸ªå­çº¿ç¨‹
 		sleep(1);
 
-		// ·¢ËÍÌõ¼şÁ¿
+		// å‘é€æ¡ä»¶é‡
 		//pthread_cond_signal(&c);
 		pthread_cond_broadcast(&c);
 
 	}
 	
-	/* Ö÷Ïß³ÌµÈ´ı3¸ö×ÓÏß³Ì½áÊø	*/
+	/* ä¸»çº¿ç¨‹ç­‰å¾…3ä¸ªå­çº¿ç¨‹ç»“æŸ	*/
 	pthread_join(t1,(void **)0);
 	pthread_join(t2,(void **)0);
 	pthread_join(t3,(void **)0);
 
-	// ÊÍ·ÅÌõ¼şÁ¿
+	// é‡Šæ”¾æ¡ä»¶é‡
 	pthread_cond_destroy(&c);
 
-	// ÊÍ·Å»¥³âÁ¿
+	// é‡Šæ”¾äº’æ–¥é‡
 	pthread_mutex_destroy(&m);
 
 }

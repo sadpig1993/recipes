@@ -12,7 +12,7 @@ main()
 
 	key=ftok(".",2);
 
-	//�õ�shmid
+	//µÃµ½shmid
 	shmid=shmget(key,4,0);
 	printf("key:%x,id:%d\n",key,shmid);
 	

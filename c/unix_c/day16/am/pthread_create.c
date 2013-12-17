@@ -7,9 +7,9 @@ void *run(void *data)
 {
 	//while(1)
 	//{
-		printf("ÎÒÊÇÏß³Ì!\n");
+		printf("æˆ‘æ˜¯çº¿ç¨‹!\n");
 		printf("::%s\n",data);
-		//sched_yield();	/* ·ÅÆúCPU */
+		//sched_yield();	/* æ”¾å¼ƒCPU */
 		//sleep(1);
 	//}
 	return "world";
@@ -18,28 +18,28 @@ void *run(void *data)
 main()
 {
 	pthread_t tid;
-	/* ²»´«µİÊı¾İ¸øÏß³Ìº¯Êı
+	/* ä¸ä¼ é€’æ•°æ®ç»™çº¿ç¨‹å‡½æ•°
 	int r=pthread_create(&tid,0,run,0);
 	*/
-	/* ´«µİÊı¾İ"hello"¸øÏß³Ìº¯Êı */
+	/* ä¼ é€’æ•°æ®"hello"ç»™çº¿ç¨‹å‡½æ•° */
 	int r=pthread_create(&tid,0,run,"hello");
 	if(r)
 	{
-		printf("´´½¨Ê§°Ü!\n");
+		printf("åˆ›å»ºå¤±è´¥!\n");
 	}
 	//while(1)
 	//{
-		printf("´´½¨³É¹¦!\n");
-		//sched_yield();	/* ·ÅÆúCPU */
+		printf("åˆ›å»ºæˆåŠŸ!\n");
+		//sched_yield();	/* æ”¾å¼ƒCPU */
 		//sleep(1);
 	//}
 
-	/* Ïß³Ìº¯Êı·µ»ØµÄÊı¾İ */
+	/* çº¿ç¨‹å‡½æ•°è¿”å›çš„æ•°æ® */
 	char *buf;
 	pthread_join(tid,(void **)&buf);
 	printf("%s\n",buf);
 	
-	/* Ïß³Ìº¯Êı²»·µ»ØÊı¾İ	
+	/* çº¿ç¨‹å‡½æ•°ä¸è¿”å›æ•°æ®	
 	pthread_join(tid,(void **)0);
 	*/
 }

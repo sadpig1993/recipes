@@ -10,11 +10,11 @@
 main()
 {
 
-	/* 1.½¨Á¢socket		*/
+	/* 1.å»ºç«‹socket		*/
 		//int fd=socket(AF_FILE,SOCK_STREAM,0);
 		int fd=socket(AF_INET,SOCK_STREAM,0);
 
-	/* 2 .Á¬½Ósocket	*/
+	/* 2 .è¿æ¥socket	*/
 
 		/*
 		struct sockaddr_un addr={};
@@ -28,7 +28,7 @@ main()
 
 		connect(fd,(struct sockaddr *)&addr,sizeof(addr));
 
-	/* 3.¶ÁÈ¡socket·µ»ØµÄÊı¾İ	*/
+	/* 3.è¯»å–socketè¿”å›çš„æ•°æ®	*/
 		char buf[50]={};
 		int r;
 		r=read(fd,buf,sizeof(buf)-1);
@@ -36,7 +36,7 @@ main()
 
 		printf("::%s\n",buf);
 		
-	/* 4.¹Ø±Õsocket		*/
+	/* 4.å…³é—­socket		*/
 		close(fd);
 
 }

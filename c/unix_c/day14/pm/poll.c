@@ -5,7 +5,7 @@
 main()
 {
 	struct pollfd fds[1]={};
-	fds[0].fd=0;	//监视标准输入
+	fds[0].fd=0;	//录脿脢脫卤锚脳录脢盲脠毛
 	fds[0].events=POLLIN ;
 
 	poll(fds,1,-1);
@@ -13,7 +13,7 @@ main()
 	{
 		char buf[20]={};
 		read(0,buf,sizeof(buf)-1);
-		printf("有输入!\n");			
+		printf("脫脨脢盲脠毛!\n");			
 		printf("::%s",buf);
 	}
 }

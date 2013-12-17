@@ -1,6 +1,6 @@
 /*
 * 
-* Ê¹ÓÃ»¥³âÁ¿½â¾öBUG
+* ä½¿ç”¨äº’æ–¥é‡è§£å†³BUG
 * 
 */
 #include <stdio.h>
@@ -12,13 +12,13 @@
 #include <time.h>
 #include <unistd.h>
 
-/* »¥³âÁ¿	*/
+/* äº’æ–¥é‡	*/
 pthread_mutex_t m;
 
-/* ÏÔÊ¾Ëæ»úÊıºÍÊ±¼äµÄ´°Ìå	*/
+/* æ˜¾ç¤ºéšæœºæ•°å’Œæ—¶é—´çš„çª—ä½“	*/
 WINDOW *wnum,*wtime;
 
-/* Ëæ»úÊıÏß³Ìº¯Êı	*/
+/* éšæœºæ•°çº¿ç¨‹å‡½æ•°	*/
 void *num_run(void *data)
 {
 	int num;
@@ -26,76 +26,76 @@ void *num_run(void *data)
 	{
 		pthread_mutex_lock(&m);
 
-		/* ²úÉú7Î»Ëæ»úÊı	*/
+		/* äº§ç”Ÿ7ä½éšæœºæ•°	*/
 		num=random()%10000000;
-		/* ÏÔÊ¾Ëæ»úÊı		*/
+		/* æ˜¾ç¤ºéšæœºæ•°		*/
 		mvwprintw(wnum,1,1,"%07d",num);
-		/*	Ë¢ĞÂÆÁÄ»		*/
+		/*	åˆ·æ–°å±å¹•		*/
 		refresh();
 		wrefresh(wnum);
 		wrefresh(wtime);
 
 		pthread_mutex_unlock(&m);
 
-		usleep(10000);/* ĞİÏ¢10ºÁÃë	*/
+		usleep(10000);/* ä¼‘æ¯10æ¯«ç§’	*/
 	}
 }
 
-/* Ê±¼äÏß³Ìº¯Êı		*/
+/* æ—¶é—´çº¿ç¨‹å‡½æ•°		*/
 void *time_run(void *data)
 {
 	time_t tt;
 	struct tm *t;
 	while(1)
 	{
-		/* »ñÈ¡ÏµÍ³Ê±¼ä		*/
+		/* è·å–ç³»ç»Ÿæ—¶é—´		*/
 		tt=time(0);
 		t=localtime(&tt);
-		/* 	ÏÔÊ¾Ê±¼ä		*/
+		/* 	æ˜¾ç¤ºæ—¶é—´		*/
 		mvwprintw(wtime,1,1,"%02d:%02d:%02d",
 					t->tm_hour,t->tm_min,t->tm_sec);
-		/*	Ë¢ĞÂÆÁÄ»		*/
+		/*	åˆ·æ–°å±å¹•		*/
 		refresh();
 		wrefresh(wtime);
 		//wrefresh(wnum);
-		sleep(1);	/* ĞİÏ¢1Ãë	*/
+		sleep(1);	/* ä¼‘æ¯1ç§’	*/
 	}
 
 }
 
 main()
 {
-	/* ³õÊ¼»¯»¥³âÁ¿	*/
+	/* åˆå§‹åŒ–äº’æ–¥é‡	*/
 	pthread_mutex_init(&m,0);
 
 	pthread_t th_time,th_num;
 
-	/* 1.³õÊ¼»¯curses 	*/
+	/* 1.åˆå§‹åŒ–curses 	*/
 	initscr();
 	curs_set(0);
 	wnum=derwin(stdscr,3,9,LINES/2,(COLS-9)/2);
 	wtime=derwin(stdscr,3,11,0,COLS-11);
-		/* ¼Ó±ß¿ò	*/
+		/* åŠ è¾¹æ¡†	*/
 	box(wnum,0,0);
 	box(wtime,0,0);
-		/* Ë¢ĞÂÖ÷´°¿Ú¼°Á½¸öĞ¡´°¿Ú	*/
+		/* åˆ·æ–°ä¸»çª—å£åŠä¸¤ä¸ªå°çª—å£	*/
 	refresh();
 	wrefresh(wnum);
 	wrefresh(wtime);
 
-	/* 2.´´½¨Ïß³Ì		*/
+	/* 2.åˆ›å»ºçº¿ç¨‹		*/
 	pthread_create(&th_time,0,time_run,0);
 	pthread_create(&th_num,0,num_run,0);
 
-	/* 3.µÈ´ı×ÓÏß³Ì½áÊø	*/
+	/* 3.ç­‰å¾…å­çº¿ç¨‹ç»“æŸ	*/
 	pthread_join(th_time,(void **)0);
 	pthread_join(th_num,(void **)0);
 
-	/* 4.ÊÍ·Åcurses		*/
+	/* 4.é‡Šæ”¾curses		*/
 	delwin(wnum);
 	delwin(wtime);
 	endwin();
 
-	/* »¥³âÁ¿Ïú»Ù	*/
+	/* äº’æ–¥é‡é”€æ¯	*/
 	pthread_mutex_destroy(&m);
 }

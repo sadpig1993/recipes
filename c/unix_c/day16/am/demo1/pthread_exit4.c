@@ -1,7 +1,7 @@
 /*
-* AÏß³ÌÔÚ30Ãëºó,ÍË³ö£¬BÏß³Ì¼ÌĞøÖ´ĞĞ
-* ´Ë³ÌĞòÔÚAÏß³ÌÍË³öºó£¬ÒòÎªÏß³ÌAÃ»ÓĞ½âËø£¬µ¼ÖÂÏß³ÌBÃ»·¨Ö´ĞĞ
-* ËùÒÔÊ¹ÓÃpthread_cleanup_push£¬pthread_cleanup_popÀ´½â¾ö´ËÎÊÌâ
+* Açº¿ç¨‹åœ¨30ç§’å,é€€å‡ºï¼ŒBçº¿ç¨‹ç»§ç»­æ‰§è¡Œ
+* æ­¤ç¨‹åºåœ¨Açº¿ç¨‹é€€å‡ºåï¼Œå› ä¸ºçº¿ç¨‹Aæ²¡æœ‰è§£é”ï¼Œå¯¼è‡´çº¿ç¨‹Bæ²¡æ³•æ‰§è¡Œ
+* æ‰€ä»¥ä½¿ç”¨pthread_cleanup_pushï¼Œpthread_cleanup_popæ¥è§£å†³æ­¤é—®é¢˜
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -23,18 +23,18 @@ void *A(void *data)
 	while(1)
 	{
 		pthread_mutex_lock(&m);
-		//Ìí¼Ópthread_cleanup_pushº¯Êı
+		//æ·»åŠ pthread_cleanup_pushå‡½æ•°
 		pthread_cleanup_push(handle,0);
 
-		printf("Ïß³Ì---A!\n");
+		printf("çº¿ç¨‹---A!\n");
 		i++;
 		if(i==30)
 		{
 			pthread_exit("byebye");
 		}
-		// Ìí¼Ópthread_cleanup_popº¯Êı
-		// Èç¹ûpopº¯Êı²ÎÊıÎª0£¬ºóÃæµÄpthread_mutex_unlock(&m);±ØĞëÒªÓĞ
-		// Èç¹ûpopº¯Êı²ÎÊıÎª1,ÔòÖ´ĞĞhandleº¯Êı£¬ºóÃæµÄphtread_mutex_unlock(&m)¿ÉÒÔ×¢ÊÍ
+		// æ·»åŠ pthread_cleanup_popå‡½æ•°
+		// å¦‚æœpopå‡½æ•°å‚æ•°ä¸º0ï¼Œåé¢çš„pthread_mutex_unlock(&m);å¿…é¡»è¦æœ‰
+		// å¦‚æœpopå‡½æ•°å‚æ•°ä¸º1,åˆ™æ‰§è¡Œhandleå‡½æ•°ï¼Œåé¢çš„phtread_mutex_unlock(&m)å¯ä»¥æ³¨é‡Š
 		pthread_cleanup_pop(0);
 		pthread_mutex_unlock(&m);
 		sleep(1);
@@ -46,7 +46,7 @@ void *B(void *data)
 	while(1)
 	{
 		pthread_mutex_lock(&m);
-		printf("B---Ïß³Ì!\n");
+		printf("B---çº¿ç¨‹!\n");
 		sleep(1);
 		pthread_mutex_unlock(&m);
 	}
@@ -54,10 +54,10 @@ void *B(void *data)
 
 main()
 {
-	/* Ïß³Ì»¥³âËø  */
+	/* çº¿ç¨‹äº’æ–¥é”  */
 	pthread_mutex_init(&m,0);
 
-	/* ´´½¨Ïß³Ì		*/
+	/* åˆ›å»ºçº¿ç¨‹		*/
 	pthread_create(&ta,0,A,0);
 	pthread_create(&tb,0,B,0);
 

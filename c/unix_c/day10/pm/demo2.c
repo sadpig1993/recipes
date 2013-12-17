@@ -7,48 +7,48 @@
 #include <math.h>
 #include <time.h>
 
-/* 4¸öÈÎÎñ£º
-* 1.ÏÔÊ¾Ê±¼ä£¬Ëæ»úÊý
-* 2.²úÉúËæ»úÊý
-* 3.»ñÈ¡Ê±¼ä
-* 4.´¦Àí°´¼ü
+/* 4ä¸ªä»»åŠ¡ï¼š
+* 1.æ˜¾ç¤ºæ—¶é—´ï¼Œéšæœºæ•°
+* 2.äº§ç”Ÿéšæœºæ•°
+* 3.èŽ·å–æ—¶é—´
+* 4.å¤„ç†æŒ‰é”®
 */
 
 WINDOW *wtime,*wnumb;
 
 main()
 {
-	/* ³õÊ¼»¯´°Ìå	*/
+	/* åˆå§‹åŒ–çª—ä½“	*/
 	initscr();
 	int id=0;
 
-	//´´½¨3¸ö×Ó½ø³Ì
+	//åˆ›å»º3ä¸ªå­è¿›ç¨‹
 	for(id;i<3;id++)
 	{
 		if(fork())
 		{
-			//¸¸½ø³Ì	
+			//çˆ¶è¿›ç¨‹	
 	
 		}
 		else
 		{
-			//×Ó½ø³Ì	
+			//å­è¿›ç¨‹	
 			switch(id)
 			{
 				case 0:
-					while(1)	//¸ºÔðËæ»úÊý
+					while(1)	//è´Ÿè´£éšæœºæ•°
 					{
 
 					}
 					break;
 				case 1:
-					while(1) 	//¸ºÔðÊ±¼ä
+					while(1) 	//è´Ÿè´£æ—¶é—´
 					{
 
 					}
 					break;
 				case 2:
-					while(1)	//¸ºÔð°´¼ü
+					while(1)	//è´Ÿè´£æŒ‰é”®
 					{
 
 					}
@@ -58,10 +58,10 @@ main()
 		}
 	}
 
-	//Ñ­»·´¦ÀíË¢ÆÁ ÏÔÊ¾Ëæ»úÊý£¬Ê±¼ä
+	//å¾ªçŽ¯å¤„ç†åˆ·å± æ˜¾ç¤ºéšæœºæ•°ï¼Œæ—¶é—´
 
 
-	/* Çå³ý´°Ìå		*/	
+	/* æ¸…é™¤çª—ä½“		*/	
 	endwin();
 }
 

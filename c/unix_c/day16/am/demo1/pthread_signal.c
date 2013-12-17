@@ -10,7 +10,7 @@
 
 void handler(int s)
 {
-	printf("ÓĞĞÅºÅ!\n");
+	printf("æœ‰ä¿¡å·!\n");
 }
 pthread_t ta,tb;
 
@@ -19,15 +19,15 @@ void *A(void *data)
 	signal(34,handler);
 	while(1)
 	{
-		printf("Ïß³Ì---A!\n");
+		printf("çº¿ç¨‹---A!\n");
 		sleep(1);
 		
-		/* Ïò×Ô¼ºÏß³ÌËùÔÚµÄ½ø³Ì·¢ËÍĞÅºÅ */
+		/* å‘è‡ªå·±çº¿ç¨‹æ‰€åœ¨çš„è¿›ç¨‹å‘é€ä¿¡å· */
 		//raise(34);
 		//kill(getpid(),34);
 
-		/* Ã¿¸ôÒ»ÃëÏòBÏß³Ì·¢ËÍĞÅºÅ	*/
-		pthread_kill(tb,34); /*¶ÔÏß³ÌtbËùÔÚµÄ½ø³Ì·¢ËÍĞÅºÅ*/
+		/* æ¯éš”ä¸€ç§’å‘Bçº¿ç¨‹å‘é€ä¿¡å·	*/
+		pthread_kill(tb,34); /*å¯¹çº¿ç¨‹tbæ‰€åœ¨çš„è¿›ç¨‹å‘é€ä¿¡å·*/
 	}
 }
 
@@ -36,14 +36,14 @@ void *B(void *data)
 	//signal(34,handler);
 	while(1)
 	{
-		printf("B---Ïß³Ì!\n");
+		printf("B---çº¿ç¨‹!\n");
 		sleep(3);
 	}
 }
 
 main()
 {
-	/* ´´½¨Ïß³Ì		*/
+	/* åˆ›å»ºçº¿ç¨‹		*/
 	pthread_create(&ta,0,A,0);
 	pthread_create(&tb,0,B,0);
 

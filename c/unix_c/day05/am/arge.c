@@ -3,10 +3,10 @@
 #include <unistd.h>
 extern char **environ;
 
-/*mainº¯Êı²ÎÊı 
-*argc :²ÎÊı¸öÊı
-*argv :²ÎÊıÖµÖ¸Õë ,ÊÇÖ¸ÕëµÄÖ¸Õë
-*arge :»·¾³±äÁ¿£¬ÊÇÖ¸ÕëµÄÖ¸Õë
+/*mainå‡½æ•°å‚æ•° 
+*argc :å‚æ•°ä¸ªæ•°
+*argv :å‚æ•°å€¼æŒ‡é’ˆ ,æ˜¯æŒ‡é’ˆçš„æŒ‡é’ˆ
+*arge :ç¯å¢ƒå˜é‡ï¼Œæ˜¯æŒ‡é’ˆçš„æŒ‡é’ˆ
 */
 int main(int argc,char **argv,char **arge)
 {

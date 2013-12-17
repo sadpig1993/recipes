@@ -7,20 +7,20 @@
 
 main()
 {
-	/* ½¨Á¢socket	*/
+	/* å»ºç«‹socket	*/
 	int fd;
 	fd = socket(AF_LOCAL,SOCK_DGRAM,0);
 	if( fd == -1)
 	{
 		perror("socket"),exit(-1);
 	}
-	printf("socket½¨Á¢³É¹¦!\n");
+	printf("socketÂ½Â¨ÃÂ¢Â³Ã‰Â¹Â¦!\n");
 
 	struct sockaddr_un	addr={};
 	addr.sun_family=AF_LOCAL;
 	sprintf(addr.sun_path,"./my.socket");
 
-	/* Á¬½Ósocket µÄfd	*/
+	/* è¿æ¥socket	*/
 	int r;
 	r=connect(fd,(struct sockaddr*)&addr,sizeof(addr));
 	if(r==-1)
@@ -30,6 +30,7 @@ main()
 
 	int i=0;
 	for(;i<10;i++)
+		/* å‘socketå‘é€æ•°æ® */
 		write(fd,"hello",5);
 	close(fd);
 }

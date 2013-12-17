@@ -1,6 +1,6 @@
 /*
-* AÏß³ÌÔÚ30Ãëºó,ÍË³ö£¬BÏß³Ì¼ÌĞøÖ´ĞĞ
-* ´Ë³ÌĞòÔÚAÏß³ÌÍË³öºó£¬ÒòÎªÏß³ÌAÃ»ÓĞ½âËø£¬µ¼ÖÂÏß³ÌBÃ»·¨Ö´ĞĞ
+* Açº¿ç¨‹åœ¨30ç§’å,é€€å‡ºï¼ŒBçº¿ç¨‹ç»§ç»­æ‰§è¡Œ
+* æ­¤ç¨‹åºåœ¨Açº¿ç¨‹é€€å‡ºåï¼Œå› ä¸ºçº¿ç¨‹Aæ²¡æœ‰è§£é”ï¼Œå¯¼è‡´çº¿ç¨‹Bæ²¡æ³•æ‰§è¡Œ
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,7 +16,7 @@ void *A(void *data)
 	while(1)
 	{
 		pthread_mutex_lock(&m);
-		printf("Ïß³Ì---A!\n");
+		printf("çº¿ç¨‹---A!\n");
 		i++;
 		if(i==30)
 		{
@@ -32,7 +32,7 @@ void *B(void *data)
 	while(1)
 	{
 		pthread_mutex_lock(&m);
-		printf("B---Ïß³Ì!\n");
+		printf("B---çº¿ç¨‹!\n");
 		sleep(1);
 		pthread_mutex_unlock(&m);
 	}
@@ -40,10 +40,10 @@ void *B(void *data)
 
 main()
 {
-	/* Ïß³Ì»¥³âËø  */
+	/* çº¿ç¨‹äº’æ–¥é”  */
 	pthread_mutex_init(&m,0);
 
-	/* ´´½¨Ïß³Ì		*/
+	/* åˆ›å»ºçº¿ç¨‹		*/
 	pthread_create(&ta,0,A,0);
 	pthread_create(&tb,0,B,0);
 

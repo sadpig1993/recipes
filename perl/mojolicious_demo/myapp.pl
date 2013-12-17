@@ -10,6 +10,7 @@ get '/' => sub {
 };
 
 
+# /foo?user=ltl
 get '/foo'  => sub {
     my $self = shift ;
     my $user = $self->param('user');

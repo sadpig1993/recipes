@@ -10,29 +10,29 @@ main
 )
 
 {
-	/* 建立socket	*/
+	/* 寤虹珛socket	*/
 	int fd;
 	fd = socket(AF_LOCAL,SOCK_DGRAM,0);
 	if( fd == -1)
 	{
 		perror("socket"),exit(-1);
 	}
-	printf("socket建立成功!\n");
+	printf("socket寤虹珛鎴愬姛!\n");
 
 	struct sockaddr_un	addr={};
 	addr.sun_family=AF_LOCAL;
 	sprintf(addr.sun_path,"./my.socket");
 
-	/* 绑定socket	*/
+	/* 缁戝畾socket	*/
 	int r;
 	r=bind(fd,(struct sockaddr*)&addr,sizeof(addr));
 	if(r==-1)
 	{
 		perror("bind"),close(fd),exit(-1);
 	}
-	printf("绑定成功!等待接收数据....\n");
+	printf("缁戝畾鎴愬姛!绛夊緟鎺ユ敹鏁版嵁....\n");
 
-	/* 接收数据	*/
+	/* 鎺ユ敹鏁版嵁	*/
 	char buf[100];
 	while(1)
 	{

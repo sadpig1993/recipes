@@ -6,9 +6,9 @@
 void handle(int s)
 {
 
-	printf("处理中断...\n");
+	printf("澶勭悊涓柇...\n");
 	sleep(10);
-	printf("中断处理完毕!\n");
+	printf("涓柇澶勭悊瀹屾瘯!\n");
 }
 
 main()
@@ -19,9 +19,9 @@ main()
 }
 
 /*
-*	连续按两次ctrl+c
+*	杩炵画鎸変袱娆trl+c
 */
 
 /*
-*	按一次ctrl+c,	发送SINGUSR1信号
+*	鎸変竴娆trl+c,	鍙戦�丼INGUSR1淇″彿
 */

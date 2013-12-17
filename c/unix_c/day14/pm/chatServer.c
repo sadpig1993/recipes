@@ -11,29 +11,29 @@
 main()
 {
 
-		/* ÔÊÐí100¸öÓÃ»§Á¬½Ó	*/
+		/* å…è®¸100ä¸ªç”¨æˆ·è¿žæŽ¥	*/
 		int *fds=mmap(0,getpagesize(),
 						PROT_READ|PROT_WRITE,
 						MAP_ANONYMOUS|MAP_SHARED,0,0);;
 
 		int i;
 		//bzero(fds,sizeof(fds[100]));
-		/* fds[100]³õÊ¼»¯Îª-1	*/
+		/* fds[100]åˆå§‹åŒ–ä¸º-1	*/
 		for(i=0;i<100;i++){
 			fds[i]=-1;
 		}
 		
-		int cfd;	//¿Í»§ÃèÊö·û£¬´æ·Å¿Í»§¶ËÁ¬½ÓÃèÊö·ûºÅ
-		int idx=0;	//Ö¸Ê¾¿Í»§µÄ¸öÊý
+		int cfd;	//å®¢æˆ·æè¿°ç¬¦ï¼Œå­˜æ”¾å®¢æˆ·ç«¯è¿žæŽ¥æè¿°ç¬¦å·
+		int idx=0;	//æŒ‡ç¤ºå®¢æˆ·çš„ä¸ªæ•°
 
-		/*	1.½¨Á¢socket	*/
+		/*	1.å»ºç«‹socket	*/
 		int serverfd=socket(AF_INET,SOCK_STREAM,0);
 		if(serverfd == -1){
 			perror("socket"),exit(-1);
 		}
-		printf("½¨Á¢·þÎñÆ÷socket!\n");
+		printf("å»ºç«‹æœåŠ¡å™¨socket!\n");
 
-		/*	2.°ó¶¨µØÖ·		*/
+		/*	2.ç»‘å®šåœ°å€		*/
 		struct sockaddr_in addr={};
 		addr.sin_family=AF_INET;
 		addr.sin_port=htons(9999);
@@ -43,73 +43,73 @@ main()
 		if(r == -1){
 			perror("bind"),close(serverfd),exit(-2);
 		}
-		printf("·þÎñÆ÷°ó¶¨µØÖ·³É¹¦!\n");
+		printf("æœåŠ¡å™¨ç»‘å®šåœ°å€æˆåŠŸ!\n");
 		
-		/*	3.¼àÌý			*/
+		/*	3.ç›‘å¬			*/
 		r = listen(serverfd,10);
 		if(r == -1){
 			perror("listen"),close(serverfd),exit(-3);
 		}
-		printf("·þÎñÆ÷¼àÌý³É¹¦!,¿ªÊ¼µÈ´ý¿Í»§Á¬½Ó.....\n");
+		printf("æœåŠ¡å™¨ç›‘å¬æˆåŠŸ!,å¼€å§‹ç­‰å¾…å®¢æˆ·è¿žæŽ¥.....\n");
 
-		/* ¶¨Òå½á¹¹ÌåÀ´´æ·ÅÇëÇó¿Í»§¶ËµÄIPµØÖ·	*/
+		/* å®šä¹‰ç»“æž„ä½“æ¥å­˜æ”¾è¯·æ±‚å®¢æˆ·ç«¯çš„IPåœ°å€	*/
 		struct sockaddr_in cdr={};
 		socklen_t soc_len=sizeof(cdr);
 
-		// ¿ªÊ¼´¦ÀíËÀÑ­»·
+		// å¼€å§‹å¤„ç†æ­»å¾ªçŽ¯
 		while(1){
-			/*	4.½ÓÊÕ¿Í»§Á¬½Ó	*/
+			/*	4.æŽ¥æ”¶å®¢æˆ·è¿žæŽ¥	*/
 			
-			//½ÓÊÕ¿Í»§Á¬½Ó£¬²¢´æ´¢¿Í»§¶ËµÄIP
+			//æŽ¥æ”¶å®¢æˆ·è¿žæŽ¥ï¼Œå¹¶å­˜å‚¨å®¢æˆ·ç«¯çš„IP
 			cfd=accept(serverfd,(struct sockaddr *)&cdr,&soc_len);
 			if(cfd==-1){
-				//·þÎñÆ÷±ÀÀ£
+				//æœåŠ¡å™¨å´©æºƒ
 				close(serverfd);
-				printf("·þÎñÆ÷±ÀÀ£!\n");
-				//Ê¹ÓÃÐÅºÅÍ¨Öª×Ó½ø³ÌÒ²½áÊø¹Ø±Õ
-				//Ð¶ÔØ¹²ÏíÄÚ´æ
+				printf("æœåŠ¡å™¨å´©æºƒ!\n");
+				//ä½¿ç”¨ä¿¡å·é€šçŸ¥å­è¿›ç¨‹ä¹Ÿç»“æŸå…³é—­
+				//å¸è½½å…±äº«å†…å­˜
 				munmap(fds,getpagesize());
 				exit(-1);
 
 				break;
 			}
 			fds[idx]=cfd;			
-			printf("ÓÐÈËÁ¬½Ó:%s\n",inet_ntoa(cdr.sin_addr));
+			printf("æœ‰äººè¿žæŽ¥:%s\n",inet_ntoa(cdr.sin_addr));
 			
-			/*	5.½¨Á¢×Ó½ø³Ì	*/
+			/*	5.å»ºç«‹å­è¿›ç¨‹	*/
 			if(fork())
 			{
-				//¸¸½ø³Ì
-				idx ++; 	// ±È½ÏÖØÒª£¬ÕâÒ»²½×îºÃ·ÅÔÚforkºó
-				continue;	//continue À´Ê¹¸¸½ø³ÌÒ»ÖÂ×öËÀÑ­»·
+				//çˆ¶è¿›ç¨‹
+				idx ++; 	// æ¯”è¾ƒé‡è¦ï¼Œè¿™ä¸€æ­¥æœ€å¥½æ”¾åœ¨forkåŽ
+				continue;	//continue æ¥ä½¿çˆ¶è¿›ç¨‹ä¸€è‡´åšæ­»å¾ªçŽ¯
 			}
 			else
 			{
-				//×Ó½ø³Ì
+				//å­è¿›ç¨‹
 				char buf[256];
-				//×Ó½ø³ÌËÀÑ­»·´¦Àí 6 7 Ò»µ©Ìø³öÑ­»·ÔòÍË³ö×Ó½ø³Ì
+				//å­è¿›ç¨‹æ­»å¾ªçŽ¯å¤„ç† 6 7 ä¸€æ—¦è·³å‡ºå¾ªçŽ¯åˆ™é€€å‡ºå­è¿›ç¨‹
 				while(1)
 				{
 
-					/*	6.×Ó½ø³Ì½ÓÊÕ¿Í»§Êý¾Ý	*/
+					/*	6.å­è¿›ç¨‹æŽ¥æ”¶å®¢æˆ·æ•°æ®	*/
 					r=read(cfd,buf,sizeof(buf)-1);
 					if(r==0)
 					{
 						fds[idx]=-1;
 						close(cfd);
-						printf("ÓÐ¿Í»§ÍË³ö!\n");
+						printf("æœ‰å®¢æˆ·é€€å‡º!\n");
 						break;
 					}
 					if(r == -1)
 					{
 						close(fds[idx]);
 						fds[idx]=-1;
-						printf("ÍøÂç¹ÊÕÏ!\n");
+						printf("ç½‘ç»œæ•…éšœ!\n");
 						break;
 					}
 					if(r>0)
 					{
-						/*	7.×Ó½ø³Ì¹ã²¥Êý¾Ý	*/
+						/*	7.å­è¿›ç¨‹å¹¿æ’­æ•°æ®	*/
 						buf[r]=0;
 						printf("::%s\n",buf);
 						for(i=0;i<100;i++)
@@ -117,7 +117,7 @@ main()
 							if(fds[i] != -1)
 							{
 								write(fds[i],buf,r);
-								//ÕâÀïÆäÊµÒ²¿ÉÒÔ´¦ÀíÏÂÒì³£
+								//è¿™é‡Œå…¶å®žä¹Ÿå¯ä»¥å¤„ç†ä¸‹å¼‚å¸¸
 							}
 
 						}

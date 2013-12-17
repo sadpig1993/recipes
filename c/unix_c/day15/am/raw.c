@@ -1,5 +1,5 @@
 /*
-*此程序需要root才能执行
+*姝ょ▼搴忛渶瑕乺oot鎵嶈兘鎵ц
 */
 #include <stdio.h>
 #include <sys/socket.h>
@@ -13,7 +13,7 @@
 
 main()
 {
-	//vi /etc/protocols 查看raw原生包支持的协议
+	//vi /etc/protocols 鏌ョ湅raw鍘熺敓鍖呮敮鎸佺殑鍗忚
 	int fd=socket(AF_INET,SOCK_RAW,6);		
 	//int fd=socket(AF_INET,SOCK_RAW,17);		
 	if(fd==-1){

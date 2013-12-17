@@ -17,7 +17,7 @@ class MyData
 /*		*/
 UserData MyData::data;
 
-/* Êı¾İÉú²úÕß		*/
+/* æ•°æ®ç”Ÿäº§è€…		*/
 class DataProductor : public MyThread
 {
 	public:
@@ -27,9 +27,9 @@ class DataProductor : public MyThread
 			int num;
 			while(true)
 			{
-				//Ëæ»úÊ±¼äÖ®ºó²úÉúÒ»¸öÊı¾İ£¬·ÅÈëÈİÆ÷
+				//éšæœºæ—¶é—´ä¹‹åäº§ç”Ÿä¸€ä¸ªæ•°æ®ï¼Œæ”¾å…¥å®¹å™¨
 				t=random()%10;
-				printf("%dÃëºó²úÉúÊı¾İ\n",t);
+				printf("%dç§’åäº§ç”Ÿæ•°æ®\n",t);
 				sleep(t);
 				num=random()%100;
 				MyData::data.push_data(num);
@@ -39,7 +39,7 @@ class DataProductor : public MyThread
 
 };
 
-/* Êı¾İÏû·ÑÕß		*/
+/* æ•°æ®æ¶ˆè´¹è€…		*/
 class DataCustomer : public MyThread
 {
 	public:
@@ -48,7 +48,7 @@ class DataCustomer : public MyThread
 			int num;
 			while(true)
 			{
-				//È¡Êı¾İ²¢ÇÒ´òÓ¡µ½ÖÕ¶Ë
+				//å–æ•°æ®å¹¶ä¸”æ‰“å°åˆ°ç»ˆç«¯
 				num=MyData::data.pop_data();
 				printf("%d\n",num);
 			}

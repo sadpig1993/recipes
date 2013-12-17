@@ -10,26 +10,26 @@
 main()
 {
 
-	/* 1.½¨Á¢socket	:socket		*/
-		//	int fd=socket(AF_FILE,SOCK_STREAM,0);	//ÒÔ±¾µØÎÄ¼şĞÎÊ½µÄsocket
-		int fd=socket(AF_INET,SOCK_STREAM,0);	//ÒÔÍøÂçĞÎÊ½µÄsocket
+	/* 1.å»ºç«‹socket	:socket		*/
+		//	int fd=socket(AF_FILE,SOCK_STREAM,0);	//ä»¥æœ¬åœ°æ–‡ä»¶å½¢å¼çš„socket
+		int fd=socket(AF_INET,SOCK_STREAM,0);	//ä»¥ç½‘ç»œå½¢å¼çš„socket
 		if(fd==-1)
 		{
 			perror("socket"),exit(-1);
 		}
-		printf("½¨Á¢socket³É¹¦!\n");
+		printf("å»ºç«‹socketæˆåŠŸ!\n");
 
-	/* 2.°ó¶¨µØÖ·	:bind		*/
+	/* 2.ç»‘å®šåœ°å€	:bind		*/
 		int r;
 
-		// ÒÔ±¾µØÎÄ¼ş¸ñÊ½
-		/* ±¾µØÎÄ¼ş¸ñÊ½
+		// ä»¥æœ¬åœ°æ–‡ä»¶æ ¼å¼
+		/* æœ¬åœ°æ–‡ä»¶æ ¼å¼
 		struct sockaddr_un addr={};
 		addr.sun_family=AF_FILE;
 		sprintf(addr.sun_path,"%s","s.socket");
 		*/
 
-		//ÒÔÍøÂçĞÎÊ½µÄsocket
+		//ä»¥ç½‘ç»œå½¢å¼çš„socket
 		struct sockaddr_in addr={};
 		addr.sin_family=AF_INET;
 		addr.sin_port=htons(11111);
@@ -40,33 +40,33 @@ main()
 		{
 			perror("bind"),close(fd),exit(-1);
 		}
-		printf("°ó¶¨socket³É¹¦!\n");
+		printf("ç»‘å®šsocketæˆåŠŸ!\n");
 
-	/* 3.¼àÌıÁ¬½Ó	:listen		*/
+	/* 3.ç›‘å¬è¿æ¥	:listen		*/
 		r=listen(fd,10);
 		if(r==-1)
 		{
 			perror("listen"),close(fd),exit(-1);
 		}
-		printf("Æô¶¯¼àÌı³É¹¦!\n");
+		printf("å¯åŠ¨ç›‘å¬æˆåŠŸ!\n");
 
 		while(1)
 		{
-	/* 4.·µ»Ø¼àÌıµ½µÄ¿Í»§Á¬½Ó	:accept		*/
-			int cfd;//Á¬½ÓÃèÊö·ûºÅ
+	/* 4.è¿”å›ç›‘å¬åˆ°çš„å®¢æˆ·è¿æ¥	:accept		*/
+			int cfd;//è¿æ¥æè¿°ç¬¦å·
 			cfd=accept(fd,0,0);
 			if(cfd==-1)
 			{
 				break;
 			}
-			printf("ÓĞ¿Í»§ÇëÇóÁ¬½Ó:%d\n",cfd);
-	/* 5.Í¨¹ı·µ»ØµÄÁ¬½Ó,Ö»Óë¸Ã¿Í»§½»»»Êı¾İ	:read/write	ÏµÁĞº¯Êı	*/
+			printf("æœ‰å®¢æˆ·è¯·æ±‚è¿æ¥:%d\n",cfd);
+	/* 5.é€šè¿‡è¿”å›çš„è¿æ¥,åªä¸è¯¥å®¢æˆ·äº¤æ¢æ•°æ®	:read/write	ç³»åˆ—å‡½æ•°	*/
 			write(cfd,"Hello",5);	
-	/* 6.¹Ø±Õ¿Í»§Á¬½Ó	:close		*/
+	/* 6.å…³é—­å®¢æˆ·è¿æ¥	:close		*/
 			close(cfd);
 		}
 
-	/* 7.¹Ø±Õsocket		:close		*/
+	/* 7.å…³é—­socket		:close		*/
 		close(fd);
 
 }

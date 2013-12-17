@@ -1,33 +1,33 @@
 #include "userdata.h"
 
-/* ¹¹Ôìº¯ÊıÊµÏÖ	*/
+/* æ„é€ å‡½æ•°å®ç°	*/
 UserData::UserData()
 {
-	/* »¥³âÁ¿ºÍÌõ¼şÁ¿µÄ³õÊ¼»¯	*/
+	/* äº’æ–¥é‡å’Œæ¡ä»¶é‡çš„åˆå§‹åŒ–	*/
 	pthread_mutex_init(&mutex,0);
 	pthread_cond_init(&cond,0);
-	/* ´Ë´¦Ã»ÓĞÊµÏÖÒì³£´¦Àí	*/
+	/* æ­¤å¤„æ²¡æœ‰å®ç°å¼‚å¸¸å¤„ç†	*/
 }
 
-/* Îö¹¹º¯ÊıÊµÏÖ		*/
+/* ææ„å‡½æ•°å®ç°		*/
 UserData::~UserData()
 {
-	/* »¥³âÁ¿ºÍÌõ¼şÁ¿µÄÊÍ·Å		*/
+	/* äº’æ–¥é‡å’Œæ¡ä»¶é‡çš„é‡Šæ”¾		*/
 	pthread_mutex_destroy(&mutex);
 	pthread_cond_destroy(&cond);
 }
 
-/*	Ïò¶ÓÁĞ Ğ´Êı¾İ	*/
-/*	¼Ó»¥³âËøµÄÊ±ºò£¬ÊÇµ¥¸öÏß³ÌĞ´Êı¾İ	
-*  	²»¼Ó»¥³âËøµÄÊ±ºò£¬¶à¸öÏß³Ì¿ÉÍ¬Ê±
-*  	Ğ´ÈëÊı¾İ
+/*	å‘é˜Ÿåˆ— å†™æ•°æ®	*/
+/*	åŠ äº’æ–¥é”çš„æ—¶å€™ï¼Œæ˜¯å•ä¸ªçº¿ç¨‹å†™æ•°æ®	
+*  	ä¸åŠ äº’æ–¥é”çš„æ—¶å€™ï¼Œå¤šä¸ªçº¿ç¨‹å¯åŒæ—¶
+*  	å†™å…¥æ•°æ®
 */
 void UserData::push_data(int num)
 {
 	pthread_mutex_lock(&mutex);
 
 	data.push_back(num);
-	printf("·ÅÈëÊı¾İ:%d,²¢Í¨Öª\n",num);
+	printf("æ”¾å…¥æ•°æ®:%d,å¹¶é€šçŸ¥\n",num);
 	pthread_cond_broadcast(&cond);
 	
 	pthread_mutex_unlock(&mutex);
@@ -40,13 +40,13 @@ int UserData::pop_data()
 
 	while(data.empty())
 	{
-		printf("Ã»ÓĞÊı¾İ,µÈ´ıÖĞ......\n");
+		printf("æ²¡æœ‰æ•°æ®,ç­‰å¾…ä¸­......\n");
 		pthread_cond_wait(&cond,&mutex);
 	}
 	ret=data.back();
 	data.pop_back();
-	pthread_mutex_unlock(&mutex);	//·ÅÔÚÕâÀï²ÅÊÇÕıÈ·µÄ
+	pthread_mutex_unlock(&mutex);	//æ”¾åœ¨è¿™é‡Œæ‰æ˜¯æ­£ç¡®çš„
 
 	return ret;
-//	pthread_mutex_unlock(&mutex); ·ÅÔÚÕâÀï»á²úÉúËÀËø
+//	pthread_mutex_unlock(&mutex); æ”¾åœ¨è¿™é‡Œä¼šäº§ç”Ÿæ­»é”
 }

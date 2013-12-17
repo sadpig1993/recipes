@@ -1,5 +1,5 @@
 /*
-* AÏß³ÌÔÚ30ÃëºóÖÕÖ¹BÏß³Ì
+* Açº¿ç¨‹åœ¨30ç§’åç»ˆæ­¢Bçº¿ç¨‹
 *
 */
 #include <stdio.h>
@@ -14,7 +14,7 @@ void *A(void *data)
 	int i=0;
 	while(1)
 	{
-		printf("Ïß³Ì---A!\n");
+		printf("çº¿ç¨‹---A!\n");
 		sleep(1);
 		i++;
 		if(i==30)
@@ -30,7 +30,7 @@ void *B(void *data)
 {
 	while(1)
 	{
-		printf("B---Ïß³Ì!\n");
+		printf("B---çº¿ç¨‹!\n");
 		sleep(1);
 		if(b==1)
 		{
@@ -41,7 +41,7 @@ void *B(void *data)
 
 main()
 {
-	/* ´´½¨Ïß³Ì		*/
+	/* åˆ›å»ºçº¿ç¨‹		*/
 	pthread_create(&ta,0,A,0);
 	pthread_create(&tb,0,B,0);
 

@@ -11,7 +11,7 @@ main()
 
 	int fd=socket(AF_INET,SOCK_STREAM,0);
 
-	/* °ó¶¨µØÖ·	*/
+	/* ç»‘å®šåœ°å€	*/
 	struct sockaddr_in addr={};
 	addr.sin_family=AF_INET;
 	addr.sin_port=htons(10000);
@@ -25,7 +25,7 @@ main()
 	int cfd;
 	cfd=accept(fd,0,0);
 
-	/* ¶¨Òå8K µÄ»º³å	*/
+	/* å®šä¹‰8K çš„ç¼“å†²	*/
 	char buf[8*1024]={};
 
 	/*
@@ -63,7 +63,7 @@ main()
 
 	close(fd);
 	/*
-	Ğ­Òé://ip:port/×ÊÔ´Â·¾¶
+	åè®®://ip:port/èµ„æºè·¯å¾„
 	http://192.168.1.188:10000/index.html
 	*/
 

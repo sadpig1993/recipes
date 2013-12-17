@@ -5,15 +5,15 @@
 #include <fcntl.h>
 #include <signal.h>
 
-char pipefile[]="p.pipe"; //¹ÜµÀÎÄ¼şÃû
-int fd;	//´ò¿ª¹ÜµÀµÄÎÄ¼şÃèÊö·ûºÅ
+char pipefile[]="p.pipe"; //ç®¡é“æ–‡ä»¶å
+int fd;	//æ‰“å¼€ç®¡é“çš„æ–‡ä»¶æè¿°ç¬¦å·
 int r ;
 
 void closeproc(int s)
 {
-	/* 4.¹Ø±Õ¹ÜµÀ	*/
+	/* 4.å…³é—­ç®¡é“	*/
 	close(fd);
-	/* 5.É¾³ı¹ÜµÀ	*/
+	/* 5.åˆ é™¤ç®¡é“	*/
 	unlink(pipefile);
 
 	exit(0);
@@ -25,7 +25,7 @@ main()
 
 	signal(2,closeproc);
 
-	/* 1.½¨Á¢¹ÜµÀÎÄ¼ş	*/
+	/* 1.å»ºç«‹ç®¡é“æ–‡ä»¶	*/
 	r = mkfifo(pipefile,0666);
 	if(r == -1)
 	{
@@ -33,7 +33,7 @@ main()
 		exit(-1);
 	}
 
-	/* 2.´ò¿ª¹ÜµÀÎÄ¼ş	*/
+	/* 2.æ‰“å¼€ç®¡é“æ–‡ä»¶	*/
 	fd = open(pipefile,O_RDWR);
 	if(fd == -1)
 	{
@@ -42,14 +42,15 @@ main()
 		exit(-1);
 	}
 
-	/* 3.Ã¿¸ôÒ»ÃëÖÓ£¬Ğ´ÈëÒ»¸öÊı¾İ	*/
+	/* 3.æ¯éš”ä¸€ç§’é’Ÿï¼Œå†™å…¥ä¸€ä¸ªæ•°æ®	*/
 	int  i=0;
 	while(1)
 	{
 		write(fd,&i,sizeof(int));
+		printf("write data ::%d\n",i);
 		i++;
-		read(fd,&r,sizeof(int));
-		printf("::%d\n",r);
+		//read(fd,&r,sizeof(int));
+		//printf("write data ::%d\n",r);
 		sleep(1);
 	}
 

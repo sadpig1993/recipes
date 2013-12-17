@@ -10,7 +10,7 @@ int a,b;
 
 void display()
 {
-		pthread_mutex_lock(&m);	//m=0,Ö±½Ó·µ»Ø,²¢ÇÒ°Ñm=1 £¬·ñÔò×èÈû
+		pthread_mutex_lock(&m);	//m=0,ç›´æ¥è¿”å›,å¹¶ä¸”æŠŠm=1 ï¼Œå¦åˆ™é˜»å¡
 		a++;
 		b++;
 		if(a!=b)
@@ -18,7 +18,7 @@ void display()
 			printf("%d!=%d\n",a,b);
 			a=b=0;
 		}
-		pthread_mutex_unlock(&m);//°Ñm±ä³É0£¬Ö±½Ó·µ»Ø	
+		pthread_mutex_unlock(&m);//æŠŠmå˜æˆ0ï¼Œç›´æ¥è¿”å›	
 		
 }
 void *r1(void *data)

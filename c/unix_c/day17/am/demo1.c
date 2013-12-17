@@ -9,28 +9,28 @@ main()
 {
 	if(fork())
 	{
-		//¸¸½ø³Ì
+		//çˆ¶è¿›ç¨‹
 		sigset_t sigs;
 		sigemptyset(&sigs);
-		/* °Ñ34ĞÅºÅ·Å½øĞÅºÅ¼¯ºÏ		*/
+		/* æŠŠ34ä¿¡å·æ”¾è¿›ä¿¡å·é›†åˆ		*/
 		sigaddset(&sigs,34);
 		int s;
 	
 		while(1)
 		{
 			sigwait(&sigs,&s);
-			printf("½â³ı×èÈû!\n");
+			printf("è§£é™¤é˜»å¡!\n");
 		}
 
 	}
 	else
 	{
-		//×Ó½ø³Ì
+		//å­è¿›ç¨‹
 		while(1)
 		{
 			sleep(1);
 			kill(getppid(),34);
-			printf("ÒÑ¾­·¢³öĞÅºÅ!\n");
+			printf("å·²ç»å‘å‡ºä¿¡å·!\n");
 		}
 
 	}

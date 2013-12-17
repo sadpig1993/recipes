@@ -12,8 +12,8 @@ main()
 		printf("::%d\n",getpid());
 		for(;i<5;i++)
 		{
-			/* 7413 ��sigaction2��ִ�е�PID */
-			sigqueue(7413,2,val);
+			/* 向sigaction2.c 编译后的执行程序发送2信号 */
+			sigqueue(4619,2,val);
 		}
 
 }

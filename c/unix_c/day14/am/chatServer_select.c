@@ -9,18 +9,18 @@
 
 main()
 {
-	int serverfd;	//·şÎñÆ÷socketÃèÊö·û
-	int r;		//´æ·Åº¯Êı·µ»ØÖµ
+	int serverfd;	//æœåŠ¡å™¨socketæè¿°ç¬¦
+	int r;		//å­˜æ”¾å‡½æ•°è¿”å›å€¼
 
-	int allfds[100];	//´æ·ÅËùÓĞÁ¬½ÓµÄ¿Í»§ÃèÊö·ûºÅ
-	int idx;		//Á¬½ÓµÄ×î´óÊı
+	int allfds[100];	//å­˜æ”¾æ‰€æœ‰è¿æ¥çš„å®¢æˆ·æè¿°ç¬¦å·
+	int idx;		//è¿æ¥çš„æœ€å¤§æ•°
 
-	int maxfd;	//×î´óÃèÊö·ûºÅ
-	fd_set fds;		//¼àÊÓµÄÃèÊö·û¼¯ºÏÓëÓĞÊı¾İµÄÃèÊö·û¼¯ºÏ
-	char  buf[1024];	//¶ÁÈ¡¿Í»§´«µİµÄÁÄÌìĞÅÏ¢
+	int maxfd;	//æœ€å¤§æè¿°ç¬¦å·
+	fd_set fds;		//ç›‘è§†çš„æè¿°ç¬¦é›†åˆä¸æœ‰æ•°æ®çš„æè¿°ç¬¦é›†åˆ
+	char  buf[1024];	//è¯»å–å®¢æˆ·ä¼ é€’çš„èŠå¤©ä¿¡æ¯
 
 
-	/*	1.½¨Á¢socket								*/
+	/*	1.å»ºç«‹socket								*/
 	serverfd=socket(AF_INET,SOCK_STREAM,0);
 	if(serverfd==-1)
 	{
@@ -28,7 +28,7 @@ main()
 	}
 	printf("socket ok!\n");
 
-	/*	2.°ó¶¨µØÖ·									*/
+	/*	2.ç»‘å®šåœ°å€									*/
 	struct sockaddr_in addr={};
 	addr.sin_family=AF_INET;
 	addr.sin_port=htons(9999);
@@ -40,7 +40,7 @@ main()
 	}
 	printf("bind ok!\n");
 
-	/*	3.¼àÌı										*/
+	/*	3.ç›‘å¬										*/
 	r=listen(serverfd,10);
 	if(r==-1)
 	{
@@ -50,22 +50,22 @@ main()
 
 
 	int i;
-	//ÏÈÇå¿Õ
+	//å…ˆæ¸…ç©º
 	for(i=0;i<100;i++)
 	{
 			allfds[i]=-1;
 	}
 	idx=0;
-	/*	4.Ñ­»·µ÷ÓÃselectÀ´¼àÊÓÃèÊö·ûºÅµÄ¸Ä±ä		*/
+	/*	4.å¾ªç¯è°ƒç”¨selectæ¥ç›‘è§†æè¿°ç¬¦å·çš„æ”¹å˜		*/
 	while(1)
 	{
-		/*	4.1 ³õÊ¼»¯ĞèÒª¼àÊÓµÄÊı¾İ*/
-		maxfd=-1;	//³õÊ¼»¯	
-		FD_ZERO(&fds);	//Çå¿Õfds
-			/*¼ÓÈëserverfdµ½¼àÊÓµÄÃèÊö·û¼¯ºÏ*/
+		/*	4.1 åˆå§‹åŒ–éœ€è¦ç›‘è§†çš„æ•°æ®*/
+		maxfd=-1;	//åˆå§‹åŒ–	
+		FD_ZERO(&fds);	//æ¸…ç©ºfds
+			/*åŠ å…¥serverfdåˆ°ç›‘è§†çš„æè¿°ç¬¦é›†åˆ*/
 		FD_SET(serverfd,&fds);
 		maxfd=serverfd>maxfd?serverfd:maxfd;
-			/*¼ÓÈëÁ¬½ÓÃèÊö·ûµ½¼àÊÓ¼¯ºÏ*/
+			/*åŠ å…¥è¿æ¥æè¿°ç¬¦åˆ°ç›‘è§†é›†åˆ*/
 		for(i=0;i<100;i++)
 		{
 			if(allfds[i]!=-1)
@@ -74,44 +74,44 @@ main()
 				maxfd=allfds[i]>maxfd?allfds[i]:maxfd;
 			}
 		}
-		/*	4.2 ¼àÊÓ				*/
+		/*	4.2 ç›‘è§†				*/
 		r=select(maxfd+1,&fds,0,0,0);	
 		if(r==-1)
 		{
-			break;//ÖĞ¶ÏÌø³öÑ­»·
+			break;//ä¸­æ–­è·³å‡ºå¾ªç¯
 		}
-		printf("¸Ä±äÊı:%d\n",r);
+		printf("æ”¹å˜æ•°:%d\n",r);
 
-	/*	5.ÅĞ¶¨serverfdÊÇ·ñÔÚÀïÃæ*/
-		/*	5.1Èç¹ûserverfdÔÚ£¬¾Í½ÓÊÕĞÂÁ¬½ÓµÄ¿Í»§ */
+	/*	5.åˆ¤å®šserverfdæ˜¯å¦åœ¨é‡Œé¢*/
+		/*	5.1å¦‚æœserverfdåœ¨ï¼Œå°±æ¥æ”¶æ–°è¿æ¥çš„å®¢æˆ· */
 		if(FD_ISSET(serverfd,&fds))
 		{
 			allfds[idx]=accept(serverfd,0,0);	
 			idx ++;
 		}
 
-	/* 	6.ÅĞ¶¨ÄÄĞ©Á¬½ÓÃèÊö·ûÔÚ·µ»ØµÄ¸Ä±äµÄ¼¯ºÏÖĞ	*/
+	/* 	6.åˆ¤å®šå“ªäº›è¿æ¥æè¿°ç¬¦åœ¨è¿”å›çš„æ”¹å˜çš„é›†åˆä¸­	*/
 		for(i=0;i<100;i++)
 		{
 			if( (allfds[i]!=-1) && (FD_ISSET(allfds[i],&fds)) )
 			{
-				/*	6.1 Èç¹ûÔÚ£¬Ôò¶ÁÈ¡Êı¾İ	*/
+				/*	6.1 å¦‚æœåœ¨ï¼Œåˆ™è¯»å–æ•°æ®	*/
 				bzero(buf,sizeof(buf));
 				r=read(allfds[i],buf,sizeof(buf)-1);
 				if(r==-1){
-					printf("ÓĞÈË¹ÊÕÏÍË³ö!\n");
+					printf("æœ‰äººæ•…éšœé€€å‡º!\n");
 					close(allfds[i]);
 					allfds[i]=-1;
 				}
 				if(r==0){
-					printf("ÓĞÈË¹Ø±ÕÍË³ö!\n");
+					printf("æœ‰äººå…³é—­é€€å‡º!\n");
 					close(allfds[i]);
 					allfds[i]=-1;
 				}
 				if(r>0){
-				/*	6.2 ¹ã²¥Êı¾İ			*/
+				/*	6.2 å¹¿æ’­æ•°æ®			*/
 					buf[r]=0;
-					printf("À´×Ô¿Í»§µÄĞÅÏ¢:%s\n",buf);
+					printf("æ¥è‡ªå®¢æˆ·çš„ä¿¡æ¯:%s\n",buf);
 					int j;
 					for(j=0;j<100;j++)
 					{
