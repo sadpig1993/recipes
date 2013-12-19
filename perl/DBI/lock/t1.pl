@@ -46,7 +46,7 @@ $sth->execute();
 print $date . "\n";
 while( my $row = $sth->fetchrow_hashref() ) {
     print $row->{ID} . $row->{TYPE} . "\n";
-    sleep 100;
+    sleep 20;
 }
 $dbh1->commit();
 if($@) {

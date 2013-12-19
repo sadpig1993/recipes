@@ -26,6 +26,8 @@ my $dbh1 = DBI->connect(
         AutoCommit => 0,    #默认属性是on , 此处关闭
         PrintError => 1,    #
         RaiseError => 1,    #
+        FetchHashKeyName => 'NAME_lc',
+        ChopBlanks => 1,
     }
 );
 
