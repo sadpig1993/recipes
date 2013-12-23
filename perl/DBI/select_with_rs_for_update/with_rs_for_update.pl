@@ -41,8 +41,8 @@ else {
 my ($sec,$min,$hour, $mday, $mon,$year) = (localtime(time))[ 0, 1, 2, 3, 4, 5 ];
 my $date = sprintf("%04d-%02d-%02d %02d:%02d:%02d", $year + 1900 , $mon + 1 , $mday, $hour, $min, $sec);
 
-my $sth = $dbh1->prepare("select * from job_dz where id = 1 with rs for update");
-$sth->execute();
+my $sth = $dbh1->prepare("select * from job_dz where zjdz_date = ? and b_acct = ? and type = ? with rs for update");
+$sth->execute('2013-12-11', '8', '1');
 print $date . "\n";
 while( my $row = $sth->fetchrow_hashref() ) {
     print $row->{ID} . $row->{TYPE} . "\n";
