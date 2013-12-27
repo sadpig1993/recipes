@@ -1,5 +1,11 @@
 #!/usr/bin/env perl
 
+=comment
+
+fork 两个进程 两个进程向延迟刷新的MQT表插入数据并且刷新MQT表
+
+=cut
+
 use strict;
 use warnings;
 
