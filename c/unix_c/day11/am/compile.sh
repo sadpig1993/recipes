@@ -1,9 +1,0 @@
-gcc shmA.c -oshmA
-gcc shmB.c -oshmB
-gcc shmctl.c -oshmctlmain
-gcc msgA.c -omsgA
-gcc msgB.c -omsgB
-gcc semA.c -osemA
-gcc semB.c -osemB
-gcc socketA.c -osocketA
-gcc socketB.c -osocketB

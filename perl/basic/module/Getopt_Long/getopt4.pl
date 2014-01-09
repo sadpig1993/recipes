@@ -35,12 +35,13 @@ use Data::Dump;
 #EOF
 
 ############## demo 2 ###################
-# test -library lib/mylib lib/stdlib
-#my $libfiles;
-#GetOptions( "library=s@" => \$libfiles );
-#print <<EOF;
-#library:	@$libfiles
-#EOF
+# test -library 'lib/mylib lib/stdlib'
+# test -l "lib/mylib lib/stdlib"
+my $libfiles;
+GetOptions( "library|l=s@" => \$libfiles );
+print <<EOF;
+library:	@$libfiles
+EOF
 
 # Of course, it is important to choose the right separator string for each purpose.
 # Warning: What follows is an experimental feature.
@@ -53,15 +54,15 @@ use Data::Dump;
 ############## demo 3 ###################
 # called this demo 
 # ./getopt4.pl -coordinates 20.0 21.2 -rgbcolor 121 188 200
-my @coor;
-my @color;
-# 获取两个浮点数坐标，三个整数RGB
-GetOptions( 'coordinates=f{2}' => \@coor, 'rgbcolor=i{3}' => \@color );
-
-print <<EOF;
-    coordinates:	@coor
-    rgbcolor   :	@color
-EOF
+# my @coor;
+# my @color;
+# # 获取两个浮点数坐标，三个整数RGB
+# GetOptions( 'coordinates=f{2}' => \@coor, 'rgbcolor=i{3}' => \@color );
+# 
+# print <<EOF;
+#     coordinates:	@coor
+#     rgbcolor   :	@color
+# EOF
 
 # The destination for the option must be an array or array reference.
 
