@@ -7,6 +7,7 @@
 _syscall0( int, inotify_init )
 _syscall3( int, inotify_add_watch, int, fd, const char *, path, __u32, mask )
 _syscall2( int, inotify_rm_watch, int, fd, __u32, mask ) 
+
 char * monitored_files[] = { 
     "./tmp_file", 
     "./tmp_dir", 
@@ -84,7 +85,7 @@ int main(void) {
             }
             printf( "Event mask: %08X\n", event->mask );
             for ( i = 0 ; i < EVENT_NUM ; i++ ) {
-                if ( event_array [i][0] == '\0' ) continue;
+                if ( event_array[i][0] == '\0' ) continue;
                 if ( event->mask & ( 1 << i ) ) {
                     printf( "Event: %s\n", event_array[i] );
                 }
