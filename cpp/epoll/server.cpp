@@ -44,8 +44,10 @@ int main()
     socklen_t clilen;
     //声明epoll_event结构体的变量,ev用于注册事件,数组用于回传要处理的事件
     struct epoll_event ev, events[20];
+
     //生成用于处理accept的epoll专用的文件描述符
     epfd=epoll_create(256);
+
     struct sockaddr_in clientaddr;
     struct sockaddr_in serveraddr;
     listenfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -56,13 +58,16 @@ int main()
     //设置要处理的事件类型
     ev.events=EPOLLIN|EPOLLET;
     //ev.events=EPOLLIN;
+
     //注册epoll事件
     epoll_ctl(epfd,EPOLL_CTL_ADD,listenfd,&ev);
+
     bzero(&serveraddr, sizeof(serveraddr));
     serveraddr.sin_family = AF_INET;
     char *local_addr="127.0.0.1";
     inet_aton(local_addr,&(serveraddr.sin_addr));//htons(SERV_PORT);
     serveraddr.sin_port=htons(SERV_PORT);
+
     bind(listenfd,(sockaddr *)&serveraddr, sizeof(serveraddr));
     listen(listenfd, LISTENQ);
     maxi = 0;
@@ -72,7 +77,7 @@ int main()
         //处理所发生的所有事件     
         for(i=0;i<nfds;++i)
         {
-            if(events[i].data.fd==listenfd) //有新的连接
+            if(events[i].data.fd == listenfd) //有新的连接
             {
                 connfd = accept(listenfd,(sockaddr *)&clientaddr, &clilen); //accept这个新连接
                 if(connfd<0){
@@ -92,7 +97,7 @@ int main()
                 //注册ev 将新的fd添加到epoll的监听队列中
                 epoll_ctl(epfd,EPOLL_CTL_ADD,connfd,&ev);
             }
-            else if(events[i].events&EPOLLIN) //接收到数据，读socket
+            else if(events[i].events & EPOLLIN) //接收到数据，读socket
             {
                 cout << "EPOLLIN" << endl;
                 if ( (sockfd = events[i].data.fd) < 0) 
@@ -119,7 +124,7 @@ int main()
                 //修改sockfd上要处理的事件为EPOLLOUT 修改标识符号，等待下一个循环时发送数据 异步处理的精髓
                 //epoll_ctl(epfd,EPOLL_CTL_MOD,sockfd,&ev);
             }
-            else if(events[i].events&EPOLLOUT) //有数据发送，写socket
+            else if(events[i].events & EPOLLOUT) //有数据发送，写socket
             {   
                 sockfd = events[i].data.fd;
                 write(sockfd, line, n); //写数据
