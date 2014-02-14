@@ -5,16 +5,17 @@
 
 #define ARR_LEN (20)
 
-char * split(char *, char *);
+char * split(char *, char *, int *);
 
 int main (int argc, char **argv)
 {
     char s[]="120214240|2013-12-22|10000609151|10012126282|31|900.00|1.17|0.00|0.00";
+    int count = 0;
     char *delim = "|";
 
-    char **result = split(s, delim);
+    char *result[ARR_LEN] = split(s, delim, &count);
     int j = 0;
-    while(result[j]) {
+    while(j <= count) {
         printf("%s\n", result[j]);
         j++;
     }
@@ -30,7 +31,7 @@ output:
     拆分后的数组
 */
 
-char * split(char *s, char *delim)
+char * split(char *s, char *delim, int *d)
 {
     char *ret[ARR_LEN];
     int i = 0;
@@ -49,6 +50,6 @@ char * split(char *s, char *delim)
         ret[i] = p;
     }
 
+    *d = i;
     return ret;
-
 }
