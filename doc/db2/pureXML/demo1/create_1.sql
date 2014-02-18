@@ -3,13 +3,15 @@
 */
 
 --1. 创建关系型的表 
-create table customer( id integer not null generated always as  identity, info varchar(1000)  );
+create table customer( cid integer not null generated always as  identity, info XML  );
 insert into customer(info) values ('
 <customerinfo Cid="1003">
 <name>jackliu</name>
 <addr country="china">
 <street>lugu road</street>
 <city>Beijing</city>
+<prov-state>bj</prov-state>
+<pcode-zip>10010</pcode-zip>
 </addr>
 <phone type="work">010-63719999</phone>
 <phone type="home">010-63719888</phone>

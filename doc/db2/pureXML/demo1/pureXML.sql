@@ -3,7 +3,7 @@
 */
 
 --1. 创建关系型的表 
-drop table customer;
+-- drop table customer;
 create table customer( id integer not null generated always as  identity, info XML  );
 insert into customer(info) values ('
 <customerinfo Cid="1003">
