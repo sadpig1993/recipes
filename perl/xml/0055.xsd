@@ -1,0 +1,61 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="yspz_0055">
+  <xs:complexType>
+  <xs:sequence>
+  <xs:element ref= "y0055" minOccurs='1' maxOccurs='unbounded'/>
+  </xs:sequence>
+  </xs:complexType>
+  </xs:element>
+    
+  <xs:element name="y0055">
+  <xs:complexType>
+  <xs:sequence>
+  <xs:element ref="serialno"   />
+  <xs:element ref="txdate"     />
+  <xs:element ref="c"           />
+  <xs:element ref="cardtype"   />
+  <xs:element ref="p"            />
+  <xs:element ref="txamt"      />
+  <xs:element ref="cfee"        />
+  <xs:element ref="cwwscfee"   /> 
+  <xs:element ref="bfjacctbj" /> 
+  <xs:element ref="bi"           />
+  <xs:element ref="bserialno" /> 
+  <xs:element ref="btxdate"   /> 
+  <xs:element ref="cleardate"   />
+  <xs:element ref="bfee"        /> 
+  <xs:element ref="dealdate"    />
+  </xs:sequence>
+  </xs:complexType>
+  </xs:element>
+
+  <xs:element name="serialno"   type="xs:string"     nillable="true"/>
+  <xs:element name="txdate"     type="dateType"  />
+  <xs:element name="c"          type="xs:integer"    />
+  <xs:element name="cardtype"   type="xs:integer"    nillable="true"/>
+  <xs:element name="p"          type="xs:integer"    />
+  <xs:element name="txamt"      type="sumType"   default ="0.00"/>
+  <xs:element name="cfee"       type="sumType"   default ="0.00" nillable="true"/>
+  <xs:element name="cwwscfee"   type="sumType"   default ="0.00" nillable="true"/> 
+  <xs:element name="bfjacctbj"  type="xs:integer"    nillable="true"/> 
+  <xs:element name="bi"         type="xs:string"     />
+  <xs:element name="bserialno"  type="xs:integer"    nillable="true"/> 
+  <xs:element name="btxdate"    type="dateType"      nillable="true"/> 
+  <xs:element name="cleardate"  type="dateType"  />
+  <xs:element name="bfee"       type="sumType"   default ="0.00"  nillable="true"/> 
+  <xs:element name="dealdate"   type="dateType"  />
+
+  <xs:simpleType name="sumType">
+     <xs:restriction base="xs:string">
+        <xs:pattern value="\d+\.\d{2}"></xs:pattern>
+     </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="dateType">
+     <xs:restriction base="xs:string">
+        <xs:pattern value="(\d{4})-(\d{2})-(\d{2})"></xs:pattern>
+     </xs:restriction>
+  </xs:simpleType> 
+
+</xs:schema>
