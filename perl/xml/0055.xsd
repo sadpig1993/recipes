@@ -1,4 +1,10 @@
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" 
+xmlns:db2-xdb="http://www.ibm.com/xmlns/prod/db2/xdb1">
+    <xs:annotation>
+        <xs:appinfo>
+        <db2-xdb:defaultSQLSchema>db2inst</db2-xdb:defaultSQLSchema>
+        </xs:appinfo>
+    </xs:annotation>
 
   <xs:element name="yspz_0055">
   <xs:complexType>
@@ -30,21 +36,21 @@
   </xs:complexType>
   </xs:element>
 
-  <xs:element name="serialno"   type="xs:string"     nillable="true"/>
-  <xs:element name="txdate"     type="dateType"  />
-  <xs:element name="c"          type="xs:integer"    />
-  <xs:element name="cardtype"   type="xs:integer"    nillable="true"/>
-  <xs:element name="p"          type="xs:integer"    />
-  <xs:element name="txamt"      type="sumType"   default ="0.00"/>
-  <xs:element name="cfee"       type="sumType"   default ="0.00" nillable="true"/>
-  <xs:element name="cwwscfee"   type="sumType"   default ="0.00" nillable="true"/> 
-  <xs:element name="bfjacctbj"  type="xs:integer"    nillable="true"/> 
-  <xs:element name="bi"         type="xs:string"     />
-  <xs:element name="bserialno"  type="xs:integer"    nillable="true"/> 
-  <xs:element name="btxdate"    type="dateType"      nillable="true"/> 
-  <xs:element name="cleardate"  type="dateType"  />
-  <xs:element name="bfee"       type="sumType"   default ="0.00"  nillable="true"/> 
-  <xs:element name="dealdate"   type="dateType"  />
+  <xs:element name="serialno" type="xs:string" nillable="true" db2-xdb:rowSet="Y0055" db2-xdb:column="SERIALNO" />
+  <xs:element name="txdate" type="dateType" db2-xdb:rowSet="Y0055" db2-xdb:column="TXDATE" />
+  <xs:element name="c" type="xs:string" db2-xdb:rowSet="Y0055" db2-xdb:column="C"  />
+  <xs:element name="cardtype" type="xs:integer" nillable="true" db2-xdb:rowSet="Y0055" db2-xdb:column="CARDTYPE"  />
+  <xs:element name="p" type="xs:integer" db2-xdb:rowSet="Y0055"  db2-xdb:column="P"  />
+  <xs:element name="txamt" type="sumType" default ="0.00" db2-xdb:rowSet="Y0055" db2-xdb:column="TXAMT"  />
+  <xs:element name="cfee" type="sumType"  default ="0.00" nillable="true" db2-xdb:rowSet="Y0055" db2-xdb:column="CFEE"  />
+  <xs:element name="cwwscfee" type="sumType" default ="0.00" nillable="true" db2-xdb:rowSet="Y0055" db2-xdb:column="CWWSCFEE" />
+  <xs:element name="bfjacctbj"  type="xs:integer"  nillable="true" db2-xdb:rowSet="Y0055" db2-xdb:column="BFJACCTBJ" /> 
+  <xs:element name="bi" type="xs:string" db2-xdb:rowSet="Y0055"  db2-xdb:column="BI" />
+  <xs:element name="bserialno" type="xs:integer" nillable="true" db2-xdb:rowSet="Y0055" db2-xdb:column="BSERIALNO" /> 
+  <xs:element name="btxdate" type="dateType"   nillable="true" db2-xdb:rowSet="Y0055" db2-xdb:column="BTXDATE" /> 
+  <xs:element name="cleardate" type="dateType" db2-xdb:rowSet="Y0055" db2-xdb:column="CLEARDATE"  />
+  <xs:element name="bfee" type="sumType"  default ="0.00"  nillable="true" db2-xdb:rowSet="Y0055" db2-xdb:column="BFEE" /> 
+  <xs:element name="dealdate"  type="dateType" db2-xdb:rowSet="Y0055" db2-xdb:column="DEALDATE"  />
 
   <xs:simpleType name="sumType">
      <xs:restriction base="xs:string">

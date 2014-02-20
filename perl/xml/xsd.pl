@@ -10,6 +10,7 @@ use warnings;
 use Data::Dumper;
 use XML::Compile::Schema;
 use XML::LibXML::Reader;
+use XML::Compile::Util;
 #use 5.010;
 
 my $xsd = '0055.xsd';
@@ -53,8 +54,8 @@ my $data = {
 
 my $doc = XML::LibXML::Document->new( '1.0', 'UTF-8' );
 eval {
-    #my $write  = $schema->compile(WRITER => 'yspz_0055');
-    my $write = $schema->compile( WRITER => 'yspz_0055' );
+    my $write  = $schema->compile(WRITER => 'myns#myid');
+    #my $write = $schema->compile( WRITER => 'yspz_0055' );
     my $xml = $write->( $doc, $data );
     $doc->setDocumentElement($xml);
 };

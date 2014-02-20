@@ -13,8 +13,9 @@ use XML::LibXML::Reader;
 use IO::File;
 
 my $src = IO::File->new("<0055.src");
-my $xsd = '0055.xsd';
+my $rst = IO::File->new(">0055.xml");
 
+my $xsd = '0055.xsd';
 my $schema = XML::Compile::Schema->new($xsd);
 
 # This will print a very basic description of what the schema describes
@@ -61,7 +62,7 @@ while(<$src>) {
         next;
     }
 
-    print $doc->toString(1);    # 1 indicates "pretty print"
+    print $rst $doc->toString(1);    # 1 indicates "pretty print"
 
 }
 

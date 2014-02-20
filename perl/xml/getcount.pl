@@ -14,7 +14,7 @@ my $cfg = {
     schema => "db2inst",
 };
 
-Data::Dump->dump($cfg);
+# Data::Dump->dump($cfg);
 
 # 建立数据库连接
 my $dbh = DBI->connect(
@@ -34,20 +34,11 @@ unless ($dbh) {
     die "cannot connect to db";
 }
 
+my $sth = $dbh->prepare("select count(*) from y0055");
+$sth->execute();
+my ($count) = $sth->fetchrow_array;
+print "count is $count" . "\n";
 
-my $i = 4;
-my $dt1;
-my $dt2;
-my $sth;
-
-while ( $i < 20 ) {
-    $dt1      = DateTime->now( time_zone => 'local' );
-    Data::Dump->dump( $dt1->hour . ":" . $dt1->minute . ":" . $dt1->second );
-
-    $dbh->do("DECOMPOSE XML DOCUMENTS IN 'select cid, info from customer' XMLSCHEMA db2inst.cust2xsd");
-    $dbh->commit();
-    $dt2 = DateTime->now( time_zone => 'local' );
-    Data::Dump->dump( $dt2->hour . ":" . $dt2->minute . ":" . $dt2->second );
-    $i++;
-}
+$sth->finish();
+$dbh->commit();
 $dbh->disconnect();

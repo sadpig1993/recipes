@@ -14,7 +14,7 @@ my $cfg = {
     schema => "db2inst",
 };
 
-Data::Dump->dump($cfg);
+# Data::Dump->dump($cfg);
 
 # 建立数据库连接
 my $dbh = DBI->connect(
@@ -44,11 +44,16 @@ while ( $i < 20 ) {
     $dt1      = DateTime->now( time_zone => 'local' );
     Data::Dump->dump( $dt1->hour . ":" . $dt1->minute . ":" . $dt1->second );
 
-    $sth = $dbh->prepare("call SYSPROC.XDB_DECOMP_XML_FROM_QUERY('db2inst', 'cust2xsd', 'select info from customer',  0, 25, 1, NULL, NULL, '1', ?, ?, ?)");
-    $sth->execute();
+    $sth = $dbh->prepare("call SYSPROC.XDB_DECOMP_XML_FROM_QUERY(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    my $schema = 'db2inst';
+    my $xsd = 'cust2xsd';
+    my $sql = 'select cid, info from customer';
+    # $sth = $dbh->prepare("call SYSPROC.XDB_DECOMP_XML_FROM_QUERY('db2inst', 'cust2xsd', 'select info from customer',  0, 25, 1, NULL, NULL, '1', ?, ?, ?)");
+    $sth->execute($schema, $xsd, $sql, '0', '25', '1', undef, undef, '1', undef, undef, undef );
     $sth->finish();
     $dbh->commit();
     $dt2 = DateTime->now( time_zone => 'local' );
+
     Data::Dump->dump( $dt2->hour . ":" . $dt2->minute . ":" . $dt2->second );
     $i++;
 }

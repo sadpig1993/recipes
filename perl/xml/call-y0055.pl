@@ -3,6 +3,7 @@
 use DBI;
 use Data::Dump;
 use DateTime;
+use Time::Elapse;
 
 use strict;
 use warnings;
@@ -14,7 +15,7 @@ my $cfg = {
     schema => "db2inst",
 };
 
-Data::Dump->dump($cfg);
+# Data::Dump->dump($cfg);
 
 # 建立数据库连接
 my $dbh = DBI->connect(
@@ -35,19 +36,25 @@ unless ($dbh) {
 }
 
 
-my $i = 4;
+my $i = 1;
+my $j = 1;
+my $max = 10000 ;
 my $dt1;
 my $dt2;
 my $sth;
 
-while ( $i < 20 ) {
-    $dt1      = DateTime->now( time_zone => 'local' );
-    Data::Dump->dump( $dt1->hour . ":" . $dt1->minute . ":" . $dt1->second );
-
-    $dbh->do("DECOMPOSE XML DOCUMENTS IN 'select cid, info from customer' XMLSCHEMA db2inst.cust2xsd");
-    $dbh->commit();
-    $dt2 = DateTime->now( time_zone => 'local' );
-    Data::Dump->dump( $dt2->hour . ":" . $dt2->minute . ":" . $dt2->second );
+Time::Elapse->lapse(my $now);
+while ( $i <= $max ) {
+    $sth = $dbh->prepare("call SYSPROC.XDB_DECOMP_XML_FROM_QUERY(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    my $schema = 'db2inst';
+    my $xsd = 'y0055xsd';
+    my $sql = 'select id, info from test0055';
+    $sth->execute($schema, $xsd, $sql, '0', '25', '1', undef, undef, '1', undef, undef, undef );
+    $sth->finish();
     $i++;
+    $j++;
+    $dbh->commit() if ($j == 500);
 }
+$dbh->commit();
+print "Time wasted: $now\n";
 $dbh->disconnect();
