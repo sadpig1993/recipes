@@ -1,3 +1,4 @@
+
 -- 注册xml schema
 db2 "register xmlschema 'http://pureXMLcookbook.org' from '/home/jackliu/workspace/recipes/doc/db2/pureXML/demo1/cust2.xsd' as db2admin.cust2xsd complete enable decomposition"
 

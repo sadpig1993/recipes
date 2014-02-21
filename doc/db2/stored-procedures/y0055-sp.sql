@@ -57,9 +57,9 @@ begin
    insert into y0055(serialno, txdate, c, cardtype, p, txamt,
                      cfee, cwwscfee, bfjacctbj, bi, bserialno,
                      btxdate, cleardate, bfee, dealdate ) 
-          values (serialno, txdate, c, cardtype, p, txamt,
-                     cfee, cwwscfee, bfjacctbj, bi, bserialno,
-                     btxdate, cleardate, bfee, dealdate ); 
+          values (v_serialno, v_txdate, v_c, v_cardtype, v_p, v_txamt,
+                     v_cfee, v_cwwscfee, v_bfjacctbj, v_bi, v_bserialno,
+                     v_btxdate, v_cleardate, v_bfee, v_dealdate ); 
 
 end
 @
