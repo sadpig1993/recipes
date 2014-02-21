@@ -38,7 +38,7 @@ unless ($dbh) {
 
 my $i = 1;
 my $j = 1;
-my $max = 10000 ;
+my $max = 30000;
 my $dt1;
 my $dt2;
 my $sth;
